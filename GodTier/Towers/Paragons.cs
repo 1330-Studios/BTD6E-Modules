@@ -79,7 +79,6 @@
             var origParagon = model.towers.First(t => t.name.Equals("MonkeyBuccaneer-Paragon"));
             var paragon = origParagon.Clone().Cast<TowerModel>();
             paragon.baseId = "ParagonMonkeyBuccaneer";
-            paragon.display = "36fc7f0fbe5ad944bb44d14820671b47";
             paragon.name = "ParagonMonkeyBuccaneer";
             paragon.towerSet = "Primary";
             paragon.emoteSpriteLarge = new("Paragon");

@@ -21,11 +21,11 @@ internal class Dynamite : TowerTask {
                 time++;
                 return;
             }
-            TransformationManager.VALUE.Add(new(identifier, tts.tower.Id));
+            TransformationManager.VALUE.Add(new(identifier, tts.tower.Id.Id));
             tts.tower.worth = 0;
             tts.tower.UpdateRootModel(dynamite);
             tts.TAdd(scale1: .25f);
-            tts.sim.simulation.CreateTextEffect(new(tts.position), "UpgradedText", 10, "Upgraded!", false);
+            tts.sim.simulation.CreateTextEffect(new(tts.position), new("UpgradedText"), 10, "Upgraded!", false);
             AbilityMenu.instance.TowerChanged(tts);
             AbilityMenu.instance.RebuildAbilities();
         };
@@ -59,14 +59,14 @@ internal class Dynamite : TowerTask {
                                     var FragOfFrag = cpocm.projectile.CloneCast();
                                     var FragOfFragOfFrag = cpocm.projectile.CloneCast();
                                     cpocm.projectile.ModifyDamageModel(new DamageChange() { set = true, damage = 5000, maxDamage = 5000 });
-                                    cpocm.projectile.display = "DynamiteFrag";
-                                    cpocm.projectile.behaviors = cpocm.projectile.behaviors.Add(new CreateEffectOnExpireModel("CEOEM_", "3e6bf36670555d4408d6a9ca2e531d85", 2, false, false,
-                                        new EffectModel("Explosion_", "3e6bf36670555d4408d6a9ca2e531d85", 1, 2)));
+                                    cpocm.projectile.display.guidRef = "DynamiteFrag";
+                                    cpocm.projectile.behaviors = cpocm.projectile.behaviors.Add(new CreateEffectOnExpireModel("CEOEM_", new("3e6bf36670555d4408d6a9ca2e531d85"), 2, false, false,
+                                        new EffectModel("Explosion_", new("3e6bf36670555d4408d6a9ca2e531d85"), 1, 2)));
                                     cpocm.projectile.radius *= 5;
                                     cpocm.emission.Cast<ArcEmissionModel>().count = 24;
 
                                     FragOfFragOfFrag.ModifyDamageModel(new DamageChange() { set = true, damage = 250, maxDamage = 250 });
-                                    FragOfFragOfFrag.display = "DynamiteFragFragFrag";
+                                    FragOfFragOfFrag.display.guidRef = "DynamiteFragFragFrag";
                                     FragOfFragOfFrag.scale *= 1.25f;
 
                                     FragOfFrag.ModifyDamageModel(new DamageChange() { set = true, damage = 500, maxDamage = 500 });
@@ -77,9 +77,9 @@ internal class Dynamite : TowerTask {
                             }
                         }
 
-                        weapon.projectile.display = "DynamiteProj";
-                        weapon.projectile.behaviors.First(a => a.Is<CreateEffectOnContactModel>()).Cast<CreateEffectOnContactModel>().effectModel.assetId = "b1324f2f4c3809643b7ef1d8c112442a";
-                        weapon.projectile.behaviors = weapon.projectile.behaviors.Add(new CreateEffectOnContactModel("CEOCM_", new EffectModel("EM_", "e9ea81b200f5036498d38048b390f22f", 1, 1)));
+                        weapon.projectile.display.guidRef = "DynamiteProj";
+                        weapon.projectile.behaviors.First(a => a.Is<CreateEffectOnContactModel>()).Cast<CreateEffectOnContactModel>().effectModel.assetId.guidRef = "b1324f2f4c3809643b7ef1d8c112442a";
+                        weapon.projectile.behaviors = weapon.projectile.behaviors.Add(new CreateEffectOnContactModel("CEOCM_", new EffectModel("EM_", new("e9ea81b200f5036498d38048b390f22f"), 1, 1)));
 
                         am.weapons[j] = weapon;
                     }

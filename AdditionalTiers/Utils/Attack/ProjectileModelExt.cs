@@ -45,9 +45,9 @@
         }
 
         public static void SetDisplay(this ProjectileModel projectile, string display) {
-            projectile.display = display;
+            projectile.display = new() { guidRef = display };
             if (projectile.HasBehavior<DisplayModel>())
-                projectile.behaviors.First(m => m.GetIl2CppType().Equals(Il2CppType.Of<DisplayModel>())).Cast<DisplayModel>().display = display;
+                projectile.behaviors.First(m => m.GetIl2CppType().Equals(Il2CppType.Of<DisplayModel>())).Cast<DisplayModel>().display = new() { guidRef = display };
         }
     }
 }

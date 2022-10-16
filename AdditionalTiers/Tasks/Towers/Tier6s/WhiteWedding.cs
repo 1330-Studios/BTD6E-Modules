@@ -13,10 +13,10 @@
                     time++;
                     return;
                 }
-                TransformationManager.VALUE.Add(new(identifier, tts.tower.Id));
+                TransformationManager.VALUE.Add(new(identifier, tts.tower.Id.Id));
                 tts.tower.worth = 0;
                 tts.tower.UpdateRootModel(whiteWedding);
-                tts.sim.simulation.CreateTextEffect(new(tts.position), "UpgradedText", 10, "Upgraded!", false);
+                tts.sim.simulation.CreateTextEffect(new(tts.position), new("UpgradedText"), 10, "Upgraded!", false);
                 AbilityMenu.instance.TowerChanged(tts);
                 AbilityMenu.instance.RebuildAbilities();
             };
@@ -27,10 +27,10 @@
                 whiteWedding.cost = 0;
                 whiteWedding.name = "White Wedding";
                 whiteWedding.baseId = "SuperMonkey";
-                whiteWedding.display = "WhiteWedding";
+                whiteWedding.display.guidRef = "WhiteWedding";
                 whiteWedding.dontDisplayUpgrades = true;
                 whiteWedding.portrait = new("WhiteWeddingIcon");
-                whiteWedding.behaviors.First(a => a.GetIl2CppType() == Il2CppType.Of<DisplayModel>()).Cast<DisplayModel>().display = "WhiteWedding";
+                whiteWedding.behaviors.First(a => a.GetIl2CppType() == Il2CppType.Of<DisplayModel>()).Cast<DisplayModel>().display.guidRef = "WhiteWedding";
                 var beh = whiteWedding.behaviors;
                 ProjectileModel proj = null;
                 for (var i = 0; i < beh.Length; i++) {
@@ -41,14 +41,14 @@
                         am.behaviors = am.behaviors.Remove(a => a.GetIl2CppType() == Il2CppType.Of<DisplayModel>());
 
                         for (var j = 0; j < am.weapons.Length; j++) {
-                            am.weapons[j].projectile.display = "WhiteWeddingProjectile";
+                            am.weapons[j].projectile.display.guidRef = "WhiteWeddingProjectile";
                             am.weapons[j].projectile.pierce *= 5;
                             am.weapons[j].projectile.scale *= 1.25f;
                             am.weapons[j].rate = 0;
                             am.weapons[j].rateFrames = 0;
 
                             proj = am.weapons[j].projectile.Clone().Cast<ProjectileModel>();
-                            proj.display = "WhiteWeddingOrbitProjectile";
+                            proj.display.guidRef = "WhiteWeddingOrbitProjectile";
                             proj.pierce *= 10;
                             proj.behaviors.First(a => a.GetIl2CppType() == Il2CppType.Of<DamageModel>()).Cast<DamageModel>().damage *= 5;
                             proj.behaviors = proj.behaviors.Remove(a => a.GetIl2CppType() == Il2CppType.Of<TravelStraitModel>());

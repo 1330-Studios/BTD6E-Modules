@@ -9,16 +9,16 @@ namespace AdditionalTiers.Tasks.Towers.Tier6s {
             getTower = () => gds;
             baseTower = AddedTierName.TUSK;
             tower = AddedTierEnum.TUSK;
-            requirements += tts => ((tts.tower.towerModel.baseId.Equals("BoomerangMonkey") && tts.tower.towerModel.isParagon) || tts.tower.towerModel.baseId.Equals("ParagonBoomerangMonkey"));
+            requirements += tts => tts.tower.towerModel.baseId.Equals("BoomerangMonkey") && tts.tower.towerModel.isParagon || tts.tower.towerModel.baseId.Equals("ParagonBoomerangMonkey");
             onComplete += tts => {
                 if (time < 50) {
                     time++;
                     return;
                 }
-                TransformationManager.VALUE.Add(new(identifier, tts.tower.Id));
+                TransformationManager.VALUE.Add(new(identifier, tts.tower.Id.Id));
                 tts.tower.worth = 0;
                 tts.tower.UpdateRootModel(gds);
-                tts.sim.simulation.CreateTextEffect(new(tts.position), "UpgradedText", 10, "Upgraded!", false);
+                tts.sim.simulation.CreateTextEffect(new(tts.position), new("UpgradedText"), 10, "Upgraded!", false);
                 AbilityMenu.instance.TowerChanged(tts);
                 AbilityMenu.instance.RebuildAbilities();
             };
@@ -38,18 +38,18 @@ namespace AdditionalTiers.Tasks.Towers.Tier6s {
                 for (int i = 0; i < beh.Length; i++) {
                     if (beh[i].Is<OrbitModel>(out var orbitModel)) {
                         orbits = orbitModel.CloneOrbit(3, 5, 15, 25);
-                        orbits[1].projectile.display = "GlaiveDominusSilverOrbit3";
-                        orbits[1].projectile.behaviors.First(a => a.GetIl2CppType() == Il2CppType.Of<DisplayModel>()).Cast<DisplayModel>().display = "GlaiveDominusSilverOrbit3";
+                        orbits[1].projectile.display.guidRef = "GlaiveDominusSilverOrbit3";
+                        orbits[1].projectile.behaviors.First(a => a.GetIl2CppType() == Il2CppType.Of<DisplayModel>()).Cast<DisplayModel>().display.guidRef = "GlaiveDominusSilverOrbit3";
                         orbits[1].projectile.AddDamageModel(DamageModelCreation.Full, 250);
-                        orbits[0].projectile.display = "GlaiveDominusSilverOrbit2";
-                        orbits[0].projectile.behaviors.First(a => a.GetIl2CppType() == Il2CppType.Of<DisplayModel>()).Cast<DisplayModel>().display = "GlaiveDominusSilverOrbit2";
+                        orbits[0].projectile.display.guidRef = "GlaiveDominusSilverOrbit2";
+                        orbits[0].projectile.behaviors.First(a => a.GetIl2CppType() == Il2CppType.Of<DisplayModel>()).Cast<DisplayModel>().display.guidRef = "GlaiveDominusSilverOrbit2";
                         orbits[0].projectile.AddDamageModel(DamageModelCreation.Full, 100);
-                        orbits[2].projectile.display = "GlaiveDominusSilverOrbit";
-                        orbits[2].projectile.behaviors.First(a => a.GetIl2CppType() == Il2CppType.Of<DisplayModel>()).Cast<DisplayModel>().display = "GlaiveDominusSilverOrbit";
+                        orbits[2].projectile.display.guidRef = "GlaiveDominusSilverOrbit";
+                        orbits[2].projectile.behaviors.First(a => a.GetIl2CppType() == Il2CppType.Of<DisplayModel>()).Cast<DisplayModel>().display.guidRef = "GlaiveDominusSilverOrbit";
                         orbits[2].projectile.AddDamageModel(DamageModelCreation.Full, 25);
                     }
                     if (beh[i].Is<AttackModel>(out var attackModel)) {
-                        attackModel.weapons[0].projectile.display = "358f76f3f21b8f9439f3cccd23c9b5ff";
+                        attackModel.weapons[0].projectile.display.guidRef = "358f76f3f21b8f9439f3cccd23c9b5ff";
                         attackModel.weapons[0].emission = new ArcEmissionModel("arcEmissionModel_", 3, 0, 30, null, false);
                         attackModel.weapons[0].projectile.behaviors = attackModel.weapons[0].projectile.behaviors.Add(mortarMonkeyCrt);
                         attackModel.weapons[0].projectile.ignorePierceExhaustion = true;
@@ -77,7 +77,7 @@ namespace AdditionalTiers.Tasks.Towers.Tier6s {
                 abm.icon = new("GlaiveDominusSilverOrbit3");
                 abm.name = "GlaiveDominusSilverBuff";
                 abm.behaviors.First(a => a.GetIl2CppType() == Il2CppType.Of<CreateEffectOnAbilityModel>()).Cast<CreateEffectOnAbilityModel>().effectModel =
-                new("EM_", "GlaiveDominusSilverAbility", 1.1f, 9999999.0f, false, false, false, false, false, false, false);
+                new("EM_", new("GlaiveDominusSilverAbility"), 1.1f, 9999999.0f, false, false, false, false, false, false, false);
                 ActivateTowerDamageSupportZoneModel atdszm = abm.behaviors.FirstOrDefault(AA => AA.name.Contains("ActivateTowerDamageSupportZoneModel")).Cast<ActivateTowerDamageSupportZoneModel>();
                 atdszm.damageIncrease = 50;
                 atdszm.canEffectThisTower = true;
@@ -87,7 +87,7 @@ namespace AdditionalTiers.Tasks.Towers.Tier6s {
                 atdszm.isGlobal = true;
 
                 gm.buffIndicatorModels = gm.buffIndicatorModels.Add(new BuffIndicatorModel("bim_", "GlaiveDominusSilverBuff", "GlaiveDominusSilverOrbit3"));
-                gds.RebuildBehaviorsA(a => a.Is<ParagonTowerModel>(out _) || a.Is<OrbitModel>(out _), abm, orbits[0], orbits[1], orbits[2], new DisplayModel("dm", "Assets/Monkeys/Adora/Graphics/Effects/AdoraSunBeamPlacement.prefab", 0, new(), 1, true, 0));
+                gds.RebuildBehaviorsA(a => a.Is<ParagonTowerModel>(out _) || a.Is<OrbitModel>(out _), abm, orbits[0], orbits[1], orbits[2], new DisplayModel("dm", new("Assets/Monkeys/Adora/Graphics/Effects/AdoraSunBeamPlacement.prefab"), 0, new(), 1, true, 0));
             };
             recurring += tts => { };
             onLeave += () => { time = -1; };

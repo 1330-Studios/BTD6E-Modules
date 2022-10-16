@@ -4,7 +4,7 @@ internal class UltraDartTime : IPowerAdapter {
         if (!power.name.Equals("DartTime"))
             return;
 
-        power.icon = "Ultra_Powers.Assets.UDartTime.png".GetSpriteReference();
+        power.icon = "Ui[Ultra_Powers.Assets.UDartTime.png]".GetSpriteReference();
 
         foreach (var dtm in power.GetChildren<DartTimeModel>()) {
             dtm.bloonSpeed = 0.01f;

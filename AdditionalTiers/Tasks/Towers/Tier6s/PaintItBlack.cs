@@ -14,10 +14,10 @@ internal class PaintItBlack : TowerTask {
                 time++;
                 return;
             }
-            TransformationManager.VALUE.Add(new(identifier, tts.tower.Id));
+            TransformationManager.VALUE.Add(new(identifier, tts.tower.Id.Id));
             tts.tower.worth = 0;
             tts.tower.UpdateRootModel(pib);
-            tts.sim.simulation.CreateTextEffect(new(tts.position), "UpgradedText", 10, "Upgraded!", false);
+            tts.sim.simulation.CreateTextEffect(new(tts.position), new("UpgradedText"), 10, "Upgraded!", false);
             AbilityMenu.instance.TowerChanged(tts);
             AbilityMenu.instance.RebuildAbilities();
         };
@@ -54,7 +54,7 @@ internal class PaintItBlack : TowerTask {
                     }
                 }
                 if (beh[i].Is<AirUnitModel>(out var aum)) {
-                    aum.display = "PIB";
+                    aum.display.guidRef = "PIB";
                 }
             }
             

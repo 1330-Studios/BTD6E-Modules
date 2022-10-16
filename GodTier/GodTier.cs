@@ -20,6 +20,8 @@ namespace GodTier {
             Steve.Assets = AssetBundle.LoadFromMemory(Models.steve);
             Shrek.Assets = AssetBundle.LoadFromMemory(Models.shrek);
             Mechagodzilla.Assets = AssetBundle.LoadFromMemory(Models.mechagodzilla);
+            LightningMcQueen.Assets = AssetBundle.LoadFromMemory(Models.mcqueen);
+            Crayon.Assets = AssetBundle.LoadFromMemory("GodlyTowers.Resources.crayon.bundle".GetEmbeddedResource());
 
             Tewtiy.PrototypeUDN_Patch.Init();
         }
@@ -58,7 +60,7 @@ namespace GodTier {
             [HarmonyPrefix]
             public static bool Prefix(ref MonkeyTeamsIcon __instance) {
                 __instance.enabled = false;
-                __instance.gameObject.SetActive(false);
+                __instance?.gameObject?.SetActive(false);
                 return false;
             }
         }
@@ -95,14 +97,14 @@ namespace GodTier {
             }
         }
 
-        public static Texture2D LoadTextureFromBytes(byte[] FileData!!) {
+        public static Texture2D LoadTextureFromBytes(byte[] FileData) {
             Texture2D Tex2D = new(64, 64);
             if (ImageConversion.LoadImage(Tex2D, FileData)) return Tex2D;
 
             return null;
         }
 
-        public static Sprite LoadSprite(Texture2D text!!) {
+        public static Sprite LoadSprite(Texture2D text) {
             return Sprite.Create(text, new(0, 0, text.width, text.height), new());
         }
 
@@ -152,6 +154,23 @@ namespace GodTier {
             }
         }
 
+        [HarmonyPatch(typeof(ResourceLoader), nameof(ResourceLoader.LoadSpriteFromSpriteReferenceAsync))]
+        public static class ResourceLoader_Patch {
+            [HarmonyPostfix]
+            public static void Postfix(SpriteReference reference, Image image) {
+                if (reference != null) {
+                    try {
+                        var res = reference.guidRef.GetEmbeddedResource();
+                        if (res.Length > 0 && res is not null) {
+                            var texture = res.ToTexture();
+                            image.canvasRenderer.SetTexture(texture);
+                            image.sprite = Sprite.Create(texture, new(0, 0, texture.width, texture.height), new(), 10.2f);
+                        }
+                    } catch { }
+                }
+            }
+        }
+
         [HarmonyPatch(typeof(GameModelLoader), nameof(GameModelLoader.Load))]
         public sealed class GameStart {
             [HarmonyPostfix]
@@ -161,6 +180,7 @@ namespace GodTier {
                 towers.Add(Godzilla.GetTower(__result));
                 towers.Add(Mechagodzilla.GetTower(__result));
                 towers.Add(Shrek.GetTower(__result));
+                towers.Add(LightningMcQueen.GetTower(__result));
                 towers.Add(Spider_Man.GetTower(__result));
                 towers.Add(Carnage.GetTower(__result));
                 towers.Add(Venom.GetTower(__result));
@@ -169,6 +189,7 @@ namespace GodTier {
                 towers.Add(MiniPekka.GetTower(__result));
                 towers.Add(Grim_Reaper.GetTower(__result));
                 towers.Add(Steve.GetTower(__result));
+                towers.Add(Crayon.GetTower(__result));
 
                 paragons.Add(Paragons.GetDartMonkey(__result));
                 paragons.Add(Paragons.GetBoomerangMonkey(__result));
@@ -182,6 +203,9 @@ namespace GodTier {
                 }
 
                 foreach (var tower in towers) {
+                    foreach (var t in tower.Item3)
+                        t.instaIcon = t.portrait;
+
                     __result.towers = __result.towers.Add(tower.Item3);
                     __result.towerSet = __result.towerSet.Add(tower.Item2);
                     __result.upgrades = __result.upgrades.Add(tower.Item4);

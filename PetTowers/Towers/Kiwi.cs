@@ -8,6 +8,7 @@
             LocalizationManager.Instance.textTable.Add("Exploding Shurikens Description", "Shurikens explode on contact.");
             LocalizationManager.Instance.textTable.Add("Quad Shots Description", "Throw out 4 shurikens at once!");
             LocalizationManager.Instance.textTable.Add("Grandmaster Kiwi Description", "This bird is one of legends, the one true savior against the bloons. Godspeed, kiwi, godspeed.");
+
         }
 
         public override TowerContainer GetTower(GameModel gameModel) {
@@ -21,23 +22,22 @@
 
             #region Upgrades
 
-            var T1U = new UpgradeModel("KiwiNinja_DoubleShot", 720, 0, new("Assets/ResizedImages/UI/UpgradeIcons/NinjaMonkey/DoubleShotUpgradeIcon.png"), 0, 0, 0, "", "Double Shot");
-            var T2U = new UpgradeModel("KiwiNinja_Seeking", 1500, 0, new("Assets/ResizedImages/UI/UpgradeIcons/NinjaMonkey/SeekingShurikenUpgradeIcon.png"), 0, 1, 0, "", "Advanced Aiming Shurikens");
-            var T3U = new UpgradeModel("KiwiNinja_Explosive", 2650, 0, new("Assets/ResizedImages/UI/UpgradeIcons/BombShooter/RecursiveClusterUpgradeIcon.png"), 0, 2, 0, "", "Exploding Shurikens");
-            var T4U = new UpgradeModel("KiwiNinja_QuadShot", 7600, 0, new("Assets/ResizedImages/UI/UpgradeIcons/HeliPilot/QuadDartsUpgradeIcon.png"), 0, 3, 0, "", "Quad Shots");
-            var T5U = new UpgradeModel("KiwiNinja_Grandmaster", 15600, 0, new("Assets/ResizedImages/UI/UpgradeIcons/NinjaMonkey/GrandmasterNinjaUpgradeIcon.png"), 0, 4, 0, "", "Grandmaster Kiwi");
+            var T1U = new UpgradeModel("KiwiNinja_DoubleShot", 720, 0, new() { guidRef = "Assets/ResizedImages/UI/UpgradeIcons/NinjaMonkey/DoubleShotUpgradeIcon.png" }, 0, 0, 0, "", "Double Shot") { name = "KiwiNinja_DoubleShot", cost = 720, xpCost = 0, icon = new() { guidRef = "Assets/ResizedImages/UI/UpgradeIcons/NinjaMonkey/DoubleShotUpgradeIcon.png" }, path = 0, locked = 0, tier = 0, confirmation = "", localizedNameOverride = "Double Shot" };
+            var T2U = new UpgradeModel("KiwiNinja_Seeking", 1500, 0, new() { guidRef = "Assets/ResizedImages/UI/UpgradeIcons/NinjaMonkey/SeekingShurikenUpgradeIcon.png" }, 0, 1, 0, "", "Advanced Aiming Shurikens") { name = "KiwiNinja_Seeking", cost = 1500, xpCost = 0, icon = new() { guidRef = "Assets/ResizedImages/UI/UpgradeIcons/NinjaMonkey/SeekingShurikenUpgradeIcon.png" }, path = 0, locked = 0, tier = 1, confirmation = "", localizedNameOverride = "Advanced Aiming Shurikens" };
+            var T3U = new UpgradeModel("KiwiNinja_Explosive", 2650, 0, new() { guidRef = "Assets/ResizedImages/UI/UpgradeIcons/BombShooter/RecursiveClusterUpgradeIcon.png" }, 0, 2, 0, "", "Exploding Shurikens") { name = "KiwiNinja_Explosive", cost = 2650, xpCost = 0, icon = new() { guidRef = "Assets/ResizedImages/UI/UpgradeIcons/BombShooter/RecursiveClusterUpgradeIcon.png" }, path = 0, locked = 0, tier = 2, confirmation = "", localizedNameOverride = "Exploding Shurikens" };
+            var T4U = new UpgradeModel("KiwiNinja_QuadShot", 7600, 0, new() { guidRef = "Assets/ResizedImages/UI/UpgradeIcons/HeliPilot/QuadDartsUpgradeIcon.png" }, 0, 3, 0, "", "Quad Shots") { name = "KiwiNinja_QuadShot", cost = 7600, xpCost = 0, icon = new() { guidRef = "Assets/ResizedImages/UI/UpgradeIcons/HeliPilot/QuadDartsUpgradeIcon.png" }, path = 0, locked = 0, tier = 3, confirmation = "", localizedNameOverride = "Quad Shots" };
+            var T5U = new UpgradeModel("KiwiNinja_Grandmaster", 15600, 0, new() { guidRef = "Assets/ResizedImages/UI/UpgradeIcons/NinjaMonkey/GrandmasterNinjaUpgradeIcon.png" }, 0, 4, 0, "", "Grandmaster Kiwi") { name = "KiwiNinja_Grandmaster", cost = 15600, xpCost = 0, icon = new() { guidRef = "Assets/ResizedImages/UI/UpgradeIcons/NinjaMonkey/GrandmasterNinjaUpgradeIcon.png" }, path = 0, locked = 0, tier = 4, confirmation = "", localizedNameOverride = "Grandmaster Kiwi" };
 
-            tc.upgrades.AddRange(new[] {T1U, T2U, T3U, T4U, T5U});
+            tc.upgrades.AddRange(new[] { T1U, T2U, T3U, T4U, T5U });
 
             #endregion
 
             #region T0
 
             var kiwiT0 = gameModel.towers[0].CloneCast();
+            kiwiT0.SetDisplay("Assets/Monkeys/NinjaMonkey/Graphics/Pets/Kiwi/NinjaMonkeyKiwiDisplay.prefab");
+            kiwiT0.SetIcons("Assets/ResizedImages/UI/TrophyStoreIcons/Tower/NinjaMonkeyPetKiwiIcon.png", true);
 
-            kiwiT0.display = "Assets/Monkeys/NinjaMonkey/Graphics/Pets/Kiwi/NinjaMonkeyKiwiDisplay.prefab";
-            kiwiT0.behaviors.First(a => a.Is<DisplayModel>()).Cast<DisplayModel>().display = "Assets/Monkeys/NinjaMonkey/Graphics/Pets/Kiwi/NinjaMonkeyKiwiDisplay.prefab";
-            kiwiT0.SetIcons("Assets/ResizedImages/UI/TrophyStoreIcons/Tower/NinjaMonkeyPetKiwiIcon.png");
             kiwiT0.name = kiwiT0.GetNameMod("KiwiNinja");
             kiwiT0.baseId = "KiwiNinja";
             kiwiT0.towerSet = "Magic";
@@ -47,7 +47,7 @@
             for (int i = 0; i < kiwiT0.behaviors.Length; i++) {
                 if (kiwiT0.behaviors[i].Is<AttackModel>(out var attack)) {
                     attack.weapons[0].emission = new RandomArcEmissionModel("RandomArcEmissionModel_", 1, 0, 1, 10, 0, null);
-                    attack.weapons[0].projectile.display = "Assets/Monkeys/NinjaMonkey/Graphics/Projectiles/Shuriken.prefab";
+                    attack.weapons[0].projectile.display = new() { guidRef = "Assets/Monkeys/NinjaMonkey/Graphics/Projectiles/Shuriken.prefab" };
                 }
             }
 
@@ -122,7 +122,7 @@
             for (int i = 0; i < kiwiT3.behaviors.Length; i++) {
                 if (kiwiT3.behaviors[i].Is<AttackModel>(out var attack)) {
                     attack.range += 10;
-                    attack.weapons[0].projectile.display = "Assets/Monkeys/NinjaMonkey/Graphics/Projectiles/SharpShuriken.prefab";
+                    attack.weapons[0].projectile.display = new() { guidRef = "Assets/Monkeys/NinjaMonkey/Graphics/Projectiles/SharpShuriken.prefab" };
                     attack.weapons[0].projectile.behaviors = attack.weapons[0].projectile.behaviors.Add(cpocm, ceocm);
 
                     for (int j = 0; j < attack.weapons[0].projectile.behaviors.Length; j++) {
@@ -151,7 +151,7 @@
                 if (kiwiT4.behaviors[i].Is<AttackModel>(out var attack)) {
                     attack.range += 5;
                     attack.weapons[0].Rate *= 0.75f;
-                    attack.weapons[0].projectile.display = "Assets/Monkeys/NinjaMonkey/Graphics/Projectiles/SharpShuriken.prefab";
+                    attack.weapons[0].projectile.display = new() { guidRef =  "Assets/Monkeys/NinjaMonkey/Graphics/Projectiles/SharpShuriken.prefab" };
                     attack.weapons[0].emission.Cast<RandomArcEmissionModel>().count = 4;
                     attack.weapons[0].emission.Cast<RandomArcEmissionModel>().angle = 30;
 
@@ -185,14 +185,14 @@
             kiwiT5.tier = 5;
             kiwiT5.tiers = new[] { 5, 0, 0 };
             kiwiT5.name = kiwiT5.GetNameMod("KiwiNinja");
-            kiwiT5.upgrades = new UpgradePathModel[0];
+            kiwiT5.upgrades = Array.Empty<UpgradePathModel>();
             kiwiT5.range += 15;
 
             for (int i = 0; i < kiwiT5.behaviors.Length; i++) {
                 if (kiwiT5.behaviors[i].Is<AttackModel>(out var attack)) {
                     attack.range += 15;
                     attack.weapons[0].Rate *= 0.75f;
-                    attack.weapons[0].projectile.display = "Assets/Monkeys/NinjaMonkey/Graphics/Projectiles/AscendedShadowShurikenLvl5.prefab";
+                    attack.weapons[0].projectile.display = new() { guidRef = "Assets/Monkeys/NinjaMonkey/Graphics/Projectiles/AscendedShadowShurikenLvl5.prefab" };
                     attack.weapons[0].projectile.radius *= 2;
                     attack.weapons[0].emission.Cast<RandomArcEmissionModel>().count = 24;
                     attack.weapons[0].emission.Cast<RandomArcEmissionModel>().angle = 360;
@@ -222,13 +222,13 @@
                         }
 
                         if (attack.weapons[0].projectile.behaviors[j].Is<CreateEffectOnContactModel>(out var createEffect))
-                            createEffect.effectModel.assetId = "Assets/Monkeys/MortarMonkey/Graphics/Effects/ShellShockExplosionXXL.prefab";
+                            createEffect.effectModel.assetId = new() { guidRef = "Assets/Monkeys/MortarMonkey/Graphics/Effects/ShellShockExplosionXXL.prefab" };
                     }
                 }
             }
 
-            kiwiT5.behaviors = kiwiT5.behaviors.Add(new DisplayModel("DM_Place1", "Assets/Monkeys/Adora/Graphics/Effects/AdoraTransformFXDark.prefab", 0, new(0, 0, 0), 1, true, 0),
-                new DisplayModel("DM_Place2", "Assets/Monkeys/Adora/Graphics/Effects/AdoraSunBeamUpgradeLvl20.prefab", 0, new(0, 0, 0), 1, true, 0));
+            kiwiT5.behaviors = kiwiT5.behaviors.Add(new DisplayModel("DM_Place1", new() { guidRef = "Assets/Monkeys/Adora/Graphics/Effects/AdoraTransformFXDark.prefab" }, 0, new(0, 0, 0), 1, true, 0),
+                new DisplayModel("DM_Place2", new() { guidRef = "Assets/Monkeys/Adora/Graphics/Effects/AdoraSunBeamUpgradeLvl20.prefab" }, 0, new(0, 0, 0), 1, true, 0));
             
             tc.towers.Add(kiwiT5);
 

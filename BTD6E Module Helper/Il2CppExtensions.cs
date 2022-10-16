@@ -21,7 +21,7 @@ public static class Il2CppExtensions {
     }
 
     public static unsafe IntPtr GetPtr(this object o) {
-        var d = new DynamicMethod("GetPtr", typeof(IntPtr), new System.Type[] { typeof(object) }, Assembly.GetExecutingAssembly().ManifestModule);
+        var d = new DynamicMethod("GetPtr", typeof(IntPtr), new Type[] { typeof(object) }, Assembly.GetExecutingAssembly().ManifestModule);
         var il = d.GetILGenerator();
         il.Emit(OpCodes.Ldarga, 0);
         il.Emit(OpCodes.Ret);

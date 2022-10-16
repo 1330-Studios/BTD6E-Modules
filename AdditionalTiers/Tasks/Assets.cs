@@ -1,11 +1,14 @@
-﻿using System.Threading;
-
+﻿using Assets.Scripts;
 using Assets.Scripts.Simulation.Behaviors;
+using Assets.Scripts.Unity;
+
+using UnityEngine.AddressableAssets;
+using UnityEngine.U2D;
 
 namespace AdditionalTiers.Tasks {
     public sealed class Assets {
         [HideFromIl2Cpp]
-        public static Dictionary<string, Type> Types { get; set; } = new() {
+        public static Dictionary<string, Il2CppSystem.Type> Types { get; set; } = new() {
             { "WhitesnakeProj", Il2CppType.Of<AnimatedEnergyTexture>() },
             { "WhitesnakePheonixProj", Il2CppType.Of<AnimatedFlameTexture>() },
             { "WhitesnakeDarkPheonixProj", Il2CppType.Of<AnimatedDarkFlameTexture>() }
@@ -64,8 +67,7 @@ namespace AdditionalTiers.Tasks {
             {
                 "MrRobotoAbility",
                 udn => {
-                    var pss = udn.transform.GetComponentsInChildren<ParticleSystem>();
-                    foreach (var ps in pss)
+                    foreach (var ps in udn.transform.GetComponentsInChildren<ParticleSystem>())
                         ps.startColor = new Color(1f, 0.8f, 0);
                 }
             },
@@ -311,6 +313,65 @@ namespace AdditionalTiers.Tasks {
                     var ps = obj.transform.GetComponentInChildren<ParticleSystem>();
                     ps.transform.localScale = new(10, 10, 10);
                 }
+            },
+            {
+                "LittleTalks",
+                udn => {
+                    for (int i = 0; i < udn.genericRenderers.Length; i++) {
+                        udn.genericRenderers[i].material.SetFloat("_OutlineWidth", 0.025f);
+                    }
+                }
+            },
+            {
+                "AdditionalTiers.Resources.V2.GoldenExperience.GoldenExperience_Proj2.png",
+                udn => {
+                    var tr = udn.transform.GetComponentInChildren<TrailRenderer>();
+                    tr.startColor = new Color(0.25f, 0.25f, 0.25f);
+                    tr.endColor = new Color(0.1f, 0.1f, 0.1f);
+                }
+            },
+            {
+                "AdditionalTiers.Resources.V2.GoldenExperience.GoldenExperience_UProj2.png",
+                udn => {
+                    var tr = udn.transform.GetComponentInChildren<TrailRenderer>();
+                    tr.startColor = new Color(0.25f, 0.25f, 0.25f);
+                    tr.endColor = new Color(0.1f, 0.1f, 0.1f);
+                }
+            },
+            {
+                "GoldenExperienceAbility",
+                udn => {
+                    foreach (var ps in udn.transform.GetComponentsInChildren<ParticleSystem>()) {
+                        ps.startColor = new Color(1f, 0.8f, 0);
+                    }
+                }
+            },
+            {
+                "GoldenExperiencePlaceEffect",
+                udn => {
+                    foreach (var ps in udn.transform.GetComponentsInChildren<ParticleSystem>()) {
+                        ps.loop = true;
+                        ps.scalingMode = ParticleSystemScalingMode.Local;
+                        ps.transform.localScale /= 2;
+                        ps.startColor = new Color(1f, 0, 0.8f);
+                    }
+                }
+            },
+            {
+                "AdditionalTiers.Resources.V2.KingCrimson.KingCrimson_T6.png",
+                udn => {
+                    foreach (var ps in udn.transform.GetComponentsInChildren<ParticleSystem>()) {
+                        ps.startColor = new Color(0, 0, 0);
+                    }
+                }
+            },
+            {
+                "AdditionalTiers.Resources.V2.KingCrimson.KingCrimson_T7.png",
+                udn => {
+                    foreach (var ps in udn.transform.GetComponentsInChildren<ParticleSystem>()) {
+                        ps.startColor = new Color(0, 0, 0);
+                    }
+                }
             }
         };
         [HideFromIl2Cpp]
@@ -321,7 +382,11 @@ namespace AdditionalTiers.Tasks {
             { "BTD4SunGod", objectId => SpriteBuilder.createProjectile(CacheBuilder.Get(objectId), 43.2f, pivoty: 0.7f) },
             { "BTD4SunGodV", objectId => SpriteBuilder.createProjectile(CacheBuilder.Get(objectId), 43.2f, pivoty: 0.7f) },
             { "BlackYellowMissile", objectId => SpriteBuilder.createProjectile(CacheBuilder.Get(objectId), 10.8f) },
-            { "BlackYellowBullet", objectId => SpriteBuilder.createProjectile(CacheBuilder.Get(objectId), 10.8f) }
+            { "BlackYellowBullet", objectId => SpriteBuilder.createProjectile(CacheBuilder.Get(objectId), 10.8f) },
+            { "LittleTalksGS", objectId => SpriteBuilder.createProjectile(CacheBuilder.Get(objectId), 21.6f) },
+            { "LittleTalksS", objectId => SpriteBuilder.createProjectile(CacheBuilder.Get(objectId), 10.8f) },
+            { "LittleTalksPS", objectId => SpriteBuilder.createProjectile(CacheBuilder.Get(objectId), 10.8f) },
+            { "LittleTalksPB", objectId => SpriteBuilder.createProjectile(CacheBuilder.Get(objectId), 10.8f) }
         };
 
 
@@ -343,8 +408,8 @@ namespace AdditionalTiers.Tasks {
         };
 
         public static Color GetResetColor(DisplayBehavior beh) {
-            if (beh?.displayModel?.display != null && SpecialColors.ContainsKey(beh.displayModel.display))
-                return SpecialColors[beh.displayModel.display];
+            if (beh?.displayModel?.display.guidRef != null && SpecialColors.ContainsKey(beh.displayModel.display.guidRef))
+                return SpecialColors[beh.displayModel.display.guidRef];
             return Color.black;
         }
 
@@ -358,7 +423,7 @@ namespace AdditionalTiers.Tasks {
             }
         }
 
-        private static AssetBundle _particle = null;
+        private static AssetBundle _particle;
 
         public static AssetBundle ParticleBundle {
             get {
@@ -368,7 +433,7 @@ namespace AdditionalTiers.Tasks {
             }
         }
 
-        private static AssetBundle _particlesystem = null;
+        private static AssetBundle _particlesystem;
 
         public static AssetBundle ParticleSystemBundle {
             get {
@@ -378,7 +443,7 @@ namespace AdditionalTiers.Tasks {
             }
         }
 
-        private static AssetBundle _t6specificassets = null;
+        private static AssetBundle _t6specificassets;
 
         public static AssetBundle T6SpecificAssets {
             get {
@@ -388,7 +453,7 @@ namespace AdditionalTiers.Tasks {
             }
         }
 
-        private static Object[] _particles = null;
+        private static Object[] _particles;
         public static Object[] Particles {
             get {
                 if (_particles == null)
@@ -397,7 +462,7 @@ namespace AdditionalTiers.Tasks {
             }
         }
 
-        private static Object[] _particlesystems = null;
+        private static Object[] _particlesystems;
         public static Object[] ParticleSystems {
             get {
                 if (_particlesystems == null)
@@ -406,201 +471,301 @@ namespace AdditionalTiers.Tasks {
             }
         }
 
-        [HarmonyPatch(typeof(Factory), nameof(Factory.FindAndSetupPrototypeAsync))]
+        private static Object[] _shaderAssets;
+        public static Object[] ShaderAssets {
+            get {
+                if (_shaderAssets == null)
+                    _shaderAssets = ShaderBundle.LoadAllAssets();
+                return _shaderAssets;
+            }
+        }
+
+        private static AssetBundle richard = AssetBundle.LoadFromMemory("AdditionalTiers.Resources.Ninja.richard.bundle".GetEmbeddedResource());
+        private static AssetBundle by = AssetBundle.LoadFromMemory("AdditionalTiers.Resources.B_Y.by.bundle".GetEmbeddedResource());
+
+        [HarmonyPatch(typeof(Factory.__c__DisplayClass21_0), nameof(Factory.__c__DisplayClass21_0._CreateAsync_b__0))]
         public sealed class DisplayFactory {
             public static bool hasBeenBuilt;
-            public static List<AssetInfo> allAssetsKnown = new();
+            public static List<CombinationAssets> allCombinationAssetsKnown = new();
             public static Dictionary<string, UnityDisplayNode> cachedSRs = new();
+            public static Dictionary<string, UnityDisplayNode> cachedRenderers = new(); // Too expensive to recalculate every time
+
+            private static List<AssetInfo> allAssetsKnown = new();
 
             [HarmonyPrefix]
-            public static bool Prefix(Factory __instance, string objectId, Il2CppSystem.Action<UnityDisplayNode> onComplete) {
-                var assets = ShaderBundle.LoadAllAssets();
+            private static bool Prefix(Factory.__c__DisplayClass21_0 __instance, ref UnityDisplayNode prototype) {
+                var factory = __instance.__4__this;
+                var prefabReference = __instance.objectId;
+                var guid = prefabReference.guidRef;
+                var onComplete = __instance.onComplete;
 
-                if (cachedSRs.ContainsKey(objectId)) {
-                    onComplete.Invoke(cachedSRs[objectId]);
+                if (cachedRenderers.ContainsKey(prefabReference.guidRef)) {
+                    onComplete.Invoke(cachedRenderers[prefabReference.guidRef]);
+                    return false;
+                }
+                if (cachedSRs.ContainsKey(prefabReference.guidRef)) {
+                    onComplete.Invoke(cachedSRs[prefabReference.guidRef]);
                     return false;
                 }
 
-                if (objectId.StartsWith("MAKE_AQUA_")) {
-                    UnityDisplayNode udn = null;
-                    __instance.FindAndSetupPrototypeAsync(objectId.Replace("MAKE_AQUA_", ""), new Action<UnityDisplayNode>(btdUdn => {
-                        var instance = Object.Instantiate(btdUdn, __instance.PrototypeRoot);
-                        instance.name = objectId + "(Clone)";
-                        instance.isSprite = true;
-                        instance.RecalculateGenericRenderers();
+                Transform transform = Game.instance.prototypeObjects.transform;
 
+                var resourceManager = Addressables.Instance.ResourceManager;
 
-                        for (var i = 0; i < instance.genericRenderers.Length; i++) {
-                            if (instance.genericRenderers[i].GetIl2CppType() == Il2CppType.Of<SpriteRenderer>()) {
-                                var sr = instance.genericRenderers[i].Cast<SpriteRenderer>();
-                                var tex = sr.sprite.texture;
-                                var texture = new Texture2D(tex.width, tex.height);
+                if (guid.Contains(".Ninja.")) {
 
-                                var pixels = tex.GetPixels();
-                                for (var aa = 0; aa < pixels.Length; aa++)
-                                    pixels[aa] = new Color(pixels[aa].r.Map(float.Epsilon, 1, float.Epsilon, .2f), pixels[aa].g.Map(float.Epsilon, 1, float.Epsilon, .5f), pixels[aa].b, 255);
+                    var nO = richard.LoadAsset(guid.Contains("Evil") ? "EVILBlev" : "RichardTylerNinjaFortniteBlevins").Cast<GameObject>();
 
-                                texture.SetPixels(pixels);
-                                texture.Apply();
+                    nO.name = guid;
 
-                                sr.sprite = SpriteBuilder.createProjectile(texture);
-                            }
-                        }
+                    var ninja = Object.Instantiate(nO, factory.DisplayRoot).AddComponent<UnityDisplayNode>();
+                    ninja.Active = false;
+                    ninja.name = guid + " (Clone)";
+                    ninja.gameObject.AddComponent<SetScaleN>();
+                    ninja.RecalculateGenericRenderers();
 
-                        cachedSRs[objectId] = instance;
+                    factory.prototypeHandles[prefabReference] = resourceManager.CreateCompletedOperation(ninja.gameObject, "");
 
-                        udn = instance;
-                        onComplete.Invoke(udn);
+                    Vector3 nvector = new(Factory.kOffscreenPosition.x, 0f, 0f);
+                    Quaternion nidentity = Quaternion.identity;
+                    GameObject ngameObject2 = Object.Instantiate(ninja.gameObject, nvector, nidentity, factory.DisplayRoot);
+                    ngameObject2.SetActive(true);
+                    UnityDisplayNode ncomponent = ngameObject2.GetComponent<UnityDisplayNode>();
+                    ncomponent.Create();
+                    ncomponent.cloneOf = prefabReference;
+                    factory.active.Add(ncomponent);
+                    onComplete.Invoke(ncomponent);
+
+                    return false;
+                }
+
+                if (guid.Contains(".B_Y")) {
+                    var nO = by.LoadAsset("BAY").Cast<GameObject>();
+
+                    nO.name = guid;
+
+                    var bay = Object.Instantiate(nO, factory.DisplayRoot).AddComponent<UnityDisplayNode>();
+                    bay.Active = false;
+                    bay.name = guid + " (Clone)";
+                    bay.gameObject.AddComponent<SetScaleBY>();
+                    bay.RecalculateGenericRenderers();
+
+                    factory.prototypeHandles[prefabReference] = resourceManager.CreateCompletedOperation(bay.gameObject, "");
+
+                    Vector3 nvector = new(Factory.kOffscreenPosition.x, 0f, 0f);
+                    Quaternion nidentity = Quaternion.identity;
+                    GameObject ngameObject2 = Object.Instantiate(bay.gameObject, nvector, nidentity, factory.DisplayRoot);
+                    ngameObject2.SetActive(true);
+                    UnityDisplayNode ncomponent = ngameObject2.GetComponent<UnityDisplayNode>();
+                    ncomponent.Create();
+                    ncomponent.cloneOf = prefabReference;
+                    factory.active.Add(ncomponent);
+                    onComplete.Invoke(ncomponent);
+
+                    return false;
+                }
+
+                if (prototype == null && allAssetsKnown.Any(a => a.CustomAssetName == guid)) {
+                    var curAsset = allAssetsKnown.First(a => a.CustomAssetName == guid);
+                    var baseRef = new PrefabReference() { guidRef = curAsset.BTDAssetName };
+
+                    factory.FindAndSetupPrototypeAsync(baseRef, new Action<UnityDisplayNode>(node => {
+                        GameObject gameObject = Object.Instantiate(node.gameObject, transform);
+                        gameObject.name = curAsset.CustomAssetName + " (Clone)";
+                        factory.prototypeHandles[prefabReference] = resourceManager.CreateCompletedOperation(gameObject, "");
+                        var udn = gameObject.GetComponent<UnityDisplayNode>();
+                        AssetCreation(curAsset, guid, udn);
+
+                        Vector3 vector = new(Factory.kOffscreenPosition.x, 0f, 0f);
+                        Quaternion identity = Quaternion.identity;
+                        GameObject gameObject2 = Object.Instantiate(udn.gameObject, vector, identity, factory.DisplayRoot);
+                        gameObject2.SetActive(true);
+                        UnityDisplayNode component = gameObject2.GetComponent<UnityDisplayNode>();
+                        component.Create();
+                        component.cloneOf = prefabReference;
+                        factory.active.Add(component);
+                        onComplete.Invoke(component);
+                    }));
+
+                    return false;
+                }
+
+                if (guid.Equals("UpgradedText")) {
+                    factory.FindAndSetupPrototypeAsync(new() { guidRef = "3dcdbc19136c60846ab944ada06695c0" }, new Action<UnityDisplayNode>(node => {
+                        Transform transform = Game.instance.prototypeObjects.transform;
+
+                        GameObject gameObject = Object.Instantiate(node.gameObject, transform);
+                        gameObject.name = guid + " (Clone)";
+
+                        var resourceManager = Addressables.Instance.ResourceManager;
+                        factory.prototypeHandles[prefabReference] = resourceManager.CreateCompletedOperation(gameObject, "");
+                        var udn = gameObject.GetComponent<UnityDisplayNode>();
+
+                        udn.RecalculateGenericRenderers();
+                        var nktmp = udn.GetComponentInChildren<NK_TextMeshPro>();
+                        nktmp.m_fontColorGradient = new(Color.red, Color.red, new(255, 255, 0), Color.white);
+                        nktmp.capitalize = false;
+                        udn.RecalculateGenericRenderers();
+
+                        Vector3 vector = new(Factory.kOffscreenPosition.x, 0f, 0f);
+                        Quaternion identity = Quaternion.identity;
+                        GameObject gameObject2 = Object.Instantiate(udn.gameObject, vector, identity, factory.DisplayRoot);
+                        gameObject2.SetActive(true);
+                        UnityDisplayNode component = gameObject2.GetComponent<UnityDisplayNode>();
+                        component.Create();
+                        component.cloneOf = prefabReference;
+                        factory.active.Add(component);
+                        onComplete.Invoke(component);
                     }));
                     return false;
                 }
 
-                foreach (var curAsset in allAssetsKnown) {
-                    if (objectId.Equals(curAsset.CustomAssetName)) {
-                        UnityDisplayNode udn = null;
-                        __instance.FindAndSetupPrototypeAsync(curAsset.BTDAssetName,
-                            new Action<UnityDisplayNode>(
-                                btdUdn => {
-                                    var instance = Object.Instantiate(btdUdn, __instance.PrototypeRoot);
-                                    instance.name = objectId + "(Clone)";
-                                    if (curAsset.RendererType == RendererType.SPRITERENDERER)
-                                        instance.isSprite = true;
-                                    instance.RecalculateGenericRenderers();
+                if (guid.Equals("JackpotText")) {
 
-                                    Type rendererType = null;
-                                    switch (curAsset.RendererType) {
-                                        case RendererType.MESHRENDERER:
-                                            rendererType = Il2CppType.Of<MeshRenderer>();
-                                            break;
-                                        case RendererType.SPRITERENDERER:
-                                            rendererType = Il2CppType.Of<SpriteRenderer>();
-                                            break;
-                                        case RendererType.SKINNEDMESHRENDERER:
-                                            rendererType = Il2CppType.Of<SkinnedMeshRenderer>();
-                                            break;
-                                        case RendererType.PARTICLESYSTEMRENDERER:
-                                            rendererType = Il2CppType.Of<ParticleSystemRenderer>();
-                                            break;
-                                    }
+                    factory.FindAndSetupPrototypeAsync(new() { guidRef = "3dcdbc19136c60846ab944ada06695c0" }, new Action<UnityDisplayNode>(node => {
+                        Transform transform = Game.instance.prototypeObjects.transform;
 
-                                    if (rendererType == null && curAsset.RendererType != RendererType.SKINNEDANDUNSKINNEDMESHRENDERER)
-                                        throw new NullReferenceException("rendererType is still null, don't leave things unset.");
+                        GameObject gameObject = Object.Instantiate(node.gameObject, transform);
+                        gameObject.name = guid + " (Clone)";
 
-                                    for (var i = 0; i < instance.genericRenderers.Length; i++) {
-                                        if (instance.genericRenderers[i].GetIl2CppType() == rendererType) {
-                                            if (curAsset.RendererType != RendererType.SPRITERENDERER && curAsset.RendererType != RendererType.SKINNEDANDUNSKINNEDMESHRENDERER && curAsset.RendererType != RendererType.PARTICLESYSTEMRENDERER) {
-                                                var renderer = instance.genericRenderers[i].Cast<Renderer>();
-                                                if (!SpecialShaderIndicies.ContainsKey(objectId))
-                                                    renderer.material.shader = assets.First(a => a.name.StartsWith("Unlit/CelShading")).Cast<Shader>();
-                                                else
-                                                    renderer.material.shader = assets.First(SpecialShaderIndicies[objectId]).Cast<Shader>();
-                                                renderer.material.SetColor("_OutlineColor", Color.black);
-                                                renderer.material.mainTexture = CacheBuilder.Get(objectId);
-                                            } else if (curAsset.RendererType == RendererType.SPRITERENDERER) {
-                                                var spriteRenderer = instance.genericRenderers[i].Cast<SpriteRenderer>();
-                                                if (SpriteCreation.ContainsKey(objectId))
-                                                    spriteRenderer.sprite = SpriteCreation[objectId](objectId);
-                                                else
-                                                    spriteRenderer.sprite = SpriteBuilder.createProjectile(CacheBuilder.Get(objectId));
-                                                if (Types.ContainsKey(objectId)) {
-                                                    spriteRenderer.gameObject.AddComponent(Types[objectId]);
-                                                }
-                                            }
-                                        } else if (curAsset.RendererType == RendererType.SKINNEDANDUNSKINNEDMESHRENDERER) {
-                                            if (instance.genericRenderers[i].GetIl2CppType() == Il2CppType.Of<SkinnedMeshRenderer>()) {
-                                                var skinnedRenderer = instance.genericRenderers[i].Cast<SkinnedMeshRenderer>();
-                                                if (!SpecialShaderIndicies.ContainsKey(objectId))
-                                                    skinnedRenderer.material.shader = assets.First(a => a.name.StartsWith("Unlit/CelShading")).Cast<Shader>();
-                                                else
-                                                    skinnedRenderer.material.shader = assets.First(SpecialShaderIndicies[objectId]).Cast<Shader>();
-                                                skinnedRenderer.material.SetColor("_OutlineColor", Color.black);
-                                                skinnedRenderer.material.mainTexture = CacheBuilder.Get(objectId);
+                        var resourceManager = Addressables.Instance.ResourceManager;
+                        factory.prototypeHandles[prefabReference] = resourceManager.CreateCompletedOperation(gameObject, "");
+                        var udn = gameObject.GetComponent<UnityDisplayNode>();
 
-                                            } else if (instance.genericRenderers[i].GetIl2CppType() == Il2CppType.Of<MeshRenderer>()) {
-                                                var meshRenderer = instance.genericRenderers[i].Cast<MeshRenderer>();
-                                                if (!SpecialShaderIndicies.ContainsKey(objectId))
-                                                    meshRenderer.material.shader = assets.First(a => a.name.StartsWith("Unlit/CelShading")).Cast<Shader>();
-                                                else
-                                                    meshRenderer.material.shader = assets.First(SpecialShaderIndicies[objectId]).Cast<Shader>();
-                                                meshRenderer.material.SetColor("_OutlineColor", Color.black);
-                                                meshRenderer.material.mainTexture = CacheBuilder.Get(objectId);
-                                            }
-                                        }
-                                    }
+                        udn.RecalculateGenericRenderers();
+                        var nktmp = udn.GetComponentInChildren<NK_TextMeshPro>();
+                        nktmp.m_fontColorGradient = new(new(237, 171, 2), new(255, 200, 15), new(255, 255, 0), Color.white);
+                        nktmp.capitalize = false;
+                        udn.RecalculateGenericRenderers();
 
-
-                                    if (Actions.ContainsKey(objectId))
-                                        Actions[objectId](instance);
-
-                                    if (curAsset.RendererType == RendererType.SPRITERENDERER)
-                                        cachedSRs[objectId] = instance;
-
-                                    udn = instance;
-                                    onComplete.Invoke(udn);
-                                }));
-                        return false;
-                    }
-                }
-
-                if (objectId.Equals("UpgradedText")) {
-                    UnityDisplayNode udn = null;
-                    __instance.FindAndSetupPrototypeAsync("3dcdbc19136c60846ab944ada06695c0",
-                        new Action<UnityDisplayNode>(oudn => {
-                            var nudn = Object.Instantiate(oudn, __instance.PrototypeRoot);
-                            nudn.name = objectId + "(Clone)";
-                            nudn.isSprite = true;
-                            nudn.RecalculateGenericRenderers();
-                            var nktmp = nudn.GetComponentInChildren<NK_TextMeshPro>();
-                            nktmp.m_fontColorGradient = new(Color.red, Color.red, new(255, 255, 0), Color.white);
-                            nktmp.capitalize = false;
-                            udn = nudn;
-                            onComplete.Invoke(udn);
-                        }));
+                        Vector3 vector = new(Factory.kOffscreenPosition.x, 0f, 0f);
+                        Quaternion identity = Quaternion.identity;
+                        GameObject gameObject2 = Object.Instantiate(udn.gameObject, vector, identity, factory.DisplayRoot);
+                        gameObject2.SetActive(true);
+                        UnityDisplayNode component = gameObject2.GetComponent<UnityDisplayNode>();
+                        component.Create();
+                        component.cloneOf = prefabReference;
+                        factory.active.Add(component);
+                        onComplete.Invoke(component);
+                    }));
                     return false;
                 }
-                if (objectId.Equals("JackpotText")) {
-                    UnityDisplayNode udn = null;
-                    __instance.FindAndSetupPrototypeAsync("3dcdbc19136c60846ab944ada06695c0",
-                        new Action<UnityDisplayNode>(oudn => {
-                            var nudn = Object.Instantiate(oudn, __instance.PrototypeRoot);
-                            nudn.name = objectId + "(Clone)";
-                            nudn.isSprite = true;
-                            nudn.RecalculateGenericRenderers();
-                            var nktmp = nudn.GetComponentInChildren<NK_TextMeshPro>();
-                            nktmp.m_fontColorGradient = new(new(237, 171, 2), new(255, 200, 15), new(255, 255, 0), Color.white);
-                            nktmp.capitalize = false;
-                            udn = nudn;
-                            onComplete.Invoke(udn);
-                        }));
-                    return false;
-                }
-                if (objectId.Equals("CashText")) {
-                    UnityDisplayNode udn = null;
-                    __instance.FindAndSetupPrototypeAsync("3dcdbc19136c60846ab944ada06695c0",
-                        new Action<UnityDisplayNode>(oudn => {
-                            var nudn = Object.Instantiate(oudn, __instance.PrototypeRoot);
-                            nudn.name = objectId + "(Clone)";
-                            nudn.isSprite = true;
-                            nudn.RecalculateGenericRenderers();
-                            var nktmp = nudn.GetComponentInChildren<NK_TextMeshPro>();
-                            nktmp.m_fontColorGradient = new(Color.green, Color.green, new(35, 255, 35), Color.white);
-                            nktmp.capitalize = false;
-                            udn = nudn;
-                            onComplete.Invoke(udn);
-                        }));
+
+                if (guid.Equals("UpgradedText")) {
+
+                    factory.FindAndSetupPrototypeAsync(new() { guidRef = "3dcdbc19136c60846ab944ada06695c0" }, new Action<UnityDisplayNode>(node => {
+                        Transform transform = Game.instance.prototypeObjects.transform;
+
+                        GameObject gameObject = Object.Instantiate(node.gameObject, transform);
+                        gameObject.name = guid + " (Clone)";
+
+                        var resourceManager = Addressables.Instance.ResourceManager;
+                        factory.prototypeHandles[prefabReference] = resourceManager.CreateCompletedOperation(gameObject, "");
+                        var udn = gameObject.GetComponent<UnityDisplayNode>();
+
+                        udn.RecalculateGenericRenderers();
+                        var nktmp = udn.GetComponentInChildren<NK_TextMeshPro>();
+                        nktmp.m_fontColorGradient = new(Color.green, Color.green, new(35, 255, 35), Color.white);
+                        nktmp.capitalize = false;
+                        udn.RecalculateGenericRenderers();
+
+                        Vector3 vector = new(Factory.kOffscreenPosition.x, 0f, 0f);
+                        Quaternion identity = Quaternion.identity;
+                        GameObject gameObject2 = Object.Instantiate(udn.gameObject, vector, identity, factory.DisplayRoot);
+                        gameObject2.SetActive(true);
+                        UnityDisplayNode component = gameObject2.GetComponent<UnityDisplayNode>();
+                        component.Create();
+                        component.cloneOf = prefabReference;
+                        factory.active.Add(component);
+                        onComplete.Invoke(component);
+                    }));
                     return false;
                 }
 
                 return true;
             }
 
+            private static void AssetCreation(AssetInfo curAsset, string objectId, UnityDisplayNode udn, Il2CppSystem.Action<UnityDisplayNode> onComplete = null) {
+                udn.RecalculateGenericRenderers();
+
+                for (var i = 0; i < udn.genericRenderers.Length; i++) {
+                    if (((curAsset.RendererType == RendererType.SKINNEDANDUNSKINNEDMESHRENDERER && udn.genericRenderers[i] is SkinnedMeshRenderer or MeshRenderer) ||
+                        (curAsset.RendererType == RendererType.SKINNEDMESHRENDERER && udn.genericRenderers[i].Is<SkinnedMeshRenderer>()) ||
+                        (curAsset.RendererType == RendererType.MESHRENDERER && udn.genericRenderers[i].Is<MeshRenderer>())) && !udn.genericRenderers[i].Is<SpriteRenderer>()) {
+                        var renderer = udn.genericRenderers[i].Cast<Renderer>();
+                        renderer.material.shader = ShaderAssets.First(a => a.name.StartsWith("Unlit/CelShading")).Cast<Shader>();
+                        renderer.material.SetColor("_OutlineColor", Color.black);
+                        renderer.material.mainTexture = CacheBuilder.Get(objectId);
+                    } else if ((curAsset.RendererType is RendererType.SPRITERENDERER) && udn.genericRenderers[i].Is<SpriteRenderer>()) {
+                        var spriteRenderer = udn.genericRenderers[i].Cast<SpriteRenderer>();
+                        if (SpriteCreation.ContainsKey(objectId))
+                            spriteRenderer.sprite = SpriteCreation[objectId](objectId);
+                        else
+                            spriteRenderer.sprite = SpriteBuilder.createProjectile(CacheBuilder.Get(objectId));
+                    }
+                }
+
+                if (curAsset.RendererType == RendererType.SPRITERENDERER)
+                    cachedSRs[objectId] = udn;
+
+                if (Actions.ContainsKey(objectId))
+                    Actions[objectId](udn);
+
+                udn.RecalculateGenericRenderers();
+            }
+
+            [HideFromIl2Cpp]
+            private static Dictionary<string, Texture2D> CombinedTextures { get; } = new();
+
+            public static Texture2D CombineTextures(string name, Texture2D baseTex, Texture2D overlayTex) {
+                if (CombinedTextures.ContainsKey(name) && CombinedTextures[name] != null)
+                    return CombinedTextures[name];
+
+                checked {
+                    unchecked {
+                        Texture2D texture = new(baseTex.width, baseTex.height);
+
+                        var MainPixels = new Color[baseTex.width * baseTex.height];
+                        var BaseTexturePixels = baseTex.GetPixels();
+                        var OverlayPixels = overlayTex.GetPixels();
+
+                        for (int i = 0; i < MainPixels.Length; i++) {
+                            MainPixels[i] = BaseTexturePixels[i] + (OverlayPixels[i] * OverlayPixels[i].a);
+                        }
+
+                        texture.SetPixels(MainPixels);
+                        texture.Apply();
+
+                        CombinedTextures[name] = texture;
+
+                        return texture;
+                    }
+                }
+            }
+
             public static void Build() {
                 for (var i = 0; i < AdditionalTiers.Towers.Length; i++) {
                     var assets = AdditionalTiers.Towers?[i]?.assetsToRead;
+                    var assetsV2 = AdditionalTiers.Towers?[i]?.v2AssetStack;
+                    var combinationAssets = AdditionalTiers.Towers?[i]?.assetsToCombine;
                     if (assets != null) {
                         foreach (var asset in assets) {
                             if (asset != null && !allAssetsKnown.Contains(asset))
                                 allAssetsKnown.Add(asset);
+                        }
+                    }
+                    if (assetsV2 != null) {
+                        foreach (var asset in assetsV2) {
+                            if (asset != null && !allAssetsKnown.Contains(asset))
+                                allAssetsKnown.Add(asset);
+                        }
+                    }
+                    if (combinationAssets != null) {
+                        foreach (var asset in combinationAssets) {
+                            if (!allCombinationAssetsKnown.Contains(asset))
+                                allCombinationAssetsKnown.Add(asset);
+
+                            CombineTextures(asset.TopLayerPath, CacheBuilder.Get(asset.BottomLayerPath), CacheBuilder.Get(asset.TopLayerPath));
                         }
                     }
                 }
@@ -608,30 +773,27 @@ namespace AdditionalTiers.Tasks {
                 hasBeenBuilt = true;
             }
 
-            public static void Flush() => allAssetsKnown.Clear();
+            public static void Flush() {
+                allAssetsKnown.Clear();
+                allCombinationAssetsKnown.Clear();
+            }
         }
 
-        [HarmonyPatch(typeof(ResourceLoader), nameof(ResourceLoader.LoadSpriteFromSpriteReferenceAsync))]
-        public sealed class ResourceLoader_Patch {
-            [HarmonyPostfix]
-            public static void Postfix(SpriteReference reference, Image image) {
-                if (reference != null) {
-                    if (Images.ResourceManager.GetObject(reference.guidRef) is byte[] bitmap) {
-                        var texture = new Texture2D(0, 0);
-                        ImageConversion.LoadImage(texture, bitmap);
-                        image.canvasRenderer.SetTexture(texture);
-                        image.sprite = Sprite.Create(texture, new(0, 0, texture.width, texture.height), new(), 10.2f);
-                    } else {
-                        var b = Images.ResourceManager.GetObject(reference.guidRef);
-                        if (b != null) {
-                            var bm = (byte[])new ImageConverter().ConvertTo(b, typeof(byte[]));
-                            var texture = new Texture2D(0, 0);
-                            ImageConversion.LoadImage(texture, bm);
-                            image.canvasRenderer.SetTexture(texture);
-                            image.sprite = Sprite.Create(texture, new(0, 0, texture.width, texture.height), new(), 10.2f);
-                        }
+        [HarmonyPatch(typeof(SpriteAtlas), nameof(SpriteAtlas.GetSprite))]
+        internal static class SpriteAtlas_GetSprite {
+            [HarmonyPrefix]
+            private static bool Prefix(SpriteAtlas __instance, string name, ref Sprite __result) {
+                if (__instance.name == "Ui") {
+                    var resource = name.Trim().GetEmbeddedResource();
+                    if (resource?.Length > 0) {
+                        var texture = resource.ToTexture();
+                        __result = Sprite.Create(texture, new(0, 0, texture.width, texture.height), new(), 10.2f);
+                        __result.texture.mipMapBias = -1;
+                        return false;
                     }
                 }
+
+                return true;
             }
         }
 

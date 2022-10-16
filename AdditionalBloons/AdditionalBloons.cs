@@ -7,7 +7,7 @@ using Assets.Scripts.Simulation.Track;
 using Assets.Scripts.Unity.UI_New.InGame.BloonMenu;
 
 [assembly: MelonGame("Ninja Kiwi", "BloonsTD6")]
-[assembly: MelonInfo(typeof(AdditionalBloons.AdditionalBloons), "Additional Bloon Addon", "1.6", "1330 Studios LLC")]
+[assembly: MelonInfo(typeof(AdditionalBloons.AdditionalBloons), "Additional Bloon Addon", "1.7", "1330 Studios LLC")]
 
 namespace AdditionalBloons {
     public class AdditionalBloons : MelonMod {

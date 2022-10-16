@@ -1,6 +1,4 @@
-﻿using Assets.Scripts.Models.Towers.Weapons.Behaviors;
-
-namespace AdditionalTiers.Tasks.Towers.Tier6s {
+﻿namespace AdditionalTiers.Tasks.Towers.Tier6s {
     public sealed class SkyHigh : TowerTask {
         public static TowerModel skyHigh;
         private static int time = -1;
@@ -15,10 +13,10 @@ namespace AdditionalTiers.Tasks.Towers.Tier6s {
                     time++;
                     return;
                 }
-                TransformationManager.VALUE.Add(new(identifier, tts.tower.Id));
+                TransformationManager.VALUE.Add(new(identifier, tts.tower.Id.Id));
                 tts.tower.worth = 0;
                 tts.tower.UpdateRootModel(skyHigh);
-                tts.sim.simulation.CreateTextEffect(new(tts.position), "UpgradedText", 10, "Upgraded!", false);
+                tts.sim.simulation.CreateTextEffect(new(tts.position), new("UpgradedText"), 10, "Upgraded!", false);
                 AbilityMenu.instance.TowerChanged(tts);
                 AbilityMenu.instance.RebuildAbilities();
             };
@@ -29,10 +27,10 @@ namespace AdditionalTiers.Tasks.Towers.Tier6s {
                 skyHigh.cost = 0;
                 skyHigh.name = "Sky High";
                 skyHigh.baseId = "DartMonkey";
-                skyHigh.display = "SkyHigh";
+                skyHigh.display.guidRef = "SkyHigh";
                 skyHigh.dontDisplayUpgrades = true;
                 skyHigh.portrait = new("SkyHighIcon");
-                skyHigh.behaviors.First(a => a.GetIl2CppType() == Il2CppType.Of<DisplayModel>()).Cast<DisplayModel>().display = "SkyHigh";
+                skyHigh.behaviors.First(a => a.GetIl2CppType() == Il2CppType.Of<DisplayModel>()).Cast<DisplayModel>().display.guidRef = "SkyHigh";
 
                 var beh = skyHigh.behaviors;
 
@@ -48,7 +46,7 @@ namespace AdditionalTiers.Tasks.Towers.Tier6s {
                                 if (we.behaviors[k].GetIl2CppType() == Il2CppType.Of<CritMultiplierModel>()) {
                                     var web = we.behaviors[k].Cast<CritMultiplierModel>();
 
-                                    web.display = "";
+                                    web.display.guidRef = "";
                                     web.damage = 100;
                                     web.lower = 10;
                                     web.upper = 10;
@@ -63,7 +61,7 @@ namespace AdditionalTiers.Tasks.Towers.Tier6s {
                             we.behaviors = we.behaviors.Add(cmm);
 
                             we.projectile.pierce = 500000;
-                            we.projectile.display = "SkyHighProj";
+                            we.projectile.display.guidRef = "SkyHighProj";
 
                             for (var k = 0; k < we.projectile.behaviors.Length; k++) {
                                 if (we.projectile.behaviors[k].GetIl2CppType() == Il2CppType.Of<DamageModel>()) {
@@ -76,7 +74,7 @@ namespace AdditionalTiers.Tasks.Towers.Tier6s {
                                 if (we.projectile.behaviors[k].GetIl2CppType() == Il2CppType.Of<DisplayModel>()) {
                                     var dm = we.projectile.behaviors[k].Cast<DisplayModel>();
 
-                                    dm.display = "SkyHighProj";
+                                    dm.display.guidRef = "SkyHighProj";
 
                                     we.projectile.behaviors[k] = dm;
                                 }

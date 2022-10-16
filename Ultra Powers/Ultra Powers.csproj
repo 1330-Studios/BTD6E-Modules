@@ -12,27 +12,43 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Assets\UBananaFarmer.png" />
+    <None Remove="Assets\UBananaFarmerIcon.png" />
+    <None Remove="Assets\UCamoTrapIcon.png" />
     <None Remove="Assets\UCrate.png" />
     <None Remove="Assets\UCrateIcon.png" />
     <None Remove="Assets\UDartTime.png" />
+    <None Remove="Assets\UEnergisingTotem.png" />
+    <None Remove="Assets\UEnergisingTotemIcon.png" />
     <None Remove="Assets\UGlueTrap.png" />
     <None Remove="Assets\UGlueTrapIcon.png" />
+    <None Remove="Assets\UMoabMine.png" />
+    <None Remove="Assets\UMoabMineIcon.png" />
     <None Remove="Assets\UMonkeyBoost.png" />
     <None Remove="Assets\URoadSpikesIcon.png" />
+    <None Remove="Assets\USuperMonkeyStormIcon.png" />
     <None Remove="Assets\UTechBotIcon.png" />
     <None Remove="Assets\UThriveIcon.png" />
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="Assets\UBananaFarmer.png" />
+    <EmbeddedResource Include="Assets\UBananaFarmerIcon.png" />
+    <EmbeddedResource Include="Assets\UCamoTrapIcon.png" />
     <EmbeddedResource Include="Assets\UCrate.png" />
     <EmbeddedResource Include="Assets\UCrateIcon.png" />
     <EmbeddedResource Include="Assets\UDartTime.png" />
     <EmbeddedResource Include="Assets\UGlueTrap.png" />
     <EmbeddedResource Include="Assets\UGlueTrapIcon.png" />
+    <EmbeddedResource Include="Assets\UMoabMine.png" />
+    <EmbeddedResource Include="Assets\UMoabMineIcon.png" />
     <EmbeddedResource Include="Assets\UMonkeyBoost.png" />
     <EmbeddedResource Include="Assets\URoadSpikesIcon.png" />
+    <EmbeddedResource Include="Assets\USuperMonkeyStormIcon.png" />
     <EmbeddedResource Include="Assets\UTechBotIcon.png" />
     <EmbeddedResource Include="Assets\UThriveIcon.png" />
+    <EmbeddedResource Include="Assets\UEnergisingTotem.png" />
+    <EmbeddedResource Include="Assets\UEnergisingTotemIcon.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -496,7 +512,7 @@
     <AssemblyVersion>1.6</AssemblyVersion>
     <FileVersion>1.6</FileVersion>
     <Copyright>Copyright (c) 1330 Studios LLC</Copyright>
-    <Product>Godly Towers for Bloons Tower Defense 6</Product>
+    <Product>Ultra Powers for Bloons Tower Defense 6</Product>
     <Company>1330 Studios LLC</Company>
   </PropertyGroup>
   <!-- Anyone who tries to copy my code (Matthew from 1330 Studios LLC) has a small pp -->

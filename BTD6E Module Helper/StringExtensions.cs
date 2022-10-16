@@ -18,7 +18,7 @@
             if (Sprites.ContainsKey(name))
                 return Sprites[name];
 
-            var sr = new SpriteReference(name);
+            var sr = new SpriteReference() { guidRef = name };
             Sprites[name] = sr;
             return sr;
         }

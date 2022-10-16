@@ -14,7 +14,7 @@ public sealed class MrRoboto : TowerTask {
                 time++;
                 return;
             }
-            TransformationManager.VALUE.Add(new(identifier, tts.tower.Id));
+            TransformationManager.VALUE.Add(new(identifier, tts.tower.Id.Id));
             tts.tower.worth = 0;
             tts.tower.UpdateRootModel(MRROBOTO);
             for (int i = 0; i < tts.tower.attackBehaviorsInDependants.Count; i++) {
@@ -25,7 +25,7 @@ public sealed class MrRoboto : TowerTask {
                     continue;
                 }
             }
-            tts.sim.simulation.CreateTextEffect(new(tts.position), "UpgradedText", 10, "Upgraded!", false);
+            tts.sim.simulation.CreateTextEffect(new(tts.position), new("UpgradedText"), 10, "Upgraded!", false);
             AbilityMenu.instance.TowerChanged(tts);
             AbilityMenu.instance.RebuildAbilities();
         };
@@ -47,9 +47,9 @@ public sealed class MrRoboto : TowerTask {
                     for (int j = 0; j < am.behaviors.Length; j++)
                         if (am.behaviors[j].Is<DisplayModel>(out var dm))
                             if (dm.display.Equals("fdff998beaa71ee45977df86cfda6d96"))
-                                dm.display = "MrRobotoArms1";
+                                dm.display.guidRef = "MrRobotoArms1";
                             else
-                                dm.display = "MrRobotoArms2";
+                                dm.display.guidRef = "MrRobotoArms2";
 
                     if (am.name.Contains("Off")) {
                         am.weapons[0].projectile = gm.towers.First(t => t.name.Contains("HeliPilot-500")).CloneCast().behaviors.First(am => am.Is<AttackModel>(out _) && am.name.Contains("Missile")).Cast<AttackModel>().weapons[0].projectile;
@@ -63,12 +63,12 @@ public sealed class MrRoboto : TowerTask {
                             }
                         am.weapons[0].rate *= 25;
                         am.weapons[0].rateFrames *= 25;
-                        am.weapons[0].projectile.display = "MrRobotoRocket";
+                        am.weapons[0].projectile.display.guidRef = "MrRobotoRocket";
                     } else {
                         am.framesBeforeRetarget = 0;
                         am.weapons[0].rate = 0;
                         am.weapons[0].rateFrames = 0;
-                        am.weapons[0].projectile.display = "MrRobotoPlasma";
+                        am.weapons[0].projectile.display.guidRef = "MrRobotoPlasma";
                         am.weapons[0].projectile.ignorePierceExhaustion = true;
                         am.weapons[0].emission = new ArcEmissionModel("ArcEmissionModel_", 5, 0, 75, null, false);
                     }
@@ -84,7 +84,7 @@ public sealed class MrRoboto : TowerTask {
                 if (behavior.Is<AbilityModel>(out var abm)) {
                     for (int j = 0; j < abm.behaviors.Length; j++) {
                         if (abm.behaviors[j].Is<CreateEffectOnAbilityModel>(out var ceoam)) {
-                            ceoam.effectModel.assetId = "MrRobotoAbility";
+                            ceoam.effectModel.assetId.guidRef = "MrRobotoAbility";
                         }
                         if (abm.behaviors[j].Is<ActivateAttackModel>(out var aam)) {
                             for (int k = 0; k < aam.attacks[0].weapons[0].projectile.behaviors.Length; k++)
@@ -98,7 +98,7 @@ public sealed class MrRoboto : TowerTask {
                 }
             }
 
-            MRROBOTO.RebuildBehaviors(new OverrideCamoDetectionModel("OverrideCamoDetectionModel_", true), new DisplayModel("dm", "MrRobotoAbility", 0, new(), 1, true, 0));
+            MRROBOTO.RebuildBehaviors(new OverrideCamoDetectionModel("OverrideCamoDetectionModel_", true), new DisplayModel("dm", new("MrRobotoAbility"), 0, new(), 1, true, 0));
         };
         recurring += tts => { };
         onLeave += () => { time = -1; };

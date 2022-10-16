@@ -1,8 +1,8 @@
 ﻿namespace BTD6E_Module_Helper;
 public sealed class Logger13 {
-    public static event Action<string, string> LogEvent = (_, _) => {};
-    public static event Action<string, string> WarnEvent = (_, _) => {};
-    public static event Action<string, string> ErrorEvent = (_, _) => {};
+    public static event Action<string, string> LogEvent = (_, _) => { };
+    public static event Action<string, string> WarnEvent = (_, _) => { };
+    public static event Action<string, string> ErrorEvent = (_, _) => { };
 
     private static string LastAssemblyName;
 

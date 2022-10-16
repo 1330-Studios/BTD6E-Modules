@@ -1,6 +1,4 @@
-﻿using Assets.Scripts.Simulation.Towers.Behaviors.Abilities;
-
-namespace GodlyTowers.Towers.BloonsTubers;
+﻿namespace GodlyTowers.Towers.BloonsTubers;
 
 internal unsafe class Tewtiy : BloonsTuberBase {
     public new static string Name => "Tewtiy";
@@ -417,7 +415,7 @@ internal unsafe class Tewtiy : BloonsTuberBase {
 
     private static Color[] BaseTexturePixels;
 
-    public static Texture2D LoadTextureFromBytes(byte[] FileData!!) {
+    public static Texture2D LoadTextureFromBytes(byte[] FileData) {
         Texture2D Tex2D = new(2, 2);
         Tex2D.filterMode = FilterMode.Trilinear;
         if (ImageConversion.LoadImage(Tex2D, FileData)) return Tex2D;
@@ -425,7 +423,7 @@ internal unsafe class Tewtiy : BloonsTuberBase {
         return null;
     }
 
-    public static Texture2D CombineTextures(Texture2D baseTex!!, Texture2D overlayTex!!) {
+    public static Texture2D CombineTextures(Texture2D baseTex, Texture2D overlayTex) {
         checked {
             unchecked {
                 Texture2D texture = new(baseTex.width, baseTex.height);

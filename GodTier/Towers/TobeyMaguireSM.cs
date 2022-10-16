@@ -1,6 +1,4 @@
-﻿using Assets.Scripts.Models.Towers.Behaviors.Attack.Behaviors;
-
-namespace GodlyTowers.Towers {
+﻿namespace GodlyTowers.Towers {
     public sealed class TobeyMaguireSM {
         public static string name = "TMSM";
 

@@ -1,9 +1,15 @@
 ﻿using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 
+using AdditionalTiers.Tasks.Towers.Progressive;
 using AdditionalTiers.Tasks.Towers.Tier6s;
 
+using Assets.Scripts.Unity;
+
+using Il2CppSystem.Collections.Generic;
+
 [assembly: MelonGame("Ninja Kiwi", "BloonsTD6")]
-[assembly: MelonInfo(typeof(AdditionalTiers.AdditionalTiers), "Additional Tier Addon", "1.6", "1330 Studios LLC")]
+[assembly: MelonInfo(typeof(AdditionalTiers.AdditionalTiers), "Additional Tier Addon", "1.7", "1330 Studios LLC")]
 
 namespace AdditionalTiers {
     public sealed class AdditionalTiers : MelonMod {
@@ -20,9 +26,9 @@ namespace AdditionalTiers {
             else
                 Version = "1.?";
 
-            List<TowerTask> towers = new() {
+            System.Collections.Generic.List<TowerTask> towers = new() {
 
-                new HeyYa(),
+                /*new HeyYa(),
                 new SpaceTruckin(),
                 new PlanetWaves(),
                 new GreenDay(),
@@ -33,8 +39,23 @@ namespace AdditionalTiers {
                 new GoldenApexPlasmaMaster(),
                 new Tusk(),
                 new CrazyDiamond(),
-                new KillerQueen()
+                new KillerQueen(),
+                new Barracuda(),
+                new LittleTalks(),
+
+                new ProgressiveSkyHigh(),
+                new ProgressiveFascination()*/
+
+                new ProgressiveGoldenExperience(),
+                new ProgressiveKingCrimson(),
+                new ProgressiveMystery(),
+                new ProgressiveBAY()
             };
+
+            /*foreach (var tower in towers) {
+                Console.WriteLine($"{tower.baseTower.Replace('2', '0').Replace('0', 'x')} - {tower.identifier} @ {(long)tower.tower:n0} pops");
+            }*/
+
             /*Assembly?.GetTypes().AsParallel().ForAll(type => {
                 if (typeof(TowerTask).IsAssignableFrom(type) && !typeof(TowerTask).FullName.Equals(type?.FullName)) {
                     var tower = (TowerTask)Activator.CreateInstance(type);
@@ -81,35 +102,55 @@ namespace AdditionalTiers {
 
         public override void OnGUI() {
             Watermark();
-            ErrorHandler.VALUE.OnGUI();
-            //UpdateHelper.OnGUI();
         }
 
+        private static bool loaded;
+
         public override void OnUpdate() {
+            if (!loaded) {
+                if (Game.instance is null || Game.instance.model is null)
+                    return;
+
+                var mdl = Game.instance.model;
+
+                GameI.Loaded.Postfix(ref mdl);
+
+                Game.instance.model = mdl;
+
+                loaded = true;
+            }
+
             if (!DisplayFactory.hasBeenBuilt)
                 DisplayFactory.Build();
 
-            if (InGame.instance == null || InGame.instance.bridge == null || InGame.instance.bridge.GetAllTowers() == null) return;
+            if (InGame.instance == null || InGame.instance.bridge == null || InGame.instance.bridge.GetAllTowers() == null) {
+                TransformationManager.VALUE.Clear();
+                return;
+            }
 
-            var allAdditionalTiers = Towers;
-            for (var indexOfTowers = 0; indexOfTowers < InGame.instance?.bridge?.GetAllTowers().Count; indexOfTowers++) {
-                var towerToSimulation = InGame.instance?.bridge?.GetAllTowers()?.ToArray()?[indexOfTowers];
-                if (towerToSimulation?.destroyed == false) {
-                    foreach (var addedTier in allAdditionalTiers) {
-                        if (towerToSimulation != null && !addedTier.requirements(towerToSimulation)) continue;
+            UpgradeMenuManager.Update(InGame.instance);
 
-                        var popsNeeded = (int) ((int) addedTier.tower * Globals.SixthTierPopCountMulti);
+            try {
+                var allAdditionalTiers = Towers;
+                for (var indexOfTowers = 0; indexOfTowers < InGame.instance?.bridge?.GetAllTowers().Count; indexOfTowers++) {
+                    var towerToSimulation = InGame.instance?.bridge?.GetAllTowers()?.ToArray()?[indexOfTowers];
+                    if (towerToSimulation?.destroyed == false) {
+                        foreach (var addedTier in allAdditionalTiers) {
+                            if (towerToSimulation != null && !addedTier.requirements(towerToSimulation)) continue;
 
-                        if (popsNeeded < towerToSimulation?.damageDealt) {
-                            if (!TransformationManager.VALUE.Contains(towerToSimulation.tower))
-                                addedTier?.onComplete(towerToSimulation);
-                            else if (TransformationManager.VALUE.Contains(towerToSimulation.tower)) addedTier.recurring(towerToSimulation);
-                        } else if (towerToSimulation != null && !TransformationManager.VALUE.Contains(towerToSimulation.tower)) {
-                            ADisplay.towerdata.Add((addedTier.identifier, towerToSimulation.damageDealt, popsNeeded));
+                            var popsNeeded = (int)((int)addedTier.tower * Globals.SixthTierPopCountMulti);
+
+                            if (popsNeeded <= towerToSimulation?.damageDealt) {
+                                if (!TransformationManager.VALUE.Contains(towerToSimulation.tower))
+                                    addedTier?.onComplete(towerToSimulation);
+                                else if (TransformationManager.VALUE.Contains(towerToSimulation.tower)) addedTier.recurring(towerToSimulation);
+                            } else if (towerToSimulation != null && !TransformationManager.VALUE.Contains(towerToSimulation.tower)) {
+                                ADisplay.towerdata.Add((addedTier.identifier, towerToSimulation.damageDealt, popsNeeded));
+                            }
                         }
                     }
                 }
-            }
+            } catch { }
         }
 
         [MethodImpl(MethodImplOptions.NoInlining)]

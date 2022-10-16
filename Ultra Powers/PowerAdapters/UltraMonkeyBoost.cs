@@ -4,7 +4,7 @@ internal class UltraMonkeyBoost : IPowerAdapter {
         if (!power.name.Equals("MonkeyBoost"))
             return;
 
-        power.icon = "Ultra_Powers.Assets.UMonkeyBoost.png".GetSpriteReference();
+        power.icon = "Ui[Ultra_Powers.Assets.UMonkeyBoost.png]".GetSpriteReference();
 
         foreach (var mbm in power.GetChildren<MonkeyBoostModel>())
             mbm.rateScale = 0.001f;

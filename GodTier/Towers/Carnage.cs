@@ -465,12 +465,12 @@
                         __instance.attack.tower.Node.graphic.GetComponentInParent<Animator>().StopPlayback();
                         __instance.attack.tower.Node.graphic.GetComponentInParent<Animator>().speed = 2f;
                         __instance.attack.tower.Node.graphic.GetComponentInParent<Animator>().Play("SWIPE");
-                        if (remaining.ContainsKey(__instance.attack.tower.Id))
-                            remaining.Remove(__instance.attack.tower.Id);
-                        remaining.Add(__instance.attack.tower.Id, 1111);
+                        if (remaining.ContainsKey(__instance.attack.tower.Id.Id))
+                            remaining.Remove(__instance.attack.tower.Id.Id);
+                        remaining.Add(__instance.attack.tower.Id.Id, 1111);
                         await Task.Run(async () => {
-                            while (remaining.ContainsKey(__instance.attack.tower.Id) && remaining[__instance.attack.tower.Id] > 0) {
-                                remaining[__instance.attack.tower.Id] -= TimeManager.timeScaleWithoutNetwork + 1;
+                            while (remaining.ContainsKey(__instance.attack.tower.Id.Id) && remaining[__instance.attack.tower.Id.Id] > 0) {
+                                remaining[__instance.attack.tower.Id.Id] -= TimeManager.timeScaleWithoutNetwork + 1;
                                 await Task.Delay(1);
                             }
                             return;
@@ -481,12 +481,12 @@
                         __instance.attack.tower.Node.graphic.GetComponentInParent<Animator>().StopPlayback();
                         __instance.attack.tower.Node.graphic.GetComponentInParent<Animator>().speed = 2f;
                         __instance.attack.tower.Node.graphic.GetComponentInParent<Animator>().Play("SPIKES");
-                        if (remaining.ContainsKey(__instance.attack.tower.Id))
-                            remaining.Remove(__instance.attack.tower.Id);
-                        remaining.Add(__instance.attack.tower.Id, 1111);
+                        if (remaining.ContainsKey(__instance.attack.tower.Id.Id))
+                            remaining.Remove(__instance.attack.tower.Id.Id);
+                        remaining.Add(__instance.attack.tower.Id.Id, 1111);
                         await Task.Run(async () => {
-                            while (remaining.ContainsKey(__instance.attack.tower.Id) && remaining[__instance.attack.tower.Id] > 0) {
-                                remaining[__instance.attack.tower.Id] -= TimeManager.timeScaleWithoutNetwork + 1;
+                            while (remaining.ContainsKey(__instance.attack.tower.Id.Id) && remaining[__instance.attack.tower.Id.Id] > 0) {
+                                remaining[__instance.attack.tower.Id.Id] -= TimeManager.timeScaleWithoutNetwork + 1;
                                 await Task.Delay(1);
                             }
                             return;

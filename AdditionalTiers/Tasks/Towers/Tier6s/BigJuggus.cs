@@ -15,11 +15,11 @@ namespace AdditionalTiers.Tasks.Towers.Tier6s {
                     time++;
                     return;
                 }
-                TransformationManager.VALUE.Add(new(identifier, tts.tower.Id));
+                TransformationManager.VALUE.Add(new(identifier, tts.tower.Id.Id));
                 tts.tower.worth = 0;
                 tts.tower.UpdateRootModel(bigJuggus);
                 tts.TAdd(scale1: .25f);
-                tts.sim.simulation.CreateTextEffect(new(tts.position), "UpgradedText", 10, "Upgraded!", false);
+                tts.sim.simulation.CreateTextEffect(new(tts.position), new("UpgradedText"), 10, "Upgraded!", false);
                 AbilityMenu.instance.TowerChanged(tts);
                 AbilityMenu.instance.RebuildAbilities();
             };
@@ -30,11 +30,11 @@ namespace AdditionalTiers.Tasks.Towers.Tier6s {
                 bigJuggus.cost = 0;
                 bigJuggus.name = "Big Juggus";
                 bigJuggus.baseId = "DartMonkey";
-                bigJuggus.display = "BigJuggus";
+                bigJuggus.display.guidRef = "BigJuggus";
                 bigJuggus.dontDisplayUpgrades = true;
                 bigJuggus.portrait = new("BigJuggusIcon");
                 bigJuggus.behaviors.First(a => a.GetIl2CppType() == Il2CppType.Of<DisplayModel>())
-                    .Cast<DisplayModel>().display = "BigJuggus";
+                    .Cast<DisplayModel>().display.guidRef = "BigJuggus";
                 bigJuggus.mods = bigJuggus.mods.Add(new ApplyModModel("ApplyModModel_", "BigJuggus", ""));
                 var beh = bigJuggus.behaviors;
                 ProjectileModel proj = null;
@@ -47,7 +47,7 @@ namespace AdditionalTiers.Tasks.Towers.Tier6s {
 
                         for (var j = 0; j < am.weapons.Length; j++) {
                             proj = am.weapons[j].projectile.Clone().Cast<ProjectileModel>();
-                            am.weapons[j].projectile.display = "BigJuggusProj";
+                            am.weapons[j].projectile.display.guidRef = "BigJuggusProj";
                             am.weapons[j].projectile.pierce *= 5;
                             am.weapons[j].projectile.scale *= 1.125f;
                             am.weapons[j].emission = new ArcEmissionModel("ArcEmissionModel_", 3, 0, 150, null, false).Cast<EmissionModel>();
@@ -108,9 +108,9 @@ namespace AdditionalTiers.Tasks.Towers.Tier6s {
                     new(new[] { new ActivateAttackModel("ActivateAttackModel_", 1, false, new(new[] { attack }), true, false, false, false, true) }),
                     false, false, "BigJuggus", 0, 0, 2, false, false);
                 var mfc = new MonkeyFanClubModel("MonkeyFanClubModel_", 15, 5, 50, 160, speed, BloonProperties.None,
-                    "SmallerJuggusProj", "SmallerJuggus", "", "SmallerJuggus", "9fdef1ee822fdae49a3ed3ba322d17d9",
-                    "ef97abc30fa87e54f9f6ab4813f0fec9", "d25a04e9666f523488a19690b2806f64",
-                    new("EE_", "d25a04e9666f523488a19690b2806f64", 1, 0.8f, false, false, false, false, false,
+                    new("SmallerJuggusProj"), new("SmallerJuggus"), new(""), new("SmallerJuggus"), new("9fdef1ee822fdae49a3ed3ba322d17d9"),
+                    new("ef97abc30fa87e54f9f6ab4813f0fec9"), new("d25a04e9666f523488a19690b2806f64"),
+                    new("EE_", new("d25a04e9666f523488a19690b2806f64"), 1, 0.8f, false, false, false, false, false,
                         false, false), 60, 6, 250, null, 0, 0, 0, "BigJuggus");
                 var ability2 = new AbilityModel("AbilityModel_2", "Juggus Conversion",
                     "Turns nearby monkeys into Smaller Juggus", 1, 0, new("SmallerJuggusIcon"), 45,

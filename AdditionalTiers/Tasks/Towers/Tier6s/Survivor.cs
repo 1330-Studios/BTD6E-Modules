@@ -13,10 +13,10 @@
                     time++;
                     return;
                 }
-                TransformationManager.VALUE.Add(new(identifier, tts.tower.Id));
+                TransformationManager.VALUE.Add(new(identifier, tts.tower.Id.Id));
                 tts.tower.worth = 0;
                 tts.tower.UpdateRootModel(survivor);
-                tts.sim.simulation.CreateTextEffect(new(tts.position), "UpgradedText", 10, "Upgraded!", false);
+                tts.sim.simulation.CreateTextEffect(new(tts.position), new("UpgradedText"), 10, "Upgraded!", false);
                 AbilityMenu.instance.TowerChanged(tts);
                 AbilityMenu.instance.RebuildAbilities();
             };
@@ -27,10 +27,10 @@
                 survivor.cost = 0;
                 survivor.name = "Survivor";
                 survivor.baseId = "SniperMonkey";
-                survivor.display = "Survivor";
+                survivor.display.guidRef = "Survivor";
                 survivor.dontDisplayUpgrades = true;
                 survivor.portrait = new("SurvivorIcon");
-                survivor.behaviors.First(a => a.GetIl2CppType() == Il2CppType.Of<DisplayModel>()).Cast<DisplayModel>().display = "Survivor";
+                survivor.behaviors.First(a => a.GetIl2CppType() == Il2CppType.Of<DisplayModel>()).Cast<DisplayModel>().display.guidRef = "Survivor";
 
                 var beh = survivor.behaviors;
 

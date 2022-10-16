@@ -13,10 +13,10 @@
                     time++;
                     return;
                 }
-                TransformationManager.VALUE.Add(new(identifier, tts.tower.Id));
+                TransformationManager.VALUE.Add(new(identifier, tts.tower.Id.Id));
                 tts.tower.worth = 0;
                 tts.tower.UpdateRootModel(aobtd);
-                tts.sim.simulation.CreateTextEffect(new(tts.position), "UpgradedText", 10, "Upgraded!", false);
+                tts.sim.simulation.CreateTextEffect(new(tts.position), new("UpgradedText"), 10, "Upgraded!", false);
                 AbilityMenu.instance.TowerChanged(tts);
                 AbilityMenu.instance.RebuildAbilities();
             };
@@ -41,7 +41,7 @@
                         am.behaviors = am.behaviors.Remove(a => a.GetIl2CppType() == Il2CppType.Of<DisplayModel>());
 
                         for (var j = 0; j < am.weapons.Length; j++) {
-                            am.weapons[j].projectile.display = "AnotherOneBitesTheDustBomb";
+                            am.weapons[j].projectile.display.guidRef = "AnotherOneBitesTheDustBomb";
                             am.weapons[j].projectile.pierce *= 5;
                             am.weapons[j].projectile.ignorePierceExhaustion = true;
                             am.weapons[j].rate *= 5f / 4f;

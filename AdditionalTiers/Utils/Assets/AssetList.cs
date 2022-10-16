@@ -1,5 +1,4 @@
 ﻿namespace AdditionalTiers.Utils.Assets {
-    [StructLayout(LayoutKind.Sequential)]
     public sealed class AssetStack {
         private sealed class Asset {
             public Asset Next;

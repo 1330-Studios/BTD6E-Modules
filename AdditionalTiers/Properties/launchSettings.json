@@ -2,7 +2,7 @@
   "profiles": {
     "AdditionalTiers": {
       "commandName": "Project",
-      "commandLineArgs": "--melonloader.launchdebugger",
+      "commandLineArgs": "--melonloader.debug",
       "workingDirectory": "Z:\\Program Files (x86)\\Steam\\steamapps\\common\\BloonsTD6",
       "nativeDebugging": false
     }

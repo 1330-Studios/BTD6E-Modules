@@ -148,4 +148,7 @@
   <data name="mechagodzilla" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\mechagodzilla.bundle;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="mcqueen" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\mcqueen.bundle;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
 </root>

@@ -14,10 +14,10 @@
                     time++;
                     return;
                 }
-                TransformationManager.VALUE.Add(new(identifier, tts.tower.Id));
+                TransformationManager.VALUE.Add(new(identifier, tts.tower.Id.Id));
                 tts.tower.worth = 0;
                 tts.tower.UpdateRootModel(vitaminC);
-                tts.sim.simulation.CreateTextEffect(new(tts.position), "UpgradedText", 10, "Upgraded!", false);
+                tts.sim.simulation.CreateTextEffect(new(tts.position), new("UpgradedText"), 10, "Upgraded!", false);
                 AbilityMenu.instance.TowerChanged(tts);
                 AbilityMenu.instance.RebuildAbilities();
             };
@@ -32,7 +32,7 @@
                 for (int i = 0; i < totemVitaminC.behaviors.Length; i++) {
                     if (totemVitaminC.behaviors[i].Is<EnergisingTotemBehaviorModel>(out var etbm)) {
                         for (int j = 0; j < etbm.effectModels.Length; j++)
-                            etbm.effectModels[j].assetId = "VitaminCTotemParticles";
+                            etbm.effectModels[j].assetId.guidRef = "VitaminCTotemParticles";
                     }
                     if (totemVitaminC.behaviors[i].Is<RateSupportModel>(out var rsm)) {
                         rsm.multiplier = 0.33f;
@@ -65,7 +65,7 @@
                     var behavior = beh[i];
                     if (behavior.GetIl2CppType() == Il2CppType.Of<AttackModel>()) {
                         var am = behavior.Cast<AttackModel>();
-                        am.behaviors.First(m => m.Is<DisplayModel>(out _)).Cast<DisplayModel>().display = "VitaminC";
+                        am.behaviors.First(m => m.Is<DisplayModel>(out _)).Cast<DisplayModel>().display.guidRef = "VitaminC";
 
                         for (var j = 0; j < am.weapons.Length; j++) {
                             am.weapons[j].projectile.SetDisplay("VitaminCBlast");
@@ -90,7 +90,7 @@
                     beh[i] = behavior;
                 }
 
-                vitaminC.behaviors = beh.Add(engi200spawner, spactory050abilityattack, new OverrideCamoDetectionModel("OverrideCamoDetectionModel_", true), new DisplayModel("dm", "VitaminCTempleBase", 0, new(), 1, true, 0));
+                vitaminC.behaviors = beh.Add(engi200spawner, spactory050abilityattack, new OverrideCamoDetectionModel("OverrideCamoDetectionModel_", true), new DisplayModel("dm", new("VitaminCTempleBase"), 0, new(), 1, true, 0));
             };
             recurring += tts => { };
             onLeave += () => { time = -1; };

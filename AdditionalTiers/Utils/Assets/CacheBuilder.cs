@@ -1,30 +1,30 @@
-﻿using System.Globalization;
-using System.Resources;
+﻿using System.Collections;
+using System.Globalization;
 
 namespace AdditionalTiers.Utils.Assets {
-    public class CacheBuilder {
+    public static class CacheBuilder {
         private static readonly Dictionary<string, string> built = new();
         private static readonly Dictionary<string, byte[]> builtBytes = new();
 
         public static void Build() {
-            ResourceSet resourceSet = Images.ResourceManager.GetResourceSet(CultureInfo.CurrentUICulture, true, true);
-            foreach (DictionaryEntry v in resourceSet) {
-                if (v.Key is string id && v.Value is Byte[] bytes) {
+            foreach (DictionaryEntry v in Images.ResourceManager.GetResourceSet(CultureInfo.CurrentUICulture, true, true)) {
+                if (v.Key is string id && v.Value is byte[] bytes) {
                     built.Add(id, Convert.ToBase64String(bytes));
                 }
             }
         }
 
         public static Texture2D Get(string key) {
+            if (key.Contains(".V2."))
+                return key.Trim().GetEmbeddedResource().ToTexture();
+
             if (builtBytes.ContainsKey(key)) {
-                var text = LoadTextureFromBytes(builtBytes[key]);
-                return text;
+                return LoadTextureFromBytes(builtBytes[key]);
             }
 
             var bytes = Convert.FromBase64String(built[key]);
             builtBytes.Add(key, bytes);
-            var textNew = LoadTextureFromBytes(Convert.FromBase64String(built[key]));
-            return textNew;
+            return LoadTextureFromBytes(Convert.FromBase64String(built[key]));
         }
 
         public static void Flush() => built.Clear();

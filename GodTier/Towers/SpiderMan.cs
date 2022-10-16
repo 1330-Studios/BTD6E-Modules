@@ -1,7 +1,4 @@
-﻿using Assets.Scripts.Models.Towers.Behaviors.Attack.Behaviors;
-using Assets.Scripts.Models.Towers.Filters;
-
-namespace GodlyTowers.Towers {
+﻿namespace GodlyTowers.Towers {
     public sealed class Spider_Man {
         public static string name = "SpiderMan";
 

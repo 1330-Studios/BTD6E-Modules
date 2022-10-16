@@ -13,10 +13,10 @@
                     time++;
                     return;
                 }
-                TransformationManager.VALUE.Add(new(identifier, tts.tower.Id));
+                TransformationManager.VALUE.Add(new(identifier, tts.tower.Id.Id));
                 tts.tower.worth = 0;
                 tts.tower.UpdateRootModel(blackYellow);
-                tts.sim.simulation.CreateTextEffect(new(tts.position), "UpgradedText", 10, "Upgraded!", false);
+                tts.sim.simulation.CreateTextEffect(new(tts.position), new("UpgradedText"), 10, "Upgraded!", false);
                 AbilityMenu.instance.TowerChanged(tts);
                 AbilityMenu.instance.RebuildAbilities();
             };
@@ -40,23 +40,23 @@
 
                                 am.weapons[j].projectile.ModifyDamageModel(new DamageChange() { set = true, damage = 50, immuneBloonProperties = BloonProperties.None });
                             } else
-                            if (am.weapons[j].projectile.display == "805de73c9d751734cb4cc61ffc9ed67a") {
-                                am.weapons[j].projectile.display = "BlackYellowLaser";
+                            if (am.weapons[j].projectile.display.guidRef == "805de73c9d751734cb4cc61ffc9ed67a") {
+                                am.weapons[j].projectile.display.guidRef = "BlackYellowLaser";
                                 am.weapons[j].rate /= 3;
                                 am.weapons[j].rate *= 2;
 
                                 am.weapons[j].projectile.ModifyDamageModel(new DamageChange() { set = true, damage = 35, immuneBloonProperties = BloonProperties.None });
                             } else
-                            if (am.weapons[j].projectile.display == "ffa3be03eb9b2d24da77aeff09693b00") {
-                                am.weapons[j].projectile.display = "BlackYellowBullet";
+                            if (am.weapons[j].projectile.display.guidRef == "ffa3be03eb9b2d24da77aeff09693b00") {
+                                am.weapons[j].projectile.display.guidRef = "BlackYellowBullet";
                                 am.weapons[j].rate = 0;
 
                                 am.weapons[j].projectile.ModifyDamageModel(new DamageChange() { set = true, damage = 25, immuneBloonProperties = BloonProperties.None });
                                 am.weapons[j].projectile.AddKnockbackModel();
                                 am.weapons[j].projectile.behaviors = am.weapons[j].projectile.behaviors.Add(new DamageModifierForTagModel("DamageModifierForTagModel_", "Moabs", 2, 5, false, false));
                             } else
-                            if (am.weapons[j].projectile.display == "299258962393e444a990a66c9aa9b619") {
-                                am.weapons[j].projectile.display = "BlackYellowMissile";
+                            if (am.weapons[j].projectile.display.guidRef == "299258962393e444a990a66c9aa9b619") {
+                                am.weapons[j].projectile.display.guidRef = "BlackYellowMissile";
                                 am.weapons[j].projectile.behaviors = am.weapons[j].projectile.behaviors.Add(new DamageModifierForTagModel("DamageModifierForTagModel_", "Moabs", 10, 5, false, false));
 
                                 var projectile = gm.towers.FirstOrDefault(a => a.name.Equals("BombShooter-300")).behaviors.First((Model a) => a.GetIl2CppType() == Il2CppType.Of<AttackModel>()).Clone().Cast<AttackModel>().weapons[0].projectile;
@@ -73,7 +73,7 @@
                         beh[i] = am;
                     }
                     if (behavior.Is<AirUnitModel>(out var aum)) {
-                        aum.display = "BlackYellowAir";
+                        aum.display.guidRef = "BlackYellowAir";
 
                         beh[i] = aum;
                     }

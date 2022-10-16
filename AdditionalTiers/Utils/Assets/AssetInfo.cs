@@ -2,7 +2,6 @@
 using Newtonsoft.Json;
 
 namespace AdditionalTiers.Utils.Assets {
-    [StructLayout(LayoutKind.Sequential)]
     [Serializable]
     [JsonObject(MemberSerialization.OptIn)]
     public record AssetInfo {

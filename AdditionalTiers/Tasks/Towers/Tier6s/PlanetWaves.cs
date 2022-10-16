@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace AdditionalTiers.Tasks.Towers.Tier6s;
+﻿namespace AdditionalTiers.Tasks.Towers.Tier6s;
 internal class PlanetWaves : TowerTask {
     public static TowerModel planetWaves;
     private static int time = -1;
@@ -19,10 +13,10 @@ internal class PlanetWaves : TowerTask {
                 time++;
                 return;
             }
-            TransformationManager.VALUE.Add(new(identifier, tts.tower.Id));
+            TransformationManager.VALUE.Add(new(identifier, tts.tower.Id.Id));
             tts.tower.worth = 0;
             tts.tower.UpdateRootModel(planetWaves);
-            tts.sim.simulation.CreateTextEffect(new(tts.position), "UpgradedText", 10, "Upgraded!", false);
+            tts.sim.simulation.CreateTextEffect(new(tts.position), new("UpgradedText"), 10, "Upgraded!", false);
             AbilityMenu.instance.TowerChanged(tts);
             AbilityMenu.instance.RebuildAbilities();
         };
@@ -33,10 +27,10 @@ internal class PlanetWaves : TowerTask {
             planetWaves.cost = 0;
             planetWaves.name = "Planet Waves";
             planetWaves.baseId = "MonkeySub";
-            planetWaves.display = "PlanetWaves";
+            planetWaves.display.guidRef = "PlanetWaves";
             planetWaves.dontDisplayUpgrades = true;
             planetWaves.portrait = new("PlanetWavesPortrait");
-            planetWaves.behaviors.First(a => a.GetIl2CppType() == Il2CppType.Of<DisplayModel>()).Cast<DisplayModel>().display = "PlanetWaves";
+            planetWaves.behaviors.First(a => a.GetIl2CppType() == Il2CppType.Of<DisplayModel>()).Cast<DisplayModel>().display.guidRef = "PlanetWaves";
 
             var beh = planetWaves.behaviors;
             for (var i = 0; i < beh.Length; i++) {

@@ -16,6 +16,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)InternalVerification.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Logger13.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Module Helper Information.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ReferenceFixes.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)StringExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TextureExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TowerExtensions.cs" />

@@ -6,6 +6,7 @@ using Assets.Scripts.Simulation.Track;
 using V3 = Assets.Scripts.Simulation.SMath.Vector3;
 
 using static Assets.Scripts.Models.Bloons.Behaviors.StunTowersInRadiusActionModel;
+using Assets.Scripts.Models.Bloons;
 
 namespace AdditionalBloons.Tasks {
     internal sealed class BloonTaskRunner {
@@ -27,81 +28,6 @@ namespace AdditionalBloons.Tasks {
                 foreach (var bloon in InGame.instance.bridge.GetAllBloons()) {
                     var bloonPosition = bloon.position;
 
-                    #region Flame BAD Burn
-
-                    if (bloon.Def.icon.guidRef.Contains("FireBADIcon")) {
-                        for (var i = 0; i < InGame.instance.bridge.GetAllTowers().Count; i++) {
-                            var tts = InGame.instance.bridge.GetAllTowers()[i];
-
-                            if (tts.tower.towerModel.baseId.StartsWith("Ice") || tts.tower.towerModel.baseId.StartsWith("Gwen"))
-                                continue;
-
-                            if (Vector3.Distance(bloonPosition, tts.tower.Position.ToUnity()) <= 140) {
-                                if (burnQueue.ContainsKey(tts.id)) {
-                                    var tierSums = tts.Def.tiers.Sum();
-                                    var ticks = burnQueue[tts.id];
-                                    var seconds = (int)Math.Round(burnFunc(tierSums));
-                                    var timeSpent = (int)Math.Round(ticks / (double)fps);
-
-                                    if (timeSpent <= seconds) {
-                                        if (ticks % fps == 0) {
-                                            tts.sim.simulation.CreateTextEffect(new(tts.tower.Position.ToVector3()), "3dcdbc19136c60846ab944ada06695c0", 10, $"{seconds - timeSpent}s", false);
-                                        } else if (ticks % fps == fps / 2) {
-                                            var tm = tts.Def.CloneCast();
-                                            tm.behaviors = tm.behaviors.Add(new DisplayModel($"FIREABAD_DM__{ticks}", "Assets/Monkeys/Gwendolin/Graphics/Effects/FireballPlacement/GwenFireballPlacementFX.prefab", 1,
-                                                new(0, 0, 0), 1, false, 0));
-                                            tts.tower.UpdateRootModel(tm);
-                                        }
-                                    }
-
-                                    if (timeSpent > seconds) {
-                                        tts.tower.towerModel.cost = 1;
-                                        tts.tower.worth = 1;
-                                        InGame.instance.SellTower(tts);
-                                    }
-
-                                    burnQueue[tts.id]++;
-                                } else {
-                                    burnQueue.Add(tts.id, 0);
-                                }
-                            }
-                        }
-                    }
-
-                    #endregion
-
-                    #region Cop BAD Jail
-
-                    if (bloon.Def.icon.guidRef.Contains("CopBADIcon")) {
-                        for (var i = 0; i < InGame.instance.bridge.GetAllTowers().Count; i++) {
-                            var tts = InGame.instance.bridge.GetAllTowers()[i];
-
-                            if (Vector3.Distance(bloonPosition, tts.tower.Position.ToUnity()) <= 140) {
-                                var tierSums = tts.Def.tiers.Sum();
-
-                                if (rand.Next(50000 / 7 * (tierSums+1)) == 0) {
-                                    tts.sim.simulation.CreateTextEffect(new(tts.tower.Position.ToVector3()), "3dcdbc19136c60846ab944ada06695c0", 10, "Jailed!", false);
-                                    var freeze = new TowerFreezeMutator("JailBars", true);
-                                    tts.tower.AddMutatorIncludeSubTowers(freeze, (15/(tierSums+1)) * 60, true, true, false, true, -1);
-                                    break;
-                                }
-                            }
-                        }
-
-                        var result = rand.Next(75000);
-                        if (result == 0) {
-                            bloon.sim.simulation.CreateTextEffect(new V3(bloonPosition), "3dcdbc19136c60846ab944ada06695c0", 10, "You've been caught speeding!\nPay a 5% fine!", false);
-                            bloon.sim.SetCash(bloon.sim.GetCash(-1) * .95, -1);
-                        } else if (result == 1) {
-                            bloon.sim.simulation.CreateTextEffect(new V3(bloonPosition), "3dcdbc19136c60846ab944ada06695c0", 10, "You've been caught speeding!\nPay a 10% fine!", false);
-                            bloon.sim.SetCash(bloon.sim.GetCash(-1) * .90, -1);
-                        } else if (result == 2) {
-                            bloon.sim.simulation.CreateTextEffect(new V3(bloonPosition), "3dcdbc19136c60846ab944ada06695c0", 10, "You've been caught speeding!\nGive me your lives!", false);
-                            bloon.sim.simulation.Health -= 10;
-                        }
-                    }
-
-                    #endregion
                 }
 
                 #region Bloon Spawner
@@ -187,18 +113,20 @@ namespace AdditionalBloons.Tasks {
             return true;
         }
 
-        internal static bool Emit(ref Spawner __instance) {
-
+        internal static bool Emit(ref Spawner __instance, ref BloonModel bloon) {
+            if (__instance.CurrentRound == 139 && HasSpawnedFireBAD && bloon.baseId == "Bad" && bloon.maxHealth != 500_500_500) {
+                return false;
+            }
             if (__instance.CurrentRound == 139 && !HasSpawnedFireBAD) {
                 HasSpawnedFireBAD = true;
-                var fireBAD = BloonCreator.bloons.Find(a => a.icon.guidRef.Equals("CopBADIcon", StringComparison.Ordinal));
+                var fireBAD = BloonCreator.bloons.Find(a => a.icon.guidRef.Equals("Ui[AdditionalBloons.Resources.CopBAD.CopBADIcon.png]", StringComparison.Ordinal));
                 if (fireBAD != null) {
                     __instance.Emit(fireBAD, __instance.currentRound.ValueInt, 0);
                 }
                 return false;
             }
 
-            if (!__instance.isSandbox) {
+            /*if (!__instance.isSandbox) {
                 int i;
                 if (__instance.CurrentRound < 50)
                     i = rand.Next(100);
@@ -219,7 +147,7 @@ namespace AdditionalBloons.Tasks {
                         __instance.Emit(coconut, __instance.currentRound.ValueInt, 0);
                     }
                 }
-            }
+            }*/
 
             return true;
         }

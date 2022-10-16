@@ -1,6 +1,4 @@
-﻿using UnhollowerBaseLib;
-
-namespace GodTier.Utils {
+﻿namespace GodTier.Utils {
     public static class Ext {
         public static Il2CppReferenceArray<T> Remove<T>(this Il2CppReferenceArray<T> reference, Func<T, bool> predicate) where T : Model {
             List<T> bases = new List<T>();
@@ -12,13 +10,11 @@ namespace GodTier.Utils {
         }
         public static Il2CppReferenceArray<T> Add<T>(this Il2CppReferenceArray<T> reference, params T[] newPart) where T : Model {
             var bases = new List<T>();
-            foreach (var tmp in reference)
-                bases.Add(tmp);
+            bases.AddRange(reference);
 
-            foreach (var tmp in newPart)
-                bases.Add(tmp);
+            bases.AddRange(newPart);
 
-            return new(bases.ToArray());
+            return bases.ToArray();
         }
     }
 }

@@ -12,6 +12,16 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <Optimize>False</Optimize>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="doom.bundle" />
+    <None Remove="Resources\CopBAD\CopBADIcon.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="doom.bundle" />
+    <EmbeddedResource Include="Resources\CopBAD\CopBADIcon.png" />
+  </ItemGroup>
   
   <ItemGroup>
     <Reference Include="0Harmony">

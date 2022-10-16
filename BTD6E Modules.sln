@@ -20,7 +20,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetTowers", "PetTowers\PetT
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "BTD6E Module Helper", "BTD6E Module Helper\BTD6E Module Helper.shproj", "{19803A05-C28B-49E1-90C3-230564DEABFD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ultra Powers", "Ultra Powers\Ultra Powers.csproj", "{75705BDC-78BE-4685-9DC4-81D899612F2E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ultra Powers", "Ultra Powers\Ultra Powers.csproj", "{75705BDC-78BE-4685-9DC4-81D899612F2E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -90,6 +90,6 @@ Global
 		BTD6E Module Helper\BTD6E Module Helper.projitems*{4a39b5ef-7e0b-428f-8a29-01e022575d36}*SharedItemsImports = 5
 		BTD6E Module Helper\BTD6E Module Helper.projitems*{75705bdc-78be-4685-9dc4-81d899612f2e}*SharedItemsImports = 5
 		BTD6E Module Helper\BTD6E Module Helper.projitems*{914d432b-bf4b-4cbb-8709-5229f7d4483b}*SharedItemsImports = 5
-		BTD6E Module Helper\BTD6E Module Helper.projitems*{b83a67c1-8c96-4b49-835a-fb02275da8f1}*SharedItemsImports = 4
+		BTD6E Module Helper\BTD6E Module Helper.projitems*{b83a67c1-8c96-4b49-835a-fb02275da8f1}*SharedItemsImports = 5
 	EndGlobalSection
 EndGlobal

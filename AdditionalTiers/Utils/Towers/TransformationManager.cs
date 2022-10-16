@@ -1,4 +1,6 @@
-﻿namespace AdditionalTiers.Utils.Towers {
+﻿using System.Collections;
+
+namespace AdditionalTiers.Utils.Towers {
     internal sealed class TransformationManager : Instanced<TransformationManager> {
         private ArrayList TransformationList { get; } = new ArrayList();
 
@@ -22,7 +24,7 @@
         internal Transformation Get(Tower tower) {
             for (var i = 0; i < TransformationList.Count; i++) {
                 var transformation = (Transformation)TransformationList[i];
-                if (transformation.TowerID == tower.Id)
+                if (transformation.TowerID == tower.Id.Id)
                     return transformation;
             }
 
@@ -31,7 +33,7 @@
         
         internal void Replace(Tower tower, Transformation transformation) {
             for (var i = 0; i < TransformationList.Count; i++) {
-                if (tower.Id == ((Transformation) TransformationList[i]).TowerID)
+                if (tower.Id.Id == ((Transformation) TransformationList[i]).TowerID)
                     TransformationList[i] = transformation;
             }
         }
@@ -39,7 +41,7 @@
         internal void Remove(Tower tower) {
             var index = -1;
             for (var i = 0; i < TransformationList.Count; i++) {
-                if (tower.Id == ((Transformation) TransformationList[i]).TowerID)
+                if (tower.Id.Id == ((Transformation) TransformationList[i]).TowerID)
                     index = i;
             }
             TransformationList.RemoveAt(index);
@@ -48,7 +50,7 @@
         internal bool Contains(Tower tower) {
             for (var i = 0; i < TransformationList.Count; i++) {
                 var transformation = (Transformation)TransformationList[i];
-                if (transformation.TowerID == tower.Id)
+                if (transformation.TowerID == tower.Id.Id)
                     return true;
             }
 

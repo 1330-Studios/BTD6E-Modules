@@ -15,10 +15,10 @@ namespace AdditionalTiers.Tasks.Towers.Level21 {
                     time++;
                     return;
                 }
-                TransformationManager.VALUE.Add(new(identifier, tts.tower.Id));
+                TransformationManager.VALUE.Add(new(identifier, tts.tower.Id.Id));
                 tts.tower.worth = 0;
                 tts.tower.UpdateRootModel(whiteWedding);
-                tts.sim.simulation.CreateTextEffect(new(tts.position), "UpgradedText", 10, "Upgraded!", false);
+                tts.sim.simulation.CreateTextEffect(new(tts.position), new("UpgradedText"), 10, "Upgraded!", false);
                 AbilityMenu.instance.TowerChanged(tts);
                 AbilityMenu.instance.RebuildAbilities();
             };
@@ -43,8 +43,8 @@ namespace AdditionalTiers.Tasks.Towers.Level21 {
 
                         for (int j = 0; j < am.behaviors.Length; j++) {
                             if (am.behaviors[j].Is<DisplayModel>(out var dm)) {
-                                if (dm.display == "adbe729f5bdee5c46ab9f08f9b23d721") { // Rocket Launcher
-                                    dm.display = "FMTTM3";
+                                if (dm.display.guidRef == "adbe729f5bdee5c46ab9f08f9b23d721") { // Rocket Launcher
+                                    dm.display.guidRef = "FMTTM3";
 
                                     for (int k = 0; k < am.weapons[0].projectile.behaviors.Length; k++) {
                                         if (am.weapons[0].projectile.behaviors[k].Is<CreateProjectileOnExhaustPierceModel>(out var cpoepm)) {
@@ -58,8 +58,8 @@ namespace AdditionalTiers.Tasks.Towers.Level21 {
                                     am.weapons[0].rate *= 4;
                                     attackBehaviors = am.behaviors;
                                     tsm = am.targetProvider;
-                                } else if (dm.display == "8e64a1a21daed814db0cd08674da230a") { // MG
-                                    dm.display = "FMTTM2";
+                                } else if (dm.display.guidRef == "8e64a1a21daed814db0cd08674da230a") { // MG
+                                    dm.display.guidRef = "FMTTM2";
                                     am.weapons[0].projectile.ModifyDamageModel(new DamageChange { immuneBloonProperties = BloonProperties.None, set = true, damage = 250 });
                                     am.weapons[0].rate = 0;
                                 }

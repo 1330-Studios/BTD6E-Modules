@@ -200,4 +200,57 @@
             }
         }
     }
+    [RegisterTypeInIl2Cpp]
+    public class SetScaleMQ : MonoBehaviour {
+        public SetScaleMQ(IntPtr obj0) : base(obj0) { ClassInjector.DerivedConstructorBody(this); }
+
+        public SetScaleMQ() : base(ClassInjector.DerivedConstructorPointer<SetScaleMQ>()) { }
+        private void Start() {
+            if (gameObject != null && gameObject.transform.localScale.z != 3.33f) {
+                gameObject.transform.localScale = new(3.33f, 3.33f, 3.33f);
+            }
+        }
+
+        private void Update() {
+            if (gameObject != null && gameObject.transform.localScale.z != 3.33f) {
+                gameObject.transform.localScale = new(3.33f, 3.33f, 3.33f);
+            }
+        }
+    }
+    [RegisterTypeInIl2Cpp]
+    public class SetScaleMQL : MonoBehaviour {
+        public SetScaleMQL(IntPtr obj0) : base(obj0) { ClassInjector.DerivedConstructorBody(this); }
+
+        public SetScaleMQL() : base(ClassInjector.DerivedConstructorPointer<SetScaleMQL>()) { }
+        private void Start() {
+            if (gameObject != null && gameObject.transform.localScale.z != 4) {
+                gameObject.transform.localScale = new(4, 4, 4);
+            }
+        }
+
+        private void Update() {
+            if (gameObject != null && gameObject.transform.localScale.z != 4) {
+                gameObject.transform.localScale = new(4, 4, 4);
+            }
+        }
+    }
+    [RegisterTypeInIl2Cpp]
+    public class SetScaleCrayon : MonoBehaviour {
+        public SetScaleCrayon(IntPtr obj0) : base(obj0) { ClassInjector.DerivedConstructorBody(this); }
+
+        public SetScaleCrayon() : base(ClassInjector.DerivedConstructorPointer<SetScaleCrayon>()) { }
+        private void Start() {
+            if (gameObject != null && gameObject.transform.localScale.z != 800) {
+                gameObject.transform.localScale = new(75, 75, 800);
+                gameObject.transform.rotation = Quaternion.Euler(-75, -150, 155);
+            }
+        }
+
+        private void Update() {
+            if (gameObject != null && gameObject.transform.localScale.z != 800) {
+                gameObject.transform.localScale = new(75, 75, 800);
+                gameObject.transform.rotation = Quaternion.Euler(-75, -150, 155);
+            }
+        }
+    }
 }

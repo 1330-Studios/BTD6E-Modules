@@ -1,4 +1,5 @@
-﻿namespace GodlyTowers.Towers {
+﻿
+namespace GodlyTowers.Towers {
     public sealed class MiniPekka {
         public static string name = "MiniPekka";
 

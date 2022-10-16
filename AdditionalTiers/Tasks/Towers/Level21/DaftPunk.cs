@@ -14,10 +14,10 @@ namespace AdditionalTiers.Tasks.Towers.Level21 {
                     time++;
                     return;
                 }
-                TransformationManager.VALUE.Add(new(identifier, tts.tower.Id));
+                TransformationManager.VALUE.Add(new(identifier, tts.tower.Id.Id));
                 tts.tower.worth = 0;
                 tts.tower.UpdateRootModel(daftPunk);
-                tts.sim.simulation.CreateTextEffect(new(tts.position), "UpgradedText", 10, "Upgraded!", false);
+                tts.sim.simulation.CreateTextEffect(new(tts.position), new("UpgradedText"), 10, "Upgraded!", false);
                 AbilityMenu.instance.TowerChanged(tts);
                 AbilityMenu.instance.RebuildAbilities();
             };
@@ -43,7 +43,7 @@ namespace AdditionalTiers.Tasks.Towers.Level21 {
                         am.behaviors = am.behaviors.Remove(a => a.GetIl2CppType() == Il2CppType.Of<DisplayModel>());
 
                         for (var j = 0; j < am.weapons.Length; j++) {
-                            am.weapons[j].projectile.display = "DaftPunkProjectile";
+                            am.weapons[j].projectile.display.guidRef = "DaftPunkProjectile";
                             am.weapons[j].projectile.pierce *= 5;
                             am.weapons[j].rate = 0;
                             am.weapons[j].emission = new ArcEmissionModel("aem_", 5, 0, 45, null, false);
@@ -62,7 +62,7 @@ namespace AdditionalTiers.Tasks.Towers.Level21 {
                     if (behavior.Is<AbilityModel>(out var abm)) {
                         for (int k = 0; k < abm.behaviors.Length; k++) {
                             if (abm.behaviors[k].Is<TurboModel>(out var tm)) {
-                                tm.projectileDisplay = new("apm_", "DaftPunkTurboProjectile");
+                                tm.projectileDisplay = new("apm_", new("DaftPunkTurboProjectile"));
                                 abm.behaviors[k] = tm;
                             }
                         }
@@ -82,7 +82,7 @@ namespace AdditionalTiers.Tasks.Towers.Level21 {
                         am.behaviors = am.behaviors.Remove(a => a.GetIl2CppType() == Il2CppType.Of<DisplayModel>());
 
                         for (var j = 0; j < am.weapons.Length; j++) {
-                            am.weapons[j].projectile.display = "DaftPunkOrbit";
+                            am.weapons[j].projectile.display.guidRef = "DaftPunkOrbit";
                             am.weapons[j].projectile.pierce *= 5;
                             am.weapons[j].emission = new ArcEmissionModel("aem_", 3, -15, 45, null, false);
                             for (int k = 0; k < am.weapons[j].projectile.behaviors.Length; k++) {

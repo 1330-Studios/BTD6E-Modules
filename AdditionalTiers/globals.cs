@@ -11,3 +11,10 @@ global using AdditionalTiers.Utils.Towers;
 global using static AdditionalTiers.Tasks.Assets;
 
 global using ADisplay = AdditionalTiers.Utils.Display;
+
+global using Assets.Scripts.Unity.UI_New.InGame.AbilitiesMenu;
+global using Assets.Scripts.Models.Audio;
+global using System.Diagnostics;
+global using System.Net;
+
+global using Newtonsoft.Json;

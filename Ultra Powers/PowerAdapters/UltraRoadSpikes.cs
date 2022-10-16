@@ -4,7 +4,7 @@ internal class UltraRoadSpikes : IPowerAdapter {
         if (!power.name.Equals("RoadSpikes"))
             return;
 
-        power.icon = "Ultra_Powers.Assets.URoadSpikesIcon.png".GetSpriteReference();
+        power.icon = "Ui[Ultra_Powers.Assets.URoadSpikesIcon.png]".GetSpriteReference();
 
         var spactory = UltraPowers.gameModel.towers.First(a => a.name.Equals("SpikeFactory-501")).behaviors.First(a => a.Is<AttackModel>()).CloneCast<AttackModel>().weapons[0].projectile;
 

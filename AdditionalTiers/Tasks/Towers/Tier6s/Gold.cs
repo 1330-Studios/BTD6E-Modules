@@ -24,10 +24,10 @@ internal class Gold : TowerTask {
                 time++;
                 return;
             }
-            TransformationManager.VALUE.Add(new(identifier, tts.tower.Id));
+            TransformationManager.VALUE.Add(new(identifier, tts.tower.Id.Id));
             tts.tower.worth = 0;
             tts.tower.UpdateRootModel(gold);
-            tts.sim.simulation.CreateTextEffect(new(tts.position), "UpgradedText", 10, "Upgraded!", false);
+            tts.sim.simulation.CreateTextEffect(new(tts.position), new("UpgradedText"), 10, "Upgraded!", false);
             AbilityMenu.instance.TowerChanged(tts);
             AbilityMenu.instance.RebuildAbilities();
         };
@@ -51,7 +51,7 @@ internal class Gold : TowerTask {
 
                         weapon.Rate = 0;
                         weapon.projectile.id = "CryoGOLD";
-                        weapon.projectile.display = "GoldProj";
+                        weapon.projectile.display.guidRef = "GoldProj";
                         weapon.emission = new RandomArcEmissionModel("RAEM_", 1, 0, 0, 10, 1, null);
 
                         am.weapons[j] = weapon;
@@ -81,17 +81,17 @@ internal class Gold : TowerTask {
             if (projectile?.Weapon?.attack?.tower?.towerModel?.name == "Gold" && t.TotalSeconds > lastJackpot) {
                 damage++;
                 if (damage % ((ulong)random.Next(50000)+1) == 0) {
-                    projectile.Sim.CreateTextEffect(__instance.Position.ToVector3(), "JackpotText", 10, "JACKPOT!!!\n+ $100,000", false);
+                    projectile.Sim.CreateTextEffect(__instance.Position.ToVector3(), new("JackpotText"), 10, "JACKPOT!!!\n+ $100,000", false);
                     projectile.Sim.AddCash(100000, CashType.Normal, InGame.instance.bridge.GetInputId(), CashSource.Normal);
                     lastJackpot = (int)t.TotalSeconds+3;
                 } else if (damage % 5000 == 0) {
-                    projectile.Sim.CreateTextEffect(__instance.Position.ToVector3(), "UpgradedText", 10, "+ $10,000", false);
+                    projectile.Sim.CreateTextEffect(__instance.Position.ToVector3(), new("JackpotText"), 10, "+ $10,000", false);
                     projectile.Sim.AddCash(10000, CashType.Normal, InGame.instance.bridge.GetInputId(), CashSource.Normal);
                 } else if (damage % 500 == 0) {
-                    projectile.Sim.CreateTextEffect(__instance.Position.ToVector3(), "UpgradedText", 10, "+ $100", false);
+                    projectile.Sim.CreateTextEffect(__instance.Position.ToVector3(), new("JackpotText"), 10, "+ $100", false);
                     projectile.Sim.AddCash(100, CashType.Normal, InGame.instance.bridge.GetInputId(), CashSource.Normal);
                 } else if (damage % 50 == 0) {
-                    projectile.Sim.CreateTextEffect(__instance.Position.ToVector3(), "UpgradedText", 10, "+ $5", false);
+                    projectile.Sim.CreateTextEffect(__instance.Position.ToVector3(), new("JackpotText"), 10, "+ $5", false);
                     projectile.Sim.AddCash(5, CashType.Normal, InGame.instance.bridge.GetInputId(), CashSource.Normal);
                 }
             }

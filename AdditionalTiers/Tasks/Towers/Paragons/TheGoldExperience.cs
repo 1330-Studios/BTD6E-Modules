@@ -9,16 +9,16 @@ namespace AdditionalTiers.Tasks.Towers.Tier6s {
             getTower = () => gapm;
             baseTower = AddedTierName.THEGOLDEXPERIENCE;
             tower = AddedTierEnum.THEGOLDEXPERIENCE;
-            requirements += tts => ((tts.tower.towerModel.baseId.Equals("DartMonkey") && tts.tower.towerModel.isParagon) || tts.tower.towerModel.baseId.Equals("ParagonDartMonkey"));
+            requirements += tts => tts.tower.towerModel.baseId.Equals("DartMonkey") && tts.tower.towerModel.isParagon || tts.tower.towerModel.baseId.Equals("ParagonDartMonkey");
             onComplete += tts => {
                 if (time < 50) {
                     time++;
                     return;
                 }
-                TransformationManager.VALUE.Add(new(identifier, tts.tower.Id));
+                TransformationManager.VALUE.Add(new(identifier, tts.tower.Id.Id));
                 tts.tower.worth = 0;
                 tts.tower.UpdateRootModel(gapm);
-                tts.sim.simulation.CreateTextEffect(new(tts.position), "UpgradedText", 10, "Upgraded!", false);
+                tts.sim.simulation.CreateTextEffect(new(tts.position), new("UpgradedText"), 10, "Upgraded!", false);
                 AbilityMenu.instance.TowerChanged(tts);
                 AbilityMenu.instance.RebuildAbilities();
             };
@@ -30,17 +30,17 @@ namespace AdditionalTiers.Tasks.Towers.Tier6s {
                 gapm.dontDisplayUpgrades = true;
                 gapm.portrait = new("APMGoldIcon");
                 gapm.name = "The Gold Experience";
-                gapm.display = "APMGold2";
+                gapm.display.guidRef = "APMGold2";
                 var beh = gapm.behaviors;
                 for (int i = 0; i < beh.Length; i++) {
                     if (beh[i].Is<AttackModel>(out var attackModel)) {
-                        attackModel.behaviors.First(a => a.Is<DisplayModel>(out _)).Cast<DisplayModel>().display = "APMGold";
+                        attackModel.behaviors.First(a => a.Is<DisplayModel>(out _)).Cast<DisplayModel>().display.guidRef = "APMGold";
                         attackModel.range += 50;
 
                         var weaponModel = attackModel.weapons[0];
 
                         weaponModel.emission.Cast<ParallelEmissionModel>().count += 2;
-                        weaponModel.projectile.display = "APMUltraJuggernautGold";
+                        weaponModel.projectile.display.guidRef = "APMUltraJuggernautGold";
                         weaponModel.rate /= 5;
                         weaponModel.rateFrames /= 5;
                         weaponModel.rate *= 2;
@@ -60,12 +60,12 @@ namespace AdditionalTiers.Tasks.Towers.Tier6s {
                                 projBeh[j] = travelStraitModel;
                             }
                             if (projBeh[j].Is<CreateProjectileOnExhaustFractionModel>(out var createProjectileOnExhaustFractionModel)) {
-                                createProjectileOnExhaustFractionModel.projectile.display = "APMJuggernautGold";
+                                createProjectileOnExhaustFractionModel.projectile.display.guidRef = "APMJuggernautGold";
 
                                 var cprojBeh = createProjectileOnExhaustFractionModel.projectile.behaviors;
                                 for (int k = 0; k < cprojBeh.Length; k++) {
                                     if (cprojBeh[k].Is<DisplayModel>(out var cprojDisplayModel)) {
-                                        cprojDisplayModel.display = "APMJuggernautGold";
+                                        cprojDisplayModel.display.guidRef = "APMJuggernautGold";
                                     }
                                     if (cprojBeh[k].Is<DamageModel>(out var cprojDamageModel)) {
                                         cprojDamageModel.damage *= 50;
@@ -82,7 +82,7 @@ namespace AdditionalTiers.Tasks.Towers.Tier6s {
                                 projBeh[j] = createProjectileOnExhaustFractionModel;
                             }
                             if (projBeh[j].Is<DisplayModel>(out var displayModel)) {
-                                displayModel.display = "APMUltraJuggernautGold";
+                                displayModel.display.guidRef = "APMUltraJuggernautGold";
 
                                 projBeh[j] = displayModel;
                             }

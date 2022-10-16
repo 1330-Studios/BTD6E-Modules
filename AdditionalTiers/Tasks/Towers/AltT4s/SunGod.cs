@@ -14,16 +14,16 @@
                     time++;
                     return;
                 }
-                TransformationManager.VALUE.Add(new(identifier, tts.tower.Id));
+                TransformationManager.VALUE.Add(new(identifier, tts.tower.Id.Id));
                 tts.tower.UpdateRootModel(btd4SunGod);
-                tts.sim.simulation.CreateTextEffect(new(tts.position), "UpgradedText", 10, "???", false);
+                tts.sim.simulation.CreateTextEffect(new(tts.position), new("UpgradedText"), 10, "???", false);
             };
             gameLoad += gm => {
                 btd4SunGod = gm.towers.First(a => a.name.Contains("SuperMonkey-320")).CloneCast();
 
-                btd4SunGod.display = "BTD4SunGod";
+                btd4SunGod.display.guidRef = "BTD4SunGod";
                 btd4SunGod.portrait = new("BTD4SunGodPor");
-                btd4SunGod.behaviors.First(a => a.GetIl2CppType() == Il2CppType.Of<DisplayModel>()).Cast<DisplayModel>().display = "BTD4SunGod";
+                btd4SunGod.behaviors.First(a => a.GetIl2CppType() == Il2CppType.Of<DisplayModel>()).Cast<DisplayModel>().display.guidRef = "BTD4SunGod";
                 var beh = btd4SunGod.behaviors;
                 for (var i = 0; i < beh.Length; i++) {
                     var behavior = beh[i];
@@ -44,7 +44,7 @@
                                 weapon.emission = raem;
                             }
 
-                            weapon.projectile.display = "BTD4SunGodProj";
+                            weapon.projectile.display.guidRef = "BTD4SunGodProj";
                             am.weapons[j] = weapon;
                         }
 
@@ -60,9 +60,9 @@
 
                 btd4SunGodV = gm.towers.First(a => a.name.Contains("SuperMonkey-320")).CloneCast();
 
-                btd4SunGodV.display = "BTD4SunGodV";
+                btd4SunGodV.display.guidRef = "BTD4SunGodV";
                 btd4SunGodV.portrait = new("BTD4SunGodPorV");
-                btd4SunGodV.behaviors.First(a => a.GetIl2CppType() == Il2CppType.Of<DisplayModel>()).Cast<DisplayModel>().display = "BTD4SunGodV";
+                btd4SunGodV.behaviors.First(a => a.GetIl2CppType() == Il2CppType.Of<DisplayModel>()).Cast<DisplayModel>().display.guidRef = "BTD4SunGodV";
                 btd4SunGodV.upgrades = new UpgradePathModel[0];
                 btd4SunGodV.dontDisplayUpgrades = true;
 
@@ -90,7 +90,7 @@
                                         dm.damage *= 5;
                                     }
                                 }
-                                weapon.projectile.display = "BTD4SunGodProjV";
+                                weapon.projectile.display.guidRef = "BTD4SunGodProjV";
                                 weapon.projectile.behaviors = pbeh;
                             }
 
@@ -110,7 +110,7 @@
                     TransformationManager.VALUE.Remove(tts.tower);
                     return;
                 }
-                if (TransformationManager.VALUE.Contains(tts.tower) && !TransformationManager.VALUE.Get(tts.tower).Name.Equals("BTD4 Vengeful Sun God") && tts.damageDealt > ((int)AddedTierEnum.BTD4SUNGOD) * Globals.SixthTierPopCountMulti * 5) {
+                if (TransformationManager.VALUE.Contains(tts.tower) && !TransformationManager.VALUE.Get(tts.tower).Name.Equals("BTD4 Vengeful Sun God") && tts.damageDealt > (int)AddedTierEnum.BTD4SUNGOD * Globals.SixthTierPopCountMulti * 5) {
                     var sim = tts.sim;
                     var towers = sim.ttss.ToArray();
                     var condition1 = towers.Any(t => t.tower.towerModel.name.StartsWith("SuperMonkey") && t.tower.towerModel.tiers[1] == 3);
@@ -120,18 +120,16 @@
                         var s1 = towers.First(t => t.tower.towerModel.name.StartsWith("SuperMonkey") && t.tower.towerModel.tiers[1] == 3);
                         var s2 = towers.First(t => t.tower.towerModel.name.StartsWith("SuperMonkey") && t.tower.towerModel.tiers[2] == 3);
 
-                        var inputId = -1;
+                        var moolah = sim.GetCash(sim.GetInputId());
 
-                        var moolah = sim.GetCash(inputId);
+                        sim.SellTower(s1.id);
+                        sim.SellTower(s2.id);
 
-                        sim.SellTower(s1.id, inputId);
-                        sim.SellTower(s2.id, inputId);
+                        sim.SetCash(moolah);
 
-                        sim.SetCash(moolah, inputId);
-
-                        TransformationManager.VALUE.Replace(tts.tower, new ("BTD4 Vengeful Sun God", tts.tower.Id));
+                        TransformationManager.VALUE.Replace(tts.tower, new ("BTD4 Vengeful Sun God", tts.tower.Id.Id));
                         tts.tower.UpdateRootModel(btd4SunGodV);
-                        tts.sim.simulation.CreateTextEffect(new(tts.position), "UpgradedText", 10, "???", false);
+                        tts.sim.simulation.CreateTextEffect(new(tts.position), new("UpgradedText"), 10, "???", false);
                     }
                 }
             };

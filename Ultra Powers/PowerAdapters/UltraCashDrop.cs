@@ -4,9 +4,9 @@ internal class UltraCashDrop : IPowerAdapter {
         if (!power.name.Equals("CashDrop"))
             return;
 
-        power.icon = "Ultra_Powers.Assets.UCrateIcon.png".GetSpriteReference();
+        power.icon = "Ui[Ultra_Powers.Assets.UCrateIcon.png]".GetSpriteReference();
         foreach (var cdm in power.GetChildren<CashDropModel>()) {
-            cdm.projectileModel.display = "Ultra_Powers.Assets.UCrate.png";
+            cdm.projectileModel.display = new() { guidRef = "Ultra_Powers.Assets.UCrate.png" };
             foreach (var cm in cdm.projectileModel.GetChildren<CashModel>()) {
                 cm.maximum = cm.minimum = 1000000;
                 cm.maximum += 500000;

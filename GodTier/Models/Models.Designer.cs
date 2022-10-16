@@ -159,5 +159,15 @@ namespace GodlyTowers.Models {
                 return ((byte[])(obj));
             }
         }
+
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] mcqueen {
+            get {
+                object obj = ResourceManager.GetObject("mcqueen", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
     }
 }

@@ -14,11 +14,11 @@
                     time++;
                     return;
                 }
-                TransformationManager.VALUE.Add(new(identifier, tts.tower.Id));
+                TransformationManager.VALUE.Add(new(identifier, tts.tower.Id.Id));
                 tts.tower.worth = 0;
                 tts.tower.UpdateRootModel(BHS);
                 tts.tower.display.SetScaleOffset(new(1.25f, 1.25f, 1.25f));
-                tts.sim.simulation.CreateTextEffect(new(tts.position), "UpgradedText", 10, "Upgraded!", false);
+                tts.sim.simulation.CreateTextEffect(new(tts.position), new("UpgradedText"), 10, "Upgraded!", false);
                 AbilityMenu.instance.TowerChanged(tts);
                 AbilityMenu.instance.RebuildAbilities();
             };
@@ -30,11 +30,11 @@
                 BHS.cost = 0;
                 BHS.name = "Black Hole Sun";
                 BHS.baseId = "DartMonkey";
-                BHS.display = "BlackHoleSun";
+                BHS.display.guidRef = "BlackHoleSun";
                 BHS.dontDisplayUpgrades = true;
                 BHS.portrait = new("BlackHoleSunIcon");
                 BHS.behaviors.First(a => a.GetIl2CppType() == Il2CppType.Of<DisplayModel>())
-                    .Cast<DisplayModel>().display = "BlackHoleSun";
+                    .Cast<DisplayModel>().display.guidRef = "BlackHoleSun";
                 var beh = BHS.behaviors;
 
                 for (var i = 0; i < beh.Length; i++) {
@@ -46,7 +46,7 @@
                         for (var j = 0; j < am.weapons.Length; j++) {
                             am.weapons[j].emission = new AdoraEmissionModel("Adora_", 1, 0, null).Cast<EmissionModel>();
 
-                            am.weapons[j].projectile.display = "BlackHoleSunProjectile";
+                            am.weapons[j].projectile.display.guidRef = "BlackHoleSunProjectile";
                             am.weapons[j].projectile.pierce *= 500;
                             am.weapons[j].projectile.scale *= 1.125f;
                             am.weapons[j].rate /= 15;
@@ -88,10 +88,10 @@
                             if (b.GetIl2CppType() == Il2CppType.Of<MonkeyFanClubModel>()) {
                                 var mfcm = b.Cast<MonkeyFanClubModel>();
 
-                                mfcm.display = "BlackHoleSunProjectile";
-                                mfcm.towerOriginDisplay = "BlackHoleSun";
-                                mfcm.bonusDamage += 1;
-                                mfcm.bonusPierce += 1;
+                                mfcm.display.guidRef = "BlackHoleSunProjectile";
+                                mfcm.towerOriginDisplay.guidRef = "BlackHoleSun";
+                                mfcm.bonusDamage++;
+                                mfcm.bonusPierce++;
                                 mfcm.maxTier = 5;
                                 mfcm.range = 200;
 

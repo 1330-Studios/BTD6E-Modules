@@ -705,13 +705,14 @@ namespace GodlyTowers.Towers {
 
             [HarmonyPrefix]
             internal static bool Prefix(ref float totalAmount, Projectile projectile) {
-                if (projectile?.Weapon?.weaponModel?.name?.EndsWith("thanossnap") ?? true)
+                if (projectile?.Weapon?.weaponModel?.name?.EndsWith("thanossnap") == true) {
                     if (should)
                         totalAmount = 0;
                     else
                         totalAmount = 10000000f;
 
-                should = !should;
+                    should = !should;
+                }
 
                 return true;
             }

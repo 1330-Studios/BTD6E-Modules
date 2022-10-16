@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace AdditionalTiers.Utils;
+﻿namespace AdditionalTiers.Utils;
 public class AnalyticsManager {
+    public static AnalyticsManager Instance { get; } = new AnalyticsManager();
+
+    public void OnTransform(TowerTask tower) {
+
+    }
 }

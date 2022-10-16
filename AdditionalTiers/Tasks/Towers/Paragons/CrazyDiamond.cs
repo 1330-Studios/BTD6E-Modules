@@ -7,16 +7,16 @@ internal class CrazyDiamond : TowerTask {
         getTower = () => crazyDiamond;
         baseTower = AddedTierName.CRAZYDIAMOND;
         tower = AddedTierEnum.CRAZYDIAMOND;
-        requirements += tts => ((tts.tower.towerModel.baseId.Equals("NinjaMonkey") && tts.tower.towerModel.isParagon) || tts.tower.towerModel.baseId.Equals("ParagonNinjaMonkey"));
+        requirements += tts => tts.tower.towerModel.baseId.Equals("NinjaMonkey") && tts.tower.towerModel.isParagon || tts.tower.towerModel.baseId.Equals("ParagonNinjaMonkey");
         onComplete += tts => {
             if (time < 50) {
                 time++;
                 return;
             }
-            TransformationManager.VALUE.Add(new(identifier, tts.tower.Id));
+            TransformationManager.VALUE.Add(new(identifier, tts.tower.Id.Id));
             tts.tower.worth = 0;
             tts.tower.UpdateRootModel(crazyDiamond);
-            tts.sim.simulation.CreateTextEffect(new(tts.position), "UpgradedText", 10, "Upgraded!", false);
+            tts.sim.simulation.CreateTextEffect(new(tts.position), new("UpgradedText"), 10, "Upgraded!", false);
             AbilityMenu.instance.TowerChanged(tts);
             AbilityMenu.instance.RebuildAbilities();
         };
@@ -42,9 +42,9 @@ internal class CrazyDiamond : TowerTask {
                         weapon.emission = new AdoraEmissionModel("AEM_", 8, 360f / 8f, null);
 
                         weapon.projectile.ModifyDamageModel(new() { multiply = true, damage = 1975 });
-                        if (!string.IsNullOrEmpty(weapon.projectile.display))
-                            if (weapon.projectile.display.Contains("d2ba0805fb7500f4c979eee9478c3a07", StringComparison.OrdinalIgnoreCase))
-                                weapon.projectile.display = "CrazyDiamondShuriken";
+                        if (!string.IsNullOrEmpty(weapon.projectile.display.guidRef))
+                            if (weapon.projectile.display.guidRef.Contains("d2ba0805fb7500f4c979eee9478c3a07", StringComparison.OrdinalIgnoreCase))
+                                weapon.projectile.display.guidRef = "CrazyDiamondShuriken";
 
                         am.weapons[j] = weapon;
                     }

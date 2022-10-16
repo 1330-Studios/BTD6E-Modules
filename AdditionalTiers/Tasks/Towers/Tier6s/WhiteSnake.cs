@@ -15,10 +15,10 @@
                     _time++;
                     return;
                 }
-                TransformationManager.VALUE.Add(new(identifier, tts.tower.Id));
+                TransformationManager.VALUE.Add(new(identifier, tts.tower.Id.Id));
                 tts.tower.worth = 0;
                 tts.tower.UpdateRootModel(whitesnake);
-                tts.sim.simulation.CreateTextEffect(new(tts.position), "UpgradedText", 10, "Upgraded!", false);
+                tts.sim.simulation.CreateTextEffect(new(tts.position), new("UpgradedText"), 10, "Upgraded!", false);
                 var sim = tts.sim;
                 foreach (var towerToSimulation in sim.GetAllTowers())
                     if (towerToSimulation.tower.towerModel.baseId.Equals("PermaPhoenix")) {
@@ -35,10 +35,10 @@
                 whitesnake.cost = 0;
                 whitesnake.range = 120;
                 whitesnake.baseId = "WizardMonkey";
-                whitesnake.display = "Whitesnake";
+                whitesnake.display.guidRef = "Whitesnake";
                 whitesnake.dontDisplayUpgrades = true;
                 whitesnake.portrait = new("WhitesnakeIcon");
-                whitesnake.behaviors.First(a => a.GetIl2CppType() == Il2CppType.Of<DisplayModel>()).Cast<DisplayModel>().display = "Whitesnake";
+                whitesnake.behaviors.First(a => a.GetIl2CppType() == Il2CppType.Of<DisplayModel>()).Cast<DisplayModel>().display.guidRef = "Whitesnake";
 
                 var beh = whitesnake.behaviors;
 
@@ -54,7 +54,7 @@
                                     we.projectile.behaviors[k] = dm;
                                 }
                                 if (we.projectile.behaviors[k].Is<DisplayModel>(out var display)) {
-                                    display.display = "WhitesnakeProj";
+                                    display.display.guidRef = "WhitesnakeProj";
 
                                     we.projectile.behaviors[k] = display;
                                 }
@@ -73,15 +73,15 @@
                             we.emission = new ArcEmissionModel("AEM_", 1, 0, 0, null, false);
                             we.projectile.pierce = 500000;
                             we.projectile.radius = 50;
-                            we.projectile.display = "WhitesnakeProj";
+                            we.projectile.display.guidRef = "WhitesnakeProj";
                             we.projectile.ignoreNonTargetable = true;
                             we.projectile.ignoreBlockers = true;
                             we.projectile.ignorePierceExhaustion = true;
 
-                            we.projectile.behaviors = we.projectile.behaviors.Add(new CreateLightningEffectModel("CLEM_", 0.3f, new string[] {
-                                    "548c26e4e668dac4a850a4c016916016", "ffed377b3e146f649b3e6d5767726a44", "c5e4bf0202becd0459c47b8184b4588f",
-                                    "3e113b397a21a3a4687cf2ed0c436ec8", "c6c2049a0c01e8a4d9904db8c9b84ca0", "e9b2a3d6f0fe0e4419a423e4d2ebe6f6",
-                                    "c8471dcde4c65fc459f7846c6a932a8c", "a73b565de9c31c14ebcd3317705ab17e", "bd23939e7362b8e40a3a39f595a2a1dc"
+                            we.projectile.behaviors = we.projectile.behaviors.Add(new CreateLightningEffectModel("CLEM_", 0.3f, new PrefabReference[] {
+                                    new("548c26e4e668dac4a850a4c016916016"), new("ffed377b3e146f649b3e6d5767726a44"), new("c5e4bf0202becd0459c47b8184b4588f"),
+                                    new("3e113b397a21a3a4687cf2ed0c436ec8"), new("c6c2049a0c01e8a4d9904db8c9b84ca0"), new("e9b2a3d6f0fe0e4419a423e4d2ebe6f6"),
+                                    new("c8471dcde4c65fc459f7846c6a932a8c"), new("a73b565de9c31c14ebcd3317705ab17e"), new("bd23939e7362b8e40a3a39f595a2a1dc")
                                 }, new float[] { 18, 18, 18, 50, 50, 50, 85, 85, 85 }),
                                 new LightningModel("LM_", 5, new ArcEmissionModel("AEM_", 3, 0, 360, null, false), 360, 5),
                                 new DamagePercentOfMaxModel("DPOMM_", 0.25f, new string[] { "Moabs" }, false),
@@ -96,13 +96,13 @@
                         beh[i] = am;
                     }
 
-                whitesnake.behaviors = beh.Add(new OverrideCamoDetectionModel("OCDM_", true), new PerRoundCashBonusTowerModel("PRCBTM_", 2500, 1.125f, 10, "CashText", true));
+                whitesnake.behaviors = beh.Add(new OverrideCamoDetectionModel("OCDM_", true), new PerRoundCashBonusTowerModel("PRCBTM_", 2500, 1.125f, 10, new("CashText"), true));
 
                 #region Light Pheonix
 
                 whitesnakePheonix = gm.towers.FirstOrDefault(a => a.baseId.Equals("PermaPhoenix")).Clone().Cast<TowerModel>();
-                whitesnakePheonix.display = "WhitesnakePheonix";
-                whitesnakePheonix.behaviors.First(a => a.GetIl2CppType() == Il2CppType.Of<DisplayModel>()).Cast<DisplayModel>().display = "WhitesnakePheonix";
+                whitesnakePheonix.display.guidRef = "WhitesnakePheonix";
+                whitesnakePheonix.behaviors.First(a => a.GetIl2CppType() == Il2CppType.Of<DisplayModel>()).Cast<DisplayModel>().display.guidRef = "WhitesnakePheonix";
                 var pbeh = whitesnakePheonix.behaviors;
 
                 for (var i = 0; i < pbeh.Length; i++) {
@@ -115,7 +115,7 @@
 
                             weap.emission = new AdoraEmissionModel("AEM_", 3, 45, null);
                             weap.projectile.ignorePierceExhaustion = true;
-                            weap.projectile.display = "WhitesnakePheonixProj";
+                            weap.projectile.display.guidRef = "WhitesnakePheonixProj";
                             weap.projectile.behaviors = weap.projectile.behaviors.Add(new DamagePercentOfMaxModel("DPOMM_", 0.0033f, new string[] { "NA" }, false),
                                 new TrackTargetWithinTimeModel("TTWM_", 9999999, true, false, 365, false, float.MaxValue, false, 3.48f, true));
 
@@ -140,15 +140,15 @@
                 }
 
                 whitesnakePheonix.behaviors = pbeh.Add(new OverrideCamoDetectionModel("OCDM_", true),
-                    new DisplayModel("DM_", "9ed0d0de732cabe48898f8dddb7023ca", 0, new(), 1, true, 0));
+                    new DisplayModel("DM_", new("9ed0d0de732cabe48898f8dddb7023ca"), 0, new(), 1, true, 0));
 
                 #endregion
 
                 #region Dark Pheonix
 
                 whitesnakeDarkPheonix = gm.towers.FirstOrDefault(a => a.baseId.Equals("PermaPhoenix")).Clone().Cast<TowerModel>();
-                whitesnakeDarkPheonix.display = "WhitesnakeDarkPheonix";
-                whitesnakeDarkPheonix.behaviors.First(a => a.GetIl2CppType() == Il2CppType.Of<DisplayModel>()).Cast<DisplayModel>().display = "WhitesnakeDarkPheonix";
+                whitesnakeDarkPheonix.display.guidRef = "WhitesnakeDarkPheonix";
+                whitesnakeDarkPheonix.behaviors.First(a => a.GetIl2CppType() == Il2CppType.Of<DisplayModel>()).Cast<DisplayModel>().display.guidRef = "WhitesnakeDarkPheonix";
                 whitesnakeDarkPheonix.behaviors.First(a => a.GetIl2CppType() == Il2CppType.Of<DisplayModel>()).Cast<DisplayModel>().positionOffset = new(0, 0, 10);
                 var dpbeh = whitesnakeDarkPheonix.behaviors;
 
@@ -161,7 +161,7 @@
                             weap.rateFrames *= 2;
 
                             weap.projectile.ignorePierceExhaustion = true;
-                            weap.projectile.display = "WhitesnakeDarkPheonixProj";
+                            weap.projectile.display.guidRef = "WhitesnakeDarkPheonixProj";
                             weap.projectile.behaviors = weap.projectile.behaviors.Add(new TrackTargetWithinTimeModel("TTWM_", 9999999, true, false, 365, false, float.MaxValue, false, 3.48f, true));
 
                             for (var j = 0; j < weap.projectile.behaviors.Length; j++) {
@@ -192,7 +192,7 @@
                 }
 
                 whitesnakeDarkPheonix.behaviors = dpbeh.Add(new OverrideCamoDetectionModel("OCDM_", true),
-                    new DisplayModel("DM_", "9ed0d0de732cabe48898f8dddb7023ca", 0, new(), 1, true, 0),
+                    new DisplayModel("DM_", new("9ed0d0de732cabe48898f8dddb7023ca"), 0, new(), 1, true, 0),
                     new TowerCreateTowerModel("TCTM_", whitesnakePheonix, true));
 
                 #endregion

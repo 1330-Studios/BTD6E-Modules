@@ -18,7 +18,6 @@
         MRROBOTO =                  1000000,
         VITAMINC =                  1000000,
         DAFTPUNK =                  1000000,
-        BLACKANDYELLOW =            100000,
         FLYMETOTHEMOON =            1000000,
         BURNINGDOWNTHEHOUSE =       100000,
         SHEERHEARTATTACK =          100000,
@@ -32,7 +31,13 @@
         DYNAMITE =                  100000,
         GOLD =                      100000,
         CRAZYDIAMOND =              1000000,
-        KILLERQUEEN =               100000
+        KILLERQUEEN =               100000,
+        BARRACUDA =                 100000,
+        LITTLETALKS =               1000000,
+        FASCINATION =               100000,
+        KINGCRIMSON =               100000,
+        MYSTERY =                   100000,
+        BLACKANDYELLOW =            100000,
     }
 
     public sealed class AddedTierName {
@@ -54,7 +59,7 @@
         public static readonly string MRROBOTO = "SuperMonkey-250";
         public static readonly string VITAMINC = "SuperMonkey-520";
         public static readonly string DAFTPUNK = "Quincy 20";
-        public static readonly string BLACKANDYELLOW = "HeliPilot-520";
+        //public static readonly string BLACKANDYELLOW = "HeliPilot-520";
         public static readonly string FLYMETOTHEMOON = "CaptainChurchill 20";
         public static readonly string BURNINGDOWNTHEHOUSE = "TackShooter-205";
         public static readonly string SHEERHEARTATTACK = "BombShooter-205";
@@ -69,5 +74,11 @@
         public static readonly string GOLD = "IceMonkey-205";
         public static readonly string CRAZYDIAMOND = "NinjaMonkey-Paragon";
         public static readonly string KILLERQUEEN = "SpikeFactory-500";
+        public static readonly string BARRACUDA = "MonkeyBuccaneer-500";
+        public static readonly string LITTLETALKS = "MonkeyBuccaneer-Paragon";
+        public static readonly string FASCINATION = "BoomerangMonkey-250";
+        public static readonly string KINGCRIMSON = "Druid-005";
+        public static readonly string MYSTERY = "NinjaMonkey-500";
+        public static readonly string BLACKANDYELLOW = "TackShooter-005";
     }
 }

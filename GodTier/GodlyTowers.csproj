@@ -12,6 +12,22 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <Optimize>False</Optimize>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Resources\box.png" />
+    <None Remove="Resources\crayon.bundle" />
+    <None Remove="Resources\crayonPor.png" />
+    <None Remove="Resources\McQueen.png" />
+    <None Remove="Resources\vicroy.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\box.png" />
+    <EmbeddedResource Include="Resources\crayon.bundle" />
+    <EmbeddedResource Include="Resources\crayonPor.png" />
+    <EmbeddedResource Include="Resources\McQueen.png" />
+    <EmbeddedResource Include="Resources\vicroy.png" />
+  </ItemGroup>
   
   <ItemGroup>
     <Reference Include="0Harmony">

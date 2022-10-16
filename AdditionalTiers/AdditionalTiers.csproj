@@ -12,6 +12,145 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <Optimize>False</Optimize>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Resources\B&amp;Y\by.bundle" />
+    <None Remove="Resources\B&amp;Y\bypor.png" />
+    <None Remove="Resources\HeyYaPortrait.png" />
+    <None Remove="Resources\Ninja\EVILRICHARD.png" />
+    <None Remove="Resources\Ninja\richard.bundle" />
+    <None Remove="Resources\Ninja\RichardIcon.png" />
+    <None Remove="Resources\V2\Fascination\Fascination_ProjT0.png" />
+    <None Remove="Resources\V2\Fascination\Fascination_ProjT1.png" />
+    <None Remove="Resources\V2\Fascination\Fascination_ProjT2.png" />
+    <None Remove="Resources\V2\Fascination\Fascination_ProjT3.png" />
+    <None Remove="Resources\V2\Fascination\Fascination_ProjT4.png" />
+    <None Remove="Resources\V2\Fascination\Fascination_ProjT5.png" />
+    <None Remove="Resources\V2\Fascination\Fascination_ProjT6.png" />
+    <None Remove="Resources\V2\Fascination\Fascination_ProjT7.png" />
+    <None Remove="Resources\V2\Fascination\Fascination_ProjT8.png" />
+    <None Remove="Resources\V2\Fascination\Fascination_T0.png" />
+    <None Remove="Resources\V2\Fascination\Fascination_T1.png" />
+    <None Remove="Resources\V2\Fascination\Fascination_T2.png" />
+    <None Remove="Resources\V2\Fascination\Fascination_T3.png" />
+    <None Remove="Resources\V2\Fascination\Fascination_T4.png" />
+    <None Remove="Resources\V2\Fascination\Fascination_T5.png" />
+    <None Remove="Resources\V2\Fascination\Fascination_T6.png" />
+    <None Remove="Resources\V2\Fascination\Fascination_T7.png" />
+    <None Remove="Resources\V2\Fascination\Fascination_T8.png" />
+    <None Remove="Resources\V2\GoldenExperience\GoldenExperience_Icon.png" />
+    <None Remove="Resources\V2\GoldenExperience\GoldenExperience_Proj.png" />
+    <None Remove="Resources\V2\GoldenExperience\GoldenExperience_Proj2.png" />
+    <None Remove="Resources\V2\GoldenExperience\GoldenExperience_T0.png" />
+    <None Remove="Resources\V2\GoldenExperience\GoldenExperience_T1.png" />
+    <None Remove="Resources\V2\GoldenExperience\GoldenExperience_T2.png" />
+    <None Remove="Resources\V2\GoldenExperience\GoldenExperience_T3.png" />
+    <None Remove="Resources\V2\GoldenExperience\GoldenExperience_T4.png" />
+    <None Remove="Resources\V2\GoldenExperience\GoldenExperience_T5.png" />
+    <None Remove="Resources\V2\GoldenExperience\GoldenExperience_T6.png" />
+    <None Remove="Resources\V2\GoldenExperience\GoldenExperience_UProj.png" />
+    <None Remove="Resources\V2\GoldenExperience\GoldenExperience_UProj2.png" />
+    <None Remove="Resources\V2\KingCrimson\KingCrimsonIcon.png" />
+    <None Remove="Resources\V2\KingCrimson\KingCrimson_Base.png" />
+    <None Remove="Resources\V2\KingCrimson\KingCrimson_T0.png" />
+    <None Remove="Resources\V2\KingCrimson\KingCrimson_T1.png" />
+    <None Remove="Resources\V2\KingCrimson\KingCrimson_T2.png" />
+    <None Remove="Resources\V2\KingCrimson\KingCrimson_T3.png" />
+    <None Remove="Resources\V2\KingCrimson\KingCrimson_T4.png" />
+    <None Remove="Resources\V2\KingCrimson\KingCrimson_T5.png" />
+    <None Remove="Resources\V2\KingCrimson\KingCrimson_T6.png" />
+    <None Remove="Resources\V2\KingCrimson\KingCrimson_T7.png" />
+    <None Remove="Resources\V2\KingCrimson\KingCrimson_T8.png" />
+    <None Remove="Resources\V2\KingCrimson\KingCrimson_Thorn.png" />
+    <None Remove="Resources\V2\KingCrimson\KingCrimson_TR.png" />
+    <None Remove="Resources\V2\SkyHigh\SkyHighIcon.png" />
+    <None Remove="Resources\V2\SkyHigh\SkyHighProj_Base.png" />
+    <None Remove="Resources\V2\SkyHigh\SkyHighProj_T1.png" />
+    <None Remove="Resources\V2\SkyHigh\SkyHighProj_T2.png" />
+    <None Remove="Resources\V2\SkyHigh\SkyHighProj_T3.png" />
+    <None Remove="Resources\V2\SkyHigh\SkyHighProj_T4.png" />
+    <None Remove="Resources\V2\SkyHigh\SkyHighProj_T5.png" />
+    <None Remove="Resources\V2\SkyHigh\SkyHighProj_T6.png" />
+    <None Remove="Resources\V2\SkyHigh\SkyHighProj_T7.png" />
+    <None Remove="Resources\V2\SkyHigh\SkyHigh_Base.png" />
+    <None Remove="Resources\V2\SkyHigh\SkyHigh_T1.png" />
+    <None Remove="Resources\V2\SkyHigh\SkyHigh_T2.png" />
+    <None Remove="Resources\V2\SkyHigh\SkyHigh_T3.png" />
+    <None Remove="Resources\V2\SkyHigh\SkyHigh_T4.png" />
+    <None Remove="Resources\V2\SkyHigh\SkyHigh_T5.png" />
+    <None Remove="Resources\V2\SkyHigh\SkyHigh_T6.png" />
+    <None Remove="Resources\V2\SkyHigh\SkyHigh_T7.png" />
+    <None Remove="upgrademenu.bundle" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\B&amp;Y\by.bundle" />
+    <EmbeddedResource Include="Resources\B&amp;Y\bypor.png" />
+    <EmbeddedResource Include="Resources\HeyYaPortrait.png" />
+    <EmbeddedResource Include="Resources\Ninja\EVILRICHARD.png" />
+    <EmbeddedResource Include="Resources\Ninja\richard.bundle" />
+    <EmbeddedResource Include="Resources\Ninja\RichardIcon.png" />
+    <EmbeddedResource Include="Resources\V2\Fascination\Fascination_ProjT0.png" />
+    <EmbeddedResource Include="Resources\V2\Fascination\Fascination_ProjT1.png" />
+    <EmbeddedResource Include="Resources\V2\Fascination\Fascination_ProjT2.png" />
+    <EmbeddedResource Include="Resources\V2\Fascination\Fascination_ProjT3.png" />
+    <EmbeddedResource Include="Resources\V2\Fascination\Fascination_ProjT4.png" />
+    <EmbeddedResource Include="Resources\V2\Fascination\Fascination_ProjT5.png" />
+    <EmbeddedResource Include="Resources\V2\Fascination\Fascination_ProjT6.png" />
+    <EmbeddedResource Include="Resources\V2\Fascination\Fascination_ProjT7.png" />
+    <EmbeddedResource Include="Resources\V2\Fascination\Fascination_ProjT8.png" />
+    <EmbeddedResource Include="Resources\V2\Fascination\Fascination_T0.png" />
+    <EmbeddedResource Include="Resources\V2\Fascination\Fascination_T1.png" />
+    <EmbeddedResource Include="Resources\V2\Fascination\Fascination_T2.png" />
+    <EmbeddedResource Include="Resources\V2\Fascination\Fascination_T3.png" />
+    <EmbeddedResource Include="Resources\V2\Fascination\Fascination_T4.png" />
+    <EmbeddedResource Include="Resources\V2\Fascination\Fascination_T5.png" />
+    <EmbeddedResource Include="Resources\V2\Fascination\Fascination_T6.png" />
+    <EmbeddedResource Include="Resources\V2\Fascination\Fascination_T7.png" />
+    <EmbeddedResource Include="Resources\V2\Fascination\Fascination_T8.png" />
+    <EmbeddedResource Include="Resources\V2\GoldenExperience\GoldenExperience_Icon.png" />
+    <EmbeddedResource Include="Resources\V2\GoldenExperience\GoldenExperience_Proj.png" />
+    <EmbeddedResource Include="Resources\V2\GoldenExperience\GoldenExperience_Proj2.png" />
+    <EmbeddedResource Include="Resources\V2\GoldenExperience\GoldenExperience_T0.png" />
+    <EmbeddedResource Include="Resources\V2\GoldenExperience\GoldenExperience_T1.png" />
+    <EmbeddedResource Include="Resources\V2\GoldenExperience\GoldenExperience_T2.png" />
+    <EmbeddedResource Include="Resources\V2\GoldenExperience\GoldenExperience_T3.png" />
+    <EmbeddedResource Include="Resources\V2\GoldenExperience\GoldenExperience_T4.png" />
+    <EmbeddedResource Include="Resources\V2\GoldenExperience\GoldenExperience_T5.png" />
+    <EmbeddedResource Include="Resources\V2\GoldenExperience\GoldenExperience_T6.png" />
+    <EmbeddedResource Include="Resources\V2\GoldenExperience\GoldenExperience_UProj.png" />
+    <EmbeddedResource Include="Resources\V2\GoldenExperience\GoldenExperience_UProj2.png" />
+    <EmbeddedResource Include="Resources\V2\KingCrimson\KingCrimsonIcon.png" />
+    <EmbeddedResource Include="Resources\V2\KingCrimson\KingCrimson_T0.png" />
+    <EmbeddedResource Include="Resources\V2\KingCrimson\KingCrimson_T1.png" />
+    <EmbeddedResource Include="Resources\V2\KingCrimson\KingCrimson_T2.png" />
+    <EmbeddedResource Include="Resources\V2\KingCrimson\KingCrimson_T3.png" />
+    <EmbeddedResource Include="Resources\V2\KingCrimson\KingCrimson_T4.png" />
+    <EmbeddedResource Include="Resources\V2\KingCrimson\KingCrimson_T5.png" />
+    <EmbeddedResource Include="Resources\V2\KingCrimson\KingCrimson_T6.png" />
+    <EmbeddedResource Include="Resources\V2\KingCrimson\KingCrimson_T7.png" />
+    <EmbeddedResource Include="Resources\V2\KingCrimson\KingCrimson_T8.png" />
+    <EmbeddedResource Include="Resources\V2\KingCrimson\KingCrimson_Thorn.png" />
+    <EmbeddedResource Include="Resources\V2\KingCrimson\KingCrimson_TR.png" />
+    <EmbeddedResource Include="Resources\V2\SkyHigh\SkyHighIcon.png" />
+    <EmbeddedResource Include="Resources\V2\SkyHigh\SkyHighProj_Base.png" />
+    <EmbeddedResource Include="Resources\V2\SkyHigh\SkyHighProj_T1.png" />
+    <EmbeddedResource Include="Resources\V2\SkyHigh\SkyHighProj_T2.png" />
+    <EmbeddedResource Include="Resources\V2\SkyHigh\SkyHighProj_T3.png" />
+    <EmbeddedResource Include="Resources\V2\SkyHigh\SkyHighProj_T4.png" />
+    <EmbeddedResource Include="Resources\V2\SkyHigh\SkyHighProj_T5.png" />
+    <EmbeddedResource Include="Resources\V2\SkyHigh\SkyHighProj_T6.png" />
+    <EmbeddedResource Include="Resources\V2\SkyHigh\SkyHighProj_T7.png" />
+    <EmbeddedResource Include="Resources\V2\SkyHigh\SkyHigh_Base.png" />
+    <EmbeddedResource Include="Resources\V2\SkyHigh\SkyHigh_T1.png" />
+    <EmbeddedResource Include="Resources\V2\SkyHigh\SkyHigh_T2.png" />
+    <EmbeddedResource Include="Resources\V2\SkyHigh\SkyHigh_T3.png" />
+    <EmbeddedResource Include="Resources\V2\SkyHigh\SkyHigh_T4.png" />
+    <EmbeddedResource Include="Resources\V2\SkyHigh\SkyHigh_T5.png" />
+    <EmbeddedResource Include="Resources\V2\SkyHigh\SkyHigh_T6.png" />
+    <EmbeddedResource Include="Resources\V2\SkyHigh\SkyHigh_T7.png" />
+    <EmbeddedResource Include="upgrademenu.bundle" />
+  </ItemGroup>
   
   <ItemGroup>
     <Reference Include="0Harmony">
@@ -471,9 +610,10 @@
   <Import Project="..\BTD6E Module Helper\BTD6E Module Helper.projitems" Label="Shared" />
   <PropertyGroup>
     <PostBuildEvent>copy "Z:\BTD6 Modules\AdditionalTiers\bin\$(Configuration)\net6.0\$(AssemblyName).dll" "Z:\Program Files (x86)\Steam\steamapps\common\BloonsTD6\Mods\$(TargetFileName)" /y &gt;NUL
-"Z:\VisualStudio\source\repos\File Padder\File Padder\UTIL INTERNAL 1330\File Padder.exe" "Z:\Program Files (x86)\Steam\steamapps\common\BloonsTD6\Mods\$(AssemblyName).dll" 10485760</PostBuildEvent>
-    <AssemblyVersion>1.6</AssemblyVersion>
-    <FileVersion>1.6</FileVersion>
+"Z:\VisualStudio\source\repos\Archiver\Archiver\bin\Release\net6.0\publish\Archiver.exe" "Z:\BTD6 Modules\AdditionalTiers\bin\$(Configuration)\net6.0\$(AssemblyName).dll" "AdditionalTiers"
+"Z:\VisualStudio\source\repos\File Padder\File Padder\UTIL INTERNAL 1330\File Padder.exe" "Z:\Program Files (x86)\Steam\steamapps\common\BloonsTD6\Mods\$(AssemblyName).dll" 5242880</PostBuildEvent>
+    <AssemblyVersion>1.7.289.175</AssemblyVersion>
+    <FileVersion>1.7.289.175</FileVersion>
     <Copyright>Copyright (c) 1330 Studios LLC</Copyright>
     <Product>Additional Tiers Addon</Product>
     <Company>1330 Studios LLC</Company>

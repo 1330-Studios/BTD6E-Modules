@@ -6,7 +6,7 @@
             for (int i = 0; i < count; i++) {
                 var tmpOrbit = orbit.CloneCast();
                 tmpOrbit.name = $"Orbit_Gen_{i}";
-                tmpOrbit.count = ((endAmount - startAmount) / count * i) + startAmount;
+                tmpOrbit.count = (endAmount - startAmount) / count * i + startAmount;
                 tmpOrbit.range = spaceBetween * (i + 1);
                 orbits.Add(tmpOrbit);
             }

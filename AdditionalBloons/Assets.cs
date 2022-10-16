@@ -1,88 +1,77 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using System.Drawing;
 
 using AdditionalBloons.Resources;
 using AdditionalBloons.Utils;
 
+using Assets.Scripts.Unity;
+using UnityEngine.AddressableAssets;
+using UnityEngine.U2D;
+
+using Color = UnityEngine.Color;
+using Image = UnityEngine.UI.Image;
+
 namespace AdditionalBloons.Tasks {
     public sealed class Assets {
-        [HarmonyPatch(typeof(Factory), nameof(Factory.FindAndSetupPrototypeAsync))]
-        public static class DisplayFactory {
-            private static List<AssetInfo> allAssetsKnown = new();
+        [HarmonyPatch(typeof(Factory.__c__DisplayClass21_0), nameof(Factory.__c__DisplayClass21_0._CreateAsync_b__0))]
+        public sealed class NDisplayFactory {
+            private static AssetBundle DOOMBUNDLE = AssetBundle.LoadFromMemory("AdditionalBloons.doom.bundle".GetEmbeddedResource());
 
             [HarmonyPrefix]
-            public static bool Prefix(Factory __instance, string objectId, Il2CppSystem.Action<UnityDisplayNode> onComplete) {
-                foreach (var curAsset in allAssetsKnown) {
-                    if (objectId.Equals(curAsset.CustomAssetName)) {
-                        if (curAsset.RendererType == RendererType.SPRITERENDERER) {
-                            GameObject obj = Object.Instantiate(new GameObject(objectId + "(Clone)"), __instance.PrototypeRoot);
-                            var sr = obj.AddComponent<SpriteRenderer>();
-                            sr.sprite = SpriteBuilder.createBloon(CacheBuilder.Get(objectId));
-                            var udn = obj.AddComponent<UnityDisplayNode>();
-                            udn.transform.position = new(-3000, 10);
+            private static bool Prefix(Factory.__c__DisplayClass21_0 __instance, ref UnityDisplayNode prototype) {
+                var factory = __instance.__4__this;
+                var prefabReference = __instance.objectId;
+                var guid = prefabReference.guidRef;
+                var onComplete = __instance.onComplete;
 
-                            if (objectId.Contains("JailBars"))
-                                udn.gameObject.AddComponent<MoveUp>();
+                if (prototype == null && guid.Equals("DOOM")) {
+                    factory.FindAndSetupPrototypeAsync(new() { guidRef = "06bf915dea753ad43b772045caf1d906" }, new Action<UnityDisplayNode>(node => {
+                        Transform transform = Game.instance.prototypeObjects.transform;
 
-                            onComplete.Invoke(udn);
+                        var orig = DOOMBUNDLE.LoadAsset("SupaDoom").Cast<GameObject>();
+                        orig.transform.parent = transform;
+                        GameObject gameObject = Object.Instantiate(orig, transform);
+                        gameObject.name = guid + " (Clone)";
 
-                            return false;
-                        }
-                        if (curAsset.RendererType == RendererType.SKINNEDMESHRENDERER) {
-                            UnityDisplayNode udn = null!;
-                            __instance.FindAndSetupPrototypeAsync(curAsset.BTDAssetName, new Action<UnityDisplayNode>(btdUdn => {
-                                var instance = Object.Instantiate(btdUdn, __instance.PrototypeRoot);
-                                instance.name = objectId + "(Clone)";
-                                instance.RecalculateGenericRenderers();
+                        var resourceManager = Addressables.Instance.ResourceManager;
+                        factory.prototypeHandles[prefabReference] = resourceManager.CreateCompletedOperation(gameObject, "");
 
-                                for (var i = 0; i < instance.genericRenderers.Length; i++) {
-                                    instance.genericRenderers[i].material.mainTexture = CacheBuilder.Get(objectId);
-                                    if (objectId.StartsWith("FireBAD", StringComparison.OrdinalIgnoreCase))
-                                        instance.genericRenderers[i].material.SetColor("_OutlineColor", new Color32(150, 0, 0, 255));
-                                    else if (objectId.StartsWith("CopBAD", StringComparison.OrdinalIgnoreCase))
-                                        instance.genericRenderers[i].material.SetColor("_OutlineColor", new Color32(0, 12, 38, 255));
-                                }
+                        var udn = gameObject.AddComponent<UnityDisplayNode>();
+                        udn.transform.position = new(-3000, 10);
 
-                                udn = instance;
-                                onComplete.Invoke(udn);
-                            }));
-                            return false;
-                        }
-                    }
+                        Vector3 vector = new(Factory.kOffscreenPosition.x, 0f, 0f);
+                        Quaternion identity = Quaternion.identity;
+                        GameObject gameObject2 = Object.Instantiate(udn.gameObject, vector, identity, factory.DisplayRoot);
+                        gameObject2.SetActive(true);
+                        UnityDisplayNode component = gameObject2.GetComponent<UnityDisplayNode>();
+                        component.Create();
+                        component.cloneOf = prefabReference;
+                        factory.active.Add(component);
+                        onComplete.Invoke(component);
+                    }));
+                    return false;
                 }
+
                 return true;
             }
-
-            public static void Build() {
-                for (var en = BloonCreator.assets.GetEnumerator(); en.MoveNext();)
-                    allAssetsKnown.Add(en.Current);
-            }
-
-            public static void Flush() => allAssetsKnown.Clear();
         }
 
-        [HarmonyPatch(typeof(ResourceLoader), nameof(ResourceLoader.LoadSpriteFromSpriteReferenceAsync))]
-        public static class ResourceLoader_Patch {
-            [HarmonyPostfix]
-            [SuppressMessage("Interoperability", "CA1416:Validate platform compatibility", Justification = "Windows rules linux drools!")]
-            public static void Postfix(SpriteReference reference, Image image) {
-                if (reference != null) {
-                    var bitmap = BloonSprites.ResourceManager.GetObject(reference.guidRef) as byte[];
-                    if (bitmap != null) {
-                        var texture = new Texture2D(0, 0);
-                        ImageConversion.LoadImage(texture, bitmap);
-                        image.canvasRenderer.SetTexture(texture);
-                        image.sprite = Sprite.Create(texture, new(0, 0, texture.width, texture.height), new(), 10.2f);
-                    } else {
-                        var b = BloonSprites.ResourceManager.GetObject(reference.guidRef);
-                        if (b != null) {
-                            var bm = new ImageConverter().ConvertTo(b, typeof(byte[])) as byte[];
-                            var texture = new Texture2D(0, 0);
-                            ImageConversion.LoadImage(texture, bm);
-                            image.canvasRenderer.SetTexture(texture);
-                            image.sprite = Sprite.Create(texture, new(0, 0, texture.width, texture.height), new(), 10.2f);
-                        }
+        [HarmonyPatch(typeof(SpriteAtlas), nameof(SpriteAtlas.GetSprite))]
+        internal static class SpriteAtlas_GetSprite {
+            [HarmonyPrefix]
+            private static bool Prefix(SpriteAtlas __instance, string name, ref Sprite __result) {
+                if (__instance.name == "Ui") {
+                    var resource = name.Trim().GetEmbeddedResource();
+                    if (resource?.Length > 0) {
+                        var texture = resource.ToTexture();
+
+                        __result = Sprite.Create(texture, new(0, 0, texture.width, texture.height), new(), 10.2f);
+                        __result.texture.mipMapBias = -1;
+                        return false;
                     }
                 }
+
+                return true;
             }
         }
     }

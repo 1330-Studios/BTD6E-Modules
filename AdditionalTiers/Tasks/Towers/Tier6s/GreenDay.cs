@@ -14,10 +14,10 @@ internal class GreenDay : TowerTask {
                 time++;
                 return;
             }
-            TransformationManager.VALUE.Add(new(identifier, tts.tower.Id));
+            TransformationManager.VALUE.Add(new(identifier, tts.tower.Id.Id));
             tts.tower.worth = 0;
             tts.tower.UpdateRootModel(gd);
-            tts.sim.simulation.CreateTextEffect(new(tts.position), "UpgradedText", 10, "Upgraded!", false);
+            tts.sim.simulation.CreateTextEffect(new(tts.position), new("UpgradedText"), 10, "Upgraded!", false);
             AbilityMenu.instance.TowerChanged(tts);
             AbilityMenu.instance.RebuildAbilities();
         };
@@ -42,9 +42,9 @@ internal class GreenDay : TowerTask {
             AttackModel clone2 = activatedAttack.CloneCast();
             clone2.weapons[0].rate /= 2;
 
-            activatedAttack.weapons[0].projectile.display = "GreenDayProj";
-            clone.weapons[0].projectile.display = "GreenDayProj2";
-            clone2.weapons[0].projectile.display = "GreenDayProj3";
+            activatedAttack.weapons[0].projectile.display.guidRef = "GreenDayProj";
+            clone.weapons[0].projectile.display.guidRef = "GreenDayProj2";
+            clone2.weapons[0].projectile.display.guidRef = "GreenDayProj3";
 
             clone.weapons[0].emission.Cast<ArcEmissionModel>().count = 8;
             clone2.weapons[0].emission.Cast<ArcEmissionModel>().count = 16;

@@ -13,10 +13,10 @@
                     time++;
                     return;
                 }
-                TransformationManager.VALUE.Add(new(identifier, tts.tower.Id));
+                TransformationManager.VALUE.Add(new(identifier, tts.tower.Id.Id));
                 tts.tower.worth = 0;
                 tts.tower.UpdateRootModel(scaryMonsters);
-                tts.sim.simulation.CreateTextEffect(new(tts.position), "UpgradedText", 10, "Upgraded!", false);
+                tts.sim.simulation.CreateTextEffect(new(tts.position), new("UpgradedText"), 10, "Upgraded!", false);
                 AbilityMenu.instance.TowerChanged(tts);
                 AbilityMenu.instance.RebuildAbilities();
             };
@@ -27,10 +27,10 @@
                 scaryMonsters.cost = 0;
                 scaryMonsters.name = "Scary Monsters";
                 scaryMonsters.baseId = "BoomerangMonkey";
-                scaryMonsters.display = "ScaryMonsters";
+                scaryMonsters.display.guidRef = "ScaryMonsters";
                 scaryMonsters.dontDisplayUpgrades = true;
                 scaryMonsters.portrait = new("ScaryMonstersIcon");
-                scaryMonsters.behaviors.First(a => a.GetIl2CppType() == Il2CppType.Of<DisplayModel>()).Cast<DisplayModel>().display = "ScaryMonsters";
+                scaryMonsters.behaviors.First(a => a.GetIl2CppType() == Il2CppType.Of<DisplayModel>()).Cast<DisplayModel>().display.guidRef = "ScaryMonsters";
                 var beh = scaryMonsters.behaviors;
                 ProjectileModel orbitProj = null;
 
@@ -41,9 +41,9 @@
                         wm.projectile.scale *= 1.01f;
                         wm.projectile.ignorePierceExhaustion = true;
                         wm.projectile.ignoreBlockers = true;
-                        wm.projectile.display = "ScaryMonstersProj";
+                        wm.projectile.display.guidRef = "ScaryMonstersProj";
 
-                        wm.projectile.behaviors = wm.projectile.behaviors.Add(new DisplayModel("DM_", "2171756de70c7744cb59ec3302393d2a", 0, new(), 0.7f, true, 0));
+                        wm.projectile.behaviors = wm.projectile.behaviors.Add(new DisplayModel("DM_", new("2171756de70c7744cb59ec3302393d2a"), 0, new(), 0.7f, true, 0));
 
                         orbitProj = wm.projectile.Clone().Cast<ProjectileModel>();
 

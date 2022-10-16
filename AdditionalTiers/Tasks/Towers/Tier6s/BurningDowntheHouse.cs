@@ -13,10 +13,10 @@
                     time++;
                     return;
                 }
-                TransformationManager.VALUE.Add(new(identifier, tts.tower.Id));
+                TransformationManager.VALUE.Add(new(identifier, tts.tower.Id.Id));
                 tts.tower.worth = 0;
                 tts.tower.UpdateRootModel(burningDownTheHouse);
-                tts.sim.simulation.CreateTextEffect(new(tts.position), "UpgradedText", 10, "Upgraded!", false);
+                tts.sim.simulation.CreateTextEffect(new(tts.position), new("UpgradedText"), 10, "Upgraded!", false);
                 AbilityMenu.instance.TowerChanged(tts);
                 AbilityMenu.instance.RebuildAbilities();
             };
@@ -41,7 +41,7 @@
                         am.behaviors = am.behaviors.Remove(a => a.GetIl2CppType() == Il2CppType.Of<DisplayModel>());
 
                         for (var j = 0; j < am.weapons.Length; j++) {
-                            am.weapons[j].projectile.display = "BurningDownTheHouseProj";
+                            am.weapons[j].projectile.display.guidRef = "BurningDownTheHouseProj";
                             am.weapons[j].projectile.pierce *= 5;
                             am.weapons[j].projectile.scale *= 1.25f;
                             am.weapons[j].projectile.pierce = 9999999;

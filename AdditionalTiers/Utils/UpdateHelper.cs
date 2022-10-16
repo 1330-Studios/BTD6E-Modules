@@ -29,7 +29,9 @@
 
             bool UpdateAvailable() {
                 try {
+#pragma warning disable SYSLIB0014
                     dynamic json = JsonConvert.DeserializeObject<dynamic>(new WebClient().DownloadString("http://1330studios.com/btd6_info.json"));
+#pragma warning restore SYSLIB0014
                     for (int i = 0; i < json.Count; i++)
                         if (json[i]["Name"].Equals(modName) && !json[i]["Versions"][0]["ReadableVersion"].Contains("(Testing)")) {
                             Process.Start(json[i]["Versions"][0]["DownloadLink"]);

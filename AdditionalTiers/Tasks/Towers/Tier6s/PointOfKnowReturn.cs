@@ -14,11 +14,11 @@
                     time++;
                     return;
                 }
-                TransformationManager.VALUE.Add(new(identifier, tts.tower.Id));
+                TransformationManager.VALUE.Add(new(identifier, tts.tower.Id.Id));
                 tts.tower.worth = 0;
                 tts.tower.UpdateRootModel(POKR);
                 tts.tower.display.SetScaleOffset(new(1.2f, 1.2f, 1.2f));
-                tts.sim.simulation.CreateTextEffect(new(tts.position), "UpgradedText", 10, "Upgraded!", false);
+                tts.sim.simulation.CreateTextEffect(new(tts.position), new("UpgradedText"), 10, "Upgraded!", false);
                 AbilityMenu.instance.TowerChanged(tts);
                 AbilityMenu.instance.RebuildAbilities();
             };
@@ -29,11 +29,11 @@
                 POKR.cost = 0;
                 POKR.name = "Point of no Return";
                 POKR.baseId = "BombShooter";
-                POKR.display = "PONR";
+                POKR.display.guidRef = "PONR";
                 POKR.dontDisplayUpgrades = true;
                 POKR.portrait = new("PONRIcon");
                 POKR.behaviors.First(a => a.GetIl2CppType() == Il2CppType.Of<DisplayModel>())
-                    .Cast<DisplayModel>().display = "PONR";
+                    .Cast<DisplayModel>().display.guidRef = "PONR";
                 var beh = POKR.behaviors;
                 ProjectileModel proj = null;
                 ProjectileModel proj2 = null;
@@ -52,7 +52,7 @@
                             new TrackTargetWithinTimeModel("TrackTargetWithinTimeModel_",
                                 9999999, true, false, 361, false, 9999999, false, 8f, true).Cast<Model>());
                         am.weapons[0].projectile.scale = 1.2f;
-                        am.weapons[0].projectile.display = "PONRProj";
+                        am.weapons[0].projectile.display.guidRef = "PONRProj";
                         am.weapons[0].rate *= 4;
                         am.weapons[0].rateFrames *= 4;
                         am.weapons[0].rate /= 3;

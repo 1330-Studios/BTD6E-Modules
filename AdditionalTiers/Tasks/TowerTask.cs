@@ -8,6 +8,8 @@
         public Func<TowerModel> getTower;
         public string identifier;
         public AssetStack assetsToRead = new();
+        public AssetStack v2AssetStack = new();
+        public List<CombinationAssets> assetsToCombine = null!;
         public string baseTower;
         public AddedTierEnum tower;
     }

@@ -14,10 +14,10 @@
                     time++;
                     return;
                 }
-                TransformationManager.VALUE.Add(new(identifier, tts.tower.Id));
+                TransformationManager.VALUE.Add(new(identifier, tts.tower.Id.Id));
                 tts.tower.worth = 0;
                 tts.tower.UpdateRootModel(NSP);
-                tts.sim.simulation.CreateTextEffect(new(tts.position), "UpgradedText", 10, "Upgraded!", false);
+                tts.sim.simulation.CreateTextEffect(new(tts.position), new("UpgradedText"), 10, "Upgraded!", false);
             };
             gameLoad += gm => {
                 NSP = gm.towers.First(a => a.name.Contains("NinjaMonkey-520")).Clone().Cast<TowerModel>();
@@ -26,11 +26,11 @@
                 NSP.cost = 0;
                 NSP.name = "NSP";
                 NSP.baseId = "NinjaMonkey";
-                NSP.display = "NinjaSexParty";
+                NSP.display.guidRef = "NinjaSexParty";
                 NSP.dontDisplayUpgrades = true;
                 NSP.portrait = new("NinjaSexPartyIcon");
                 NSP.behaviors.First(a => a.GetIl2CppType() == Il2CppType.Of<DisplayModel>())
-                    .Cast<DisplayModel>().display = "NinjaSexParty";
+                    .Cast<DisplayModel>().display.guidRef = "NinjaSexParty";
                 var beh = NSP.behaviors;
 
                 for (var i = 0; i < beh.Length; i++) {
@@ -38,7 +38,7 @@
                     if (behavior.GetIl2CppType() == Il2CppType.Of<AttackModel>()) {
                         var am = behavior.Cast<AttackModel>();
                         am.range = 150;
-                        am.weapons[0].projectile.display = "NinjaSexPartyProj";
+                        am.weapons[0].projectile.display.guidRef = "NinjaSexPartyProj";
                         am.weapons[0].rate *= 4;
                         am.weapons[0].rateFrames *= 4;
                         am.weapons[0].rate /= 3;

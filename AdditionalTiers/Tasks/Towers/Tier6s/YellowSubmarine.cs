@@ -13,10 +13,10 @@
                     time++;
                     return;
                 }
-                TransformationManager.VALUE.Add(new(identifier, tts.tower.Id));
+                TransformationManager.VALUE.Add(new(identifier, tts.tower.Id.Id));
                 tts.tower.worth = 0;
                 tts.tower.UpdateRootModel(yellowSubmarine);
-                tts.sim.simulation.CreateTextEffect(new(tts.position), "UpgradedText", 10, "Upgraded!", false);
+                tts.sim.simulation.CreateTextEffect(new(tts.position), new("UpgradedText"), 10, "Upgraded!", false);
                 AbilityMenu.instance.TowerChanged(tts);
                 AbilityMenu.instance.RebuildAbilities();
             };
@@ -28,11 +28,11 @@
                 yellowSubmarine.cost = 0;
                 yellowSubmarine.name = "Yellow Submarine";
                 yellowSubmarine.baseId = "MonkeySub";
-                yellowSubmarine.display = "YellowSubmarine";
+                yellowSubmarine.display.guidRef = "YellowSubmarine";
                 yellowSubmarine.dontDisplayUpgrades = true;
                 yellowSubmarine.portrait = new("YellowSubmarineIcon");
                 yellowSubmarine.behaviors.First(a => a.GetIl2CppType() == Il2CppType.Of<DisplayModel>())
-                    .Cast<DisplayModel>().display = "YellowSubmarine";
+                    .Cast<DisplayModel>().display.guidRef = "YellowSubmarine";
                 var beh = yellowSubmarine.behaviors;
                 ProjectileModel projectile = null;
                 for (int i = 0; i < beh.Length; i++) {

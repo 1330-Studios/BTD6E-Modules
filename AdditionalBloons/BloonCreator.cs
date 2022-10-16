@@ -70,7 +70,55 @@ namespace AdditionalBloons {
 
             #endregion
 
-            #region Coconut
+            #region Cop BAD
+
+            var copBAD = __result.bloons.First(a => a.baseId.Equals("Bad")).CloneCast();
+            copBAD.display = new() { guidRef = "DOOM" };
+            copBAD.icon = new() { guidRef = "Ui[AdditionalBloons.Resources.CopBAD.CopBADIcon.png]" };
+            copBAD.Speed /= 3;
+            copBAD.maxHealth = copBAD.leakDamage = 500_500_500;
+            copBAD.tags = new Il2CppStringArray(new string[] { "DOOM", "NA" });
+            copBAD.damageDisplayStates = Array.Empty<DamageStateModel>();
+            for (int i = 0; i < copBAD.behaviors.Length; i++) {
+                var behavior = copBAD.behaviors[i];
+
+                if (behavior.GetIl2CppType() == Il2CppType.Of<DamageStateModel>()) {
+                    behavior.Cast<DamageStateModel>().displayPath = new() { guidRef = "DOOM" };
+                }
+
+                copBAD.behaviors[i] = behavior;
+            }
+
+            bloons.Add(copBAD);
+            
+            #endregion
+
+            #endregion
+        }
+
+        internal static bool BloonMenuCreate(ref Il2CppSystem.Collections.Generic.List<BloonModel> sortedBloons) {
+            for (int i = 0; i < bloons.Count; i++) sortedBloons.Add(bloons[i]);
+            return true;
+        }
+
+        internal static bool SpawnBloon(ref SpawnBloonButton __instance) {
+            for (int i = 0; i < bloons.Count; i++)
+                if (__instance.model.display.Equals(bloons[i].display)) {
+                    int amount = int.Parse(__instance.count.text);
+                    int delay = int.Parse(__instance.rate.text);
+
+                    BloonTaskRunner.bloonQueue.Enqueue(new(bloons[i], amount, delay));
+
+                    return false;
+                }
+
+            return true;
+        }
+    }
+}
+
+/*
+#region Coconut
 
             for (int i = 1; i < 6; i++) assets.Add(new($"Coconut{i}", bloonBase.display, RendererType.SPRITERENDERER));
 
@@ -136,7 +184,7 @@ namespace AdditionalBloons {
             flameBAD.display = "FireBAD0";
             flameBAD.icon = new("FireBADIcon");
             flameBAD.radius *= 1.5f;
-            flameBAD.maxHealth = 1000000f;
+            flameBAD.maxHealth = 30000000f;
             flameBAD.tags = new Il2CppStringArray(new string[] { "FireBAD", "NA" });
             flameBAD.damageDisplayStates = new(new DamageStateModel[] {
                 new DamageStateModel("DamageStateModel_4", "FireBAD4", 0.2f),
@@ -285,29 +333,4 @@ namespace AdditionalBloons {
             
 
             #endregion
-
-            #endregion
-
-            Tasks.Assets.DisplayFactory.Build();
-        }
-
-        internal static bool BloonMenuCreate(ref Il2CppSystem.Collections.Generic.List<BloonModel> sortedBloons) {
-            for (int i = 0; i < bloons.Count; i++) sortedBloons.Add(bloons[i]);
-            return true;
-        }
-
-        internal static bool SpawnBloon(ref SpawnBloonButton __instance) {
-            for (int i = 0; i < bloons.Count; i++)
-                if (__instance.model.display.Equals(bloons[i].display)) {
-                    int amount = int.Parse(__instance.count.text);
-                    int delay = int.Parse(__instance.rate.text);
-
-                    BloonTaskRunner.bloonQueue.Enqueue(new(bloons[i], amount, delay));
-
-                    return false;
-                }
-
-            return true;
-        }
-    }
-}
+*/

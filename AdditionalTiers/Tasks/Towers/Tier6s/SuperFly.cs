@@ -16,10 +16,10 @@ namespace AdditionalTiers.Tasks.Towers.Tier6s {
                     time++;
                     return;
                 }
-                TransformationManager.VALUE.Add(new(identifier, tts.tower.Id));
+                TransformationManager.VALUE.Add(new(identifier, tts.tower.Id.Id));
                 tts.tower.worth = 0;
                 tts.tower.UpdateRootModel(superFly);
-                tts.sim.simulation.CreateTextEffect(new(tts.position), "UpgradedText", 10, "Upgraded!", false);
+                tts.sim.simulation.CreateTextEffect(new(tts.position), new("UpgradedText"), 10, "Upgraded!", false);
                 Globals.SixthTierPopCountMulti /= 10;
                 AbilityMenu.instance.TowerChanged(tts);
                 AbilityMenu.instance.RebuildAbilities();
@@ -32,10 +32,10 @@ namespace AdditionalTiers.Tasks.Towers.Tier6s {
                 superFly.cost = 0;
                 superFly.name = "Super Fly";
                 superFly.baseId = "MonkeyVillage";
-                superFly.display = "SuperFly";
+                superFly.display.guidRef = "SuperFly";
                 superFly.dontDisplayUpgrades = true;
                 superFly.portrait = new("SuperFlyIcon");
-                superFly.behaviors.First(a => a.GetIl2CppType() == Il2CppType.Of<DisplayModel>()).Cast<DisplayModel>().display = "SuperFly";
+                superFly.behaviors.First(a => a.GetIl2CppType() == Il2CppType.Of<DisplayModel>()).Cast<DisplayModel>().display.guidRef = "SuperFly";
                 var beh = superFly.behaviors;
                 for (var i = 0; i < beh.Length; i++) {
                     var behavior = beh[i];

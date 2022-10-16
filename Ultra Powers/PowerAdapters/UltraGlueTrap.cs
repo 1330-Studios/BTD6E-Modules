@@ -6,10 +6,10 @@ internal class UltraGlueTrap : IPowerAdapter {
 
         SlowModel glueSlow = UltraPowers.gameModel.towers.First(a => a.name.Equals("GlueGunner-005")).behaviors.First(a => a.Is<AttackModel>()).Cast<AttackModel>().weapons[0].projectile.behaviors.First(a=>a.Is<SlowModel>()).CloneCast<SlowModel>();
 
-        power.icon = "Ultra_Powers.Assets.UGlueTrapIcon.png".GetSpriteReference();
+        power.icon = "Ui[Ultra_Powers.Assets.UGlueTrapIcon.png]".GetSpriteReference();
         foreach (var gtm in power.GetChildren<GlueTrapModel>()) {
             gtm.projectileModel.pierce = 30000;
-            gtm.projectileModel.display = "Ultra_Powers.Assets.UGlueTrap.png";
+            gtm.projectileModel.display = new() { guidRef = "Ultra_Powers.Assets.UGlueTrap.png" };
             gtm.projectileModel.filters = Array.Empty<FilterModel>();
             gtm.projectileModel.behaviors = gtm.projectileModel.behaviors.Remove(m => m.Is<ProjectileFilterModel>() || m.Is<CollideExtraPierceReductionModel>());
             for (var i = 0; i < gtm.projectileModel.behaviors.Count; i++)

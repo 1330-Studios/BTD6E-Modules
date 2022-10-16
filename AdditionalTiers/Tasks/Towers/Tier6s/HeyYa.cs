@@ -13,10 +13,10 @@
                     time++;
                     return;
                 }
-                TransformationManager.VALUE.Add(new(identifier, tts.tower.Id));
+                TransformationManager.VALUE.Add(new(identifier, tts.tower.Id.Id));
                 tts.tower.worth = 0;
                 tts.tower.UpdateRootModel(heyYa);
-                tts.sim.simulation.CreateTextEffect(new(tts.position), "UpgradedText", 10, "Upgraded!", false);
+                tts.sim.simulation.CreateTextEffect(new(tts.position), new() { guidRef = "UpgradedText" }, 10, "Upgraded!", false);
                 AbilityMenu.instance.TowerChanged(tts);
                 AbilityMenu.instance.RebuildAbilities();
             };
@@ -27,8 +27,8 @@
                 heyYa.name = "Hey Ya!";
                 heyYa.baseId = "BoomerangMonkey";
                 heyYa.SetDisplay("HeyYa");
+                heyYa.SetIcons("AdditionalTiers.Resources.HeyYaPortrait.png");
                 heyYa.dontDisplayUpgrades = true;
-                heyYa.portrait = new("HeyYaPortrait");
                 heyYa.range += 35;
 
                 var beh = heyYa.behaviors;
@@ -85,7 +85,7 @@
             };
             recurring += _ => { };
             onLeave += () => time = -1;
-            assetsToRead.Add(new("HeyYa", "f6933c7c197b620488746d571d4e49cd", RendererType.SKINNEDMESHRENDERER));
+            assetsToRead.Add(new("HeyYa", "c73f298fe9c1187449a45ef0a7ae5fc2", RendererType.SKINNEDMESHRENDERER));
         }
     }
 }
