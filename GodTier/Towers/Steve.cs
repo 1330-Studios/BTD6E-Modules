@@ -1,4 +1,6 @@
-﻿namespace GodlyTowers.Towers {
+﻿using Assets.Scripts;
+
+namespace GodlyTowers.Towers {
     public sealed class Steve {
         public static string name = "Steve";
 
@@ -523,7 +525,7 @@
 
         [HarmonyPatch(typeof(Weapon), nameof(Weapon.SpawnDart))]
         public static class WI {
-            private static readonly Dictionary<int, float> remaining = new();
+            private static readonly Dictionary<ObjectId, float> remaining = new();
 
             [HarmonyPrefix]
             public static bool Prefix_SwitchWeapons(ref Weapon __instance) {

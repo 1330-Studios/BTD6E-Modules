@@ -1,5 +1,5 @@
 ﻿namespace AdditionalTiers.Utils.Components {
-    [RegisterTypeInIl2Cpp]
+    [RegisterTypeInIl2Cpp(false)]
     public class SetHeight1 : MonoBehaviour {
         public SetHeight1(IntPtr obj0) : base(obj0) { ClassInjector.DerivedConstructorBody(this); }
 

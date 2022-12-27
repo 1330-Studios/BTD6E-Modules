@@ -74,7 +74,7 @@ public sealed class InternalVerification {
                                 continue;
                             }
                         case 15U: {
-                                a3d2z16v47 = new NKR().Next() ^ 330;
+                                a3d2z16v47 = ((int)UnityEngine.Random.value) ^ 330;
                                 agtesbnuognsc_________________true = adbduiofh__mmbn_false * 259682229U ^ 2582466770U;
                                 continue;
                             }

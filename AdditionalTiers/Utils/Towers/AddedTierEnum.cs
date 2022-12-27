@@ -38,6 +38,9 @@
         KINGCRIMSON =               100000,
         MYSTERY =                   100000,
         BLACKANDYELLOW =            100000,
+        FORTUNATESON =              100000,
+        KINGOFDARKNESS =            100000,
+        GLAIVECREATOR =             100000
     }
 
     public sealed class AddedTierName {
@@ -59,7 +62,6 @@
         public static readonly string MRROBOTO = "SuperMonkey-250";
         public static readonly string VITAMINC = "SuperMonkey-520";
         public static readonly string DAFTPUNK = "Quincy 20";
-        //public static readonly string BLACKANDYELLOW = "HeliPilot-520";
         public static readonly string FLYMETOTHEMOON = "CaptainChurchill 20";
         public static readonly string BURNINGDOWNTHEHOUSE = "TackShooter-205";
         public static readonly string SHEERHEARTATTACK = "BombShooter-205";
@@ -80,5 +82,8 @@
         public static readonly string KINGCRIMSON = "Druid-005";
         public static readonly string MYSTERY = "NinjaMonkey-500";
         public static readonly string BLACKANDYELLOW = "TackShooter-005";
+        public static readonly string FORTUNATESON = "HeliPilot-205";
+        public static readonly string KINGOFDARKNESS = "WizardMonkey-015";
+        public static readonly string GLAIVECREATOR = "BoomerangMonkey-502";
     }
 }

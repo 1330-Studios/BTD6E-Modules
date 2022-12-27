@@ -27,6 +27,9 @@ public sealed class Logger13 {
     }
 
     public static void Log(string message) {
+        if (message.Equals("Called"))
+            return;
+
         Format();
         LogEvent(LastAssemblyName, null);
         Console.ForegroundColor = ConsoleColor.White;

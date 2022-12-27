@@ -1,73 +1,43 @@
 ﻿using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-using AdditionalTiers.Tasks.Towers.Progressive;
-using AdditionalTiers.Tasks.Towers.Tier6s;
+using AdditionalTiers.Tasks.Round8;
+using AdditionalTiers.Tasks.Towers;
 
-using Assets.Scripts.Unity;
+using Il2CppAssets.Scripts.Unity;
 
-using Il2CppSystem.Collections.Generic;
-
+[assembly: MelonAuthorColor(255, 200, 200, 255)]
+[assembly: MelonColor(255, 255, 75, 255)]
 [assembly: MelonGame("Ninja Kiwi", "BloonsTD6")]
-[assembly: MelonInfo(typeof(AdditionalTiers.AdditionalTiers), "Additional Tier Addon", "1.7", "1330 Studios LLC")]
+[assembly: MelonInfo(typeof(AdditionalTiers.AdditionalTiers), "Additional Tier Addon", "1.8", "1330 Studios LLC")]
 
 namespace AdditionalTiers {
     public sealed class AdditionalTiers : MelonMod {
         public static TowerTask[] Towers;
         public static string Version;
 
-        public override void OnApplicationStart() {
+        public override void OnInitializeMelon() {
             ErrorHandler.VALUE.Initialize();
 
-            var mia = Assembly.GetCustomAttribute<MelonInfoAttribute>();
+            Version = MelonAssembly.Assembly.GetName().Version.ToString();
 
-            if (mia != null)
-                Version = mia.Version;
-            else
-                Version = "1.?";
-
-            System.Collections.Generic.List<TowerTask> towers = new() {
-
-                /*new HeyYa(),
-                new SpaceTruckin(),
-                new PlanetWaves(),
-                new GreenDay(),
-                new TooCold(),
-                new PaintItBlack(),
-                new Dynamite(),
-                new Gold(),
-                new GoldenApexPlasmaMaster(),
-                new Tusk(),
-                new CrazyDiamond(),
-                new KillerQueen(),
-                new Barracuda(),
-                new LittleTalks(),
-
-                new ProgressiveSkyHigh(),
-                new ProgressiveFascination()*/
-
-                new ProgressiveGoldenExperience(),
-                new ProgressiveKingCrimson(),
-                new ProgressiveMystery(),
-                new ProgressiveBAY()
+            List<TowerTask> towers = new() {
+                new GoldenExperience(),
+                new KingCrimson(),
+                new Mystery(),
+                new BAY(),
+                new WhiteWedding(),
+                new FortunateSon(),
+                new KingOfDarkness(),
+                new GlaiveCreator()
             };
 
-            /*foreach (var tower in towers) {
-                Console.WriteLine($"{tower.baseTower.Replace('2', '0').Replace('0', 'x')} - {tower.identifier} @ {(long)tower.tower:n0} pops");
-            }*/
+            StringBuilder sb = new();
 
-            /*Assembly?.GetTypes().AsParallel().ForAll(type => {
-                if (typeof(TowerTask).IsAssignableFrom(type) && !typeof(TowerTask).FullName.Equals(type?.FullName)) {
-                    var tower = (TowerTask)Activator.CreateInstance(type);
-                    while (tower is null)
-                        tower = (TowerTask)Activator.CreateInstance(type);
-
-                    if ((long)tower?.tower != -1)
-                        towers?.Add(tower);
-                }
-            });
-
-            Towers = towers?.ToArray();*/
+            sb.AppendLine("╔Towers Loaded:══════════════════════════════════════════════════════════════════════════════════════════════════╗");
+            foreach (var tower in towers.OrderByDescending(a => (long)a.tower).OrderByDescending(a => a.baseTower.Contains("Paragon")))
+                sb.AppendLine($"║\t{tower.baseTower.Split('-')[0] + "-" + tower.baseTower.Split('-')[1].Replace('2', '0').Replace('1', '0').Replace('0', 'x'),-20} - {$"\"{tower.identifier}\"",-20} @ {(long)tower.tower:n0} pops".PadRight(107) + "║");
+            sb.AppendLine("╚════════════════════════════════════════════════════════════════════════════════════════════════════════════════╝");
 
             Towers = towers.ToArray();
 
@@ -82,7 +52,13 @@ namespace AdditionalTiers {
             HarmonyInstance?.Patch(Method(typeof(Tower), nameof(Tower.Hilight)), postfix: new HarmonyMethod(Method(typeof(HighlightManager), nameof(HighlightManager.Highlight))));
             HarmonyInstance?.Patch(Method(typeof(Tower), nameof(Tower.UnHighlight)), postfix: new HarmonyMethod(Method(typeof(HighlightManager), nameof(HighlightManager.UnHighlight))));
 
-            LoggerInstance?.Msg(ConsoleColor.Red, "Additional Tier Addon Loaded!");
+            var o_OutputEncoding = Console.OutputEncoding;
+
+            Console.OutputEncoding = Encoding.UTF8;
+            
+            LoggerInstance?.Msg(System.Drawing.Color.OrangeRed, $"Additional Tier Addon Loaded (v{Version}){Environment.NewLine}{sb}");
+
+            Console.OutputEncoding = o_OutputEncoding;
 
             Logger13.Log("Success!");
 
@@ -90,19 +66,15 @@ namespace AdditionalTiers {
 
             CacheBuilder.Build();
             DisplayFactory.Build();
-
-            UpdateHelper.Init();
         }
 
         public override void OnApplicationQuit() {
-            LoggerInstance?.Msg($"Last Win32 Error - {Marshal.GetLastWin32Error()}");
+            LoggerInstance?.Msg(System.Drawing.Color.MediumAquamarine, $"Last Win32 Error - {Marshal.GetLastWin32Error()}");
             DisplayFactory.Flush();
             CacheBuilder.Flush();
         }
 
-        public override void OnGUI() {
-            Watermark();
-        }
+        public override void OnGUI() => Watermark();
 
         private static bool loaded;
 
@@ -129,6 +101,19 @@ namespace AdditionalTiers {
             }
 
             UpgradeMenuManager.Update(InGame.instance);
+
+            if (CameraMotionManager.instance == null) {
+                var go = new GameObject("CameraMotionManager");
+                var cmm = go.AddComponent<CameraMotionManager>();
+                cmm.target = Vector3.zero;
+                cmm.disable = Camera.allCameras;
+                CameraMotionManager.instance = cmm;
+            }
+            if (OverlayManager.instance == null) {
+                var go = new GameObject("OverlayManager");
+                var om = go.AddComponent<OverlayManager>();
+                OverlayManager.instance = om;
+            }
 
             try {
                 var allAdditionalTiers = Towers;

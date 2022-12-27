@@ -1,20 +1,24 @@
-﻿using System.Threading.Channels;
-
-using Assets.Scripts;
+﻿using Il2CppAssets.Scripts;
 
 using UnityEngine.EventSystems;
 
 namespace AdditionalTiers.Utils;
 internal static class UpgradeMenuManager {
-    private static AssetBundle Assets = AssetBundle.LoadFromMemory("AdditionalTiers.upgrademenu.bundle".GetEmbeddedResource());
+    private static readonly AssetBundle Assets = AssetBundle.LoadFromMemory("AdditionalTiers.upgrademenu.bundle".GetEmbeddedResource());
     public static GameObject uiAsset = null!;
     public static GameObject canvasObject = null!;
 
-    public static Dictionary<string, dynamic> towers = new();
+    [Obsolete("Use AddTower instead of accessing this directly")]
+    public static Dictionary<string, UMM_Tower> towers = new();
 
     public static Tuple<string, ObjectId> lastTower;
 
     private static long lastPops = -1;
+
+    public static void AddTower(int currentUpgrade, string name, TowerModel towerModel, string towerType, int upgradeCost, string portrait, double currentSPA, int currentDamage, double nextSPA, int nextDamage, int nextRange, string extra, bool maxUpgrade, string nextUpgradeName) {
+        towers[towerModel.name] = new UMM_Tower(currentUpgrade, name, towerModel, towerType, upgradeCost, portrait, currentSPA, currentDamage, nextSPA, nextDamage, nextRange, extra, maxUpgrade, nextUpgradeName);
+        System.Diagnostics.Debug.WriteLine($"AddTower for {towerModel.name} registered!");
+    }
 
     public unsafe static void Update(InGame __instance) {
         if (__instance.bridge == null)
@@ -112,11 +116,7 @@ internal static class UpgradeMenuManager {
 
 
     public static void UpdateUM(string towerName, ObjectId id) {
-        var info = towers.ContainsKey(towerName) ? towers[towerName] : null;
-
-        if (info == null)
-            throw new NullReferenceException("info");
-
+        var info = towers.ContainsKey(towerName) ? towers[towerName] : default;
 
         var tower = InGame.instance.bridge.GetTower(id);
         canvasObject.transform.FindChild("NAME").GetComponent<Text>().text = $"{info.Name}|{info.CurrentUpgrade}";
@@ -165,9 +165,16 @@ internal static class UpgradeMenuManager {
 
         targetingButton.transform.FindChild("TARGETTYPE").GetComponent<Text>().text = tower.tower.TargetType.id;
 
-        var texture = (info.Portrait as string).GetEmbeddedResource().ToTexture();
-        texture.mipMapBias = -1;
-        canvasObject.transform.FindChild("PORTRAIT").GetComponent<Image>().sprite = Sprite.Create(texture, new(0, 0, texture.width, texture.height), new(), 10.2f);
+        if (info.Portrait.StartsWith("Round8_")) {
+            var assetName = info.Portrait.Trim().Replace("Round8_", "");
+            var r8T = Round8.LoadAsset(assetName).Cast<Texture2D>();
+            r8T.mipMapBias = -1;
+            canvasObject.transform.FindChild("PORTRAIT").GetComponent<Image>().sprite = Sprite.Create(r8T, new Rect(0, 0, r8T.width, r8T.height), new Vector2(), 10.2f);
+        } else {
+            var texture = (info.Portrait as string).GetEmbeddedResource().ToTexture();
+            texture.mipMapBias = -1;
+            canvasObject.transform.FindChild("PORTRAIT").GetComponent<Image>().sprite = Sprite.Create(texture, new(0, 0, texture.width, texture.height), new(), 10.2f);
+        }
 
 
         var curStats = canvasObject.transform.FindChild("STATS");

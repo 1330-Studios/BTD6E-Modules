@@ -1,5 +1,5 @@
 ﻿namespace AdditionalTiers.Utils.Components {
-    [RegisterTypeInIl2Cpp]
+    [RegisterTypeInIl2Cpp(false)]
     public class AnimatedFlameTexture : MonoBehaviour {
         public AnimatedFlameTexture(IntPtr obj0) : base(obj0) {
             ClassInjector.DerivedConstructorBody(this);

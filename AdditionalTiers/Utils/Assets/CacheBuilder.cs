@@ -1,17 +1,9 @@
-﻿using System.Collections;
-using System.Globalization;
-
-namespace AdditionalTiers.Utils.Assets {
+﻿namespace AdditionalTiers.Utils.Assets {
     public static class CacheBuilder {
         private static readonly Dictionary<string, string> built = new();
         private static readonly Dictionary<string, byte[]> builtBytes = new();
 
         public static void Build() {
-            foreach (DictionaryEntry v in Images.ResourceManager.GetResourceSet(CultureInfo.CurrentUICulture, true, true)) {
-                if (v.Key is string id && v.Value is byte[] bytes) {
-                    built.Add(id, Convert.ToBase64String(bytes));
-                }
-            }
         }
 
         public static Texture2D Get(string key) {

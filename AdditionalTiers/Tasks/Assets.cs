@@ -1,7 +1,9 @@
-﻿using Assets.Scripts;
-using Assets.Scripts.Simulation.Behaviors;
-using Assets.Scripts.Unity;
+﻿using Il2CppAssets.Scripts.Simulation.Behaviors;
+using Il2CppAssets.Scripts.Unity;
 
+using Il2CppTMPro;
+
+using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.U2D;
 
@@ -15,313 +17,6 @@ namespace AdditionalTiers.Tasks {
         };
         [HideFromIl2Cpp]
         public static Dictionary<string, Action<UnityDisplayNode>> Actions { get; set; } = new() {
-            {
-                "GlaiveDominusSilver",
-                udn => {
-                    var light = udn.gameObject.AddComponent<Light>();
-                    light.type = LightType.Directional;
-                    light.renderMode = LightRenderMode.ForceVertex;
-
-                    var assets = Particles;
-                    var _obj = assets[1].Cast<GameObject>();
-                    var obj = Object.Instantiate(_obj, udn.transform);
-                    obj.SetActive(true);
-                    var ps = obj.transform.GetComponentInChildren<ParticleSystem>();
-                    ps.emissionRate = 15;
-                    ps.transform.localScale = new(10, 10, 10);
-                }
-            },
-            {
-                "VitaminC",
-                udn => {
-                    var assets = ParticleSystems;
-                    var _obj = assets[0].Cast<GameObject>();
-                    var obj = Object.Instantiate(_obj, udn.transform);
-                    obj.SetActive(true);
-                    var ps = obj.transform.GetComponent<ParticleSystem>();
-                    ps.transform.localScale = new(15, 15, 15);
-                }
-            },
-            {
-                "APMGold2",
-                udn => {
-                    for (int i = 0; i < udn.genericRenderers.Length; i++) {
-                        udn.genericRenderers[i].material.SetFloat("_OutlineWidth", 0.02f);
-                    }
-                }
-            },
-            {
-                "MrRoboto",
-                udn => {
-                    for (int i = 0; i < udn.genericRenderers.Length; i++) {
-                        udn.genericRenderers[i].material.SetFloat("_OutlineWidth", 0.02f);
-                    }
-                    var assets = Particles;
-                    var _obj = assets[0].Cast<GameObject>();
-                    var obj = Object.Instantiate(_obj, udn.transform);
-                    obj.SetActive(true);
-                    var ps = obj.transform.GetComponentInChildren<ParticleSystem>();
-                    ps.transform.localScale = new(10, 10, 10);
-                }
-            },
-            {
-                "MrRobotoAbility",
-                udn => {
-                    foreach (var ps in udn.transform.GetComponentsInChildren<ParticleSystem>())
-                        ps.startColor = new Color(1f, 0.8f, 0);
-                }
-            },
-            {
-                "GlaiveDominusSilverOrbit",
-                udn => {
-                    var ps = udn.transform.GetComponentInChildren<ParticleSystem>();
-                    ps.startColor = new Color(1, 0.25f, 0);
-                    udn.gameObject.AddComponent<FastRotation>();
-                }
-            },
-            {
-                "GlaiveDominusSilverOrbit2",
-                udn => {
-                    var ps = udn.transform.GetComponentInChildren<ParticleSystem>();
-                    ps.startColor = new Color(1, 1, 1);
-                    for (int i = 0; i < 2; i++)
-                        udn.gameObject.AddComponent<FastRotation>();
-                }
-            },
-            {
-                "GlaiveDominusSilverOrbit3",
-                udn => {
-                    var ps = udn.transform.GetComponentInChildren<ParticleSystem>();
-                    ps.startColor = new Color(0.3f, 1, 0.3f);
-                    for (int i = 0; i < 5; i++)
-                        udn.gameObject.AddComponent<FastRotation>();
-                }
-            },
-            {
-                "GlaiveDominusSilverAbility",
-                udn => {
-                    var ps = udn.transform.GetComponentInChildren<ParticleSystem>();
-                    ps.startColor = new Color(1f, 0, 0);
-                }
-            },
-            {
-                "VitaminCTotemParticles",
-                udn => {
-                    var ps = udn.transform.GetComponentsInChildren<ParticleSystem>();
-
-                    for (int i = 0; i < ps.Length; i++)
-                        ps[i].startColor = new Color(0, 1, 0);
-                }
-            },
-            {
-                "BTD4SunGod",
-                udn => {
-                    udn.transform.GetComponentInChildren<ParticleSystem>().gameObject.active = false;
-                    udn.gameObject.AddComponent<SetHeight1>();
-                }
-            },
-            {
-                "BTD4SunGodV",
-                udn => {
-                    udn.transform.GetComponentInChildren<ParticleSystem>().gameObject.active = false;
-                    udn.gameObject.AddComponent<SetHeight1>();
-                }
-            },
-            {
-                "DaftPunkProjectile",
-                udn => {
-                    var ps = udn.transform.GetComponentInChildren<ParticleSystem>();
-                    ps.startColor = new Color(1, 0.25f, 0.25f);
-                    var tr = udn.transform.GetComponentInChildren<TrailRenderer>();
-                    tr.startColor = new Color(1f, 0.25f, 0.25f);
-                    tr.endColor = new Color(0.4f, 0.1f, 0.1f);
-                }
-            },
-            {
-                "DaftPunkTurboProjectile",
-                udn => {
-                    var ps = udn.transform.GetComponentInChildren<ParticleSystem>();
-                    ps.startColor = new Color(1, 0.25f, 0.25f);
-                    var tr = udn.transform.GetComponentInChildren<TrailRenderer>();
-                    tr.startColor = new Color(1f, 0.25f, 0.25f);
-                    tr.endColor = new Color(0.4f, 0.1f, 0.1f);
-                }
-            },
-            {
-                "DaftPunkOrbit",
-                udn => {
-                    var ps = udn.transform.GetComponentInChildren<ParticleSystem>();
-                    ps.startColor = new Color(1f, .1f, .1f);
-                    for (int i = 0; i < 5; i++)
-                        udn.gameObject.AddComponent<FastRotation>();
-                }
-            },
-            {
-                "FMTTM",
-                udn => {
-                    for (int i = 0; i < udn.genericRenderers.Length; i++) {
-                        udn.genericRenderers[i].material.SetFloat("_OutlineWidth", 1f);
-                        udn.genericRenderers[i].material.SetColor("_OutlineColor", new Color32(177, 135, 255, 255));
-                    }
-                }
-            },
-            {
-                "FMTTM2",
-                udn => {
-                    for (int i = 0; i < udn.genericRenderers.Length; i++) {
-                        udn.genericRenderers[i].material.SetFloat("_OutlineWidth", 1f);
-                        udn.genericRenderers[i].material.SetColor("_OutlineColor", new Color32(177, 135, 255, 255));
-                    }
-                }
-            },
-            {
-                "FMTTM3",
-                udn => {
-                    for (int i = 0; i < udn.genericRenderers.Length; i++) {
-                        udn.genericRenderers[i].material.SetFloat("_OutlineWidth", 1f);
-                        udn.genericRenderers[i].material.SetColor("_OutlineColor", new Color32(177, 135, 255, 255));
-                    }
-                }
-            },
-            {
-                "BurningDownTheHouse",
-                udn => {
-                    for (int i = 0; i < udn.genericRenderers.Length; i++) {
-                        udn.genericRenderers[i].material.SetFloat("_OutlineWidth", 0.05f);
-                        udn.genericRenderers[i].material.SetColor("_OutlineColor", new Color32(0, 254, 254, 255));
-                    }
-                }
-            },
-            {
-                "SheerHeartAttack",
-                udn => {
-                    for (int i = 0; i < udn.genericRenderers.Length; i++) {
-                        udn.genericRenderers[i].material.SetFloat("_OutlineWidth", 0.05f);
-                        udn.genericRenderers[i].material.SetColor("_OutlineColor", new Color32(206, 141, 0, 255));
-                    }
-                }
-            },
-            {
-                "AOBTD",
-                udn => {
-                    for (int i = 0; i < udn.genericRenderers.Length; i++) {
-                        udn.genericRenderers[i].material.SetFloat("_OutlineWidth", 0.02f);
-                        udn.genericRenderers[i].material.SetColor("_OutlineColor", new Color32(162, 0, 255, 255));
-                    }
-                }
-            },
-            {
-                "HeyYa",
-                udn => {
-                    for (int i = 0; i < udn.genericRenderers.Length; i++)
-                        udn.genericRenderers[i].material.SetFloat("_OutlineWidth", 1);
-                }
-            },
-            {
-                "SpaceTruckin",
-                udn => {
-                    for (int i = 0; i < udn.genericRenderers.Length; i++)
-                        udn.genericRenderers[i].material.SetFloat("_OutlineWidth", 0.02f);
-                }
-            },
-            {
-                "PlanetWaves",
-                udn => {
-                    for (int i = 0; i < udn.genericRenderers.Length; i++)
-                        udn.genericRenderers[i].material.SetFloat("_OutlineWidth", 0.05f);
-                }
-            },
-            {
-                "GreenDay",
-                udn => {
-                    for (int i = 0; i < udn.genericRenderers.Length; i++)
-                        udn.genericRenderers[i].material.SetFloat("_OutlineWidth", 0.05f);
-                }
-            },
-            {
-                "Dynamite",
-                udn => {
-                    for (int i = 0; i < udn.genericRenderers.Length; i++)
-                        udn.genericRenderers[i].material.SetFloat("_OutlineWidth", 0.05f);
-                }
-            },
-            {
-                "TooCold",
-                udn => {
-                    var main = T6SpecificAssets.LoadAsset("TooColdMain");
-                    var sub = T6SpecificAssets.LoadAsset("TooColdSub");
-                    var @static = T6SpecificAssets.LoadAsset("TooColdStatic");
-
-                    {
-                        var obj = Object.Instantiate(main.Cast<GameObject>(), udn.transform);
-                        obj.SetActive(true);
-                        var ps = obj.transform.GetComponentInChildren<ParticleSystem>();
-                        ps.transform.localScale = new(10, 0, 10);
-
-                        var pos = ps.transform.position;
-
-                        pos.y += 2.1f;
-
-                        ps.transform.position = pos;
-                    }
-                    {
-                        var obj = Object.Instantiate(sub.Cast<GameObject>(), udn.transform);
-                        obj.SetActive(true);
-                        var ps = obj.transform.GetComponentInChildren<ParticleSystem>();
-                        ps.transform.localScale = new(10, 0, 10);
-
-                        var pos = ps.transform.position;
-
-                        pos.y += 2.2f;
-
-                        ps.transform.position = pos;
-                    }
-                    {
-                        var obj = Object.Instantiate(@static.Cast<GameObject>(), udn.transform);
-                        obj.SetActive(true);
-                        var ps = obj.transform.GetComponentInChildren<ParticleSystem>();
-                        ps.transform.localScale = new(10, 0, 10);
-
-                        var pos = ps.transform.position;
-
-                        pos.y += 2.0f;
-
-                        ps.transform.position = pos;
-                    }
-
-                    for (int i = 0; i < udn.genericRenderers.Length; i++) {
-                        udn.genericRenderers[i].material.SetFloat("_OutlineWidth", 0.005f);
-                        udn.genericRenderers[i].material.SetColor("_OutlineColor", SpecialColors["TooCold"]);
-                    }
-                }
-            },
-            {
-                "KillerQueen",
-                udn => {
-                    for (int i = 0; i < udn.genericRenderers.Length; i++) {
-                        udn.genericRenderers[i].material.SetFloat("_OutlineWidth", 0.5f);
-                    }
-                }
-            },
-            {
-                "CrazyDiamond",
-                udn => {
-                    var main = T6SpecificAssets.LoadAsset("DSparkle");
-
-                    var obj = Object.Instantiate(main.Cast<GameObject>(), udn.transform);
-                    obj.SetActive(true);
-                    var ps = obj.transform.GetComponentInChildren<ParticleSystem>();
-                    ps.transform.localScale = new(10, 10, 10);
-                }
-            },
-            {
-                "LittleTalks",
-                udn => {
-                    for (int i = 0; i < udn.genericRenderers.Length; i++) {
-                        udn.genericRenderers[i].material.SetFloat("_OutlineWidth", 0.025f);
-                    }
-                }
-            },
             {
                 "AdditionalTiers.Resources.V2.GoldenExperience.GoldenExperience_Proj2.png",
                 udn => {
@@ -376,35 +71,15 @@ namespace AdditionalTiers.Tasks {
         };
         [HideFromIl2Cpp]
         public static Dictionary<string, Func<string, Sprite>> SpriteCreation { get; set; } = new() {
-            { "ScaryMonstersProj", objectId => SpriteBuilder.createProjectile(CacheBuilder.Get(objectId), 10.8f) },
-            { "GlaiveDominusSilverOrbit2", objectId => SpriteBuilder.createProjectile(CacheBuilder.Get(objectId), 10.8f) },
-            { "VitaminCBlast", objectId => SpriteBuilder.createProjectile(CacheBuilder.Get(objectId), 7.6f) },
-            { "BTD4SunGod", objectId => SpriteBuilder.createProjectile(CacheBuilder.Get(objectId), 43.2f, pivoty: 0.7f) },
-            { "BTD4SunGodV", objectId => SpriteBuilder.createProjectile(CacheBuilder.Get(objectId), 43.2f, pivoty: 0.7f) },
-            { "BlackYellowMissile", objectId => SpriteBuilder.createProjectile(CacheBuilder.Get(objectId), 10.8f) },
-            { "BlackYellowBullet", objectId => SpriteBuilder.createProjectile(CacheBuilder.Get(objectId), 10.8f) },
-            { "LittleTalksGS", objectId => SpriteBuilder.createProjectile(CacheBuilder.Get(objectId), 21.6f) },
-            { "LittleTalksS", objectId => SpriteBuilder.createProjectile(CacheBuilder.Get(objectId), 10.8f) },
-            { "LittleTalksPS", objectId => SpriteBuilder.createProjectile(CacheBuilder.Get(objectId), 10.8f) },
-            { "LittleTalksPB", objectId => SpriteBuilder.createProjectile(CacheBuilder.Get(objectId), 10.8f) }
         };
 
 
         [HideFromIl2Cpp]
         public static Dictionary<string, Func<Object, bool>> SpecialShaderIndicies { get; set; } = new() {
-            { "GlaiveDominusSilver", obj => obj.name.StartsWith("Unlit/Metallic") }
         };
 
         [HideFromIl2Cpp]
         public static Dictionary<string, Color> SpecialColors { get; set; } = new() {
-            { "FMTTM", new Color32(177, 135, 255, 255) },
-            { "FMTTM2", new Color32(177, 135, 255, 255) },
-            { "FMTTM3", new Color32(177, 135, 255, 255) },
-            { "BurningDownTheHouse", new Color32(0, 254, 254, 255) },
-            { "SheerHeartAttack", new Color32(206, 141, 0, 255) },
-            { "AOBTD", new Color32(162, 0, 255, 255) },
-            { "SpaceTruckin", new Color32(255, 25, 25, 255) },
-            { "TooCold", new Color32(55, 182, 237, 255) }
         };
 
         public static Color GetResetColor(DisplayBehavior beh) {
@@ -418,7 +93,7 @@ namespace AdditionalTiers.Tasks {
         public static AssetBundle ShaderBundle {
             get {
                 if (_shader == null)
-                    _shader = AssetBundle.LoadFromMemory(Images.shader);
+                    _shader = AssetBundle.LoadFromMemory("AdditionalTiers.Resources.shader.bundle".GetEmbeddedResource());
                 return _shader;
             }
         }
@@ -428,7 +103,7 @@ namespace AdditionalTiers.Tasks {
         public static AssetBundle ParticleBundle {
             get {
                 if (_particle == null)
-                    _particle = AssetBundle.LoadFromMemory(Images.particle);
+                    _particle = AssetBundle.LoadFromMemory("AdditionalTiers.Resources.particle.bundle".GetEmbeddedResource());
                 return _particle;
             }
         }
@@ -438,7 +113,7 @@ namespace AdditionalTiers.Tasks {
         public static AssetBundle ParticleSystemBundle {
             get {
                 if (_particlesystem == null)
-                    _particlesystem = AssetBundle.LoadFromMemory(Images.particlesystem);
+                    _particlesystem = AssetBundle.LoadFromMemory("AdditionalTiers.Resources.particlesystem.bundle".GetEmbeddedResource());
                 return _particlesystem;
             }
         }
@@ -448,7 +123,7 @@ namespace AdditionalTiers.Tasks {
         public static AssetBundle T6SpecificAssets {
             get {
                 if (_t6specificassets == null)
-                    _t6specificassets = AssetBundle.LoadFromMemory(Images.t6);
+                    _t6specificassets = AssetBundle.LoadFromMemory("AdditionalTiers.Resources.t6.bundle".GetEmbeddedResource());
                 return _t6specificassets;
             }
         }
@@ -483,6 +158,8 @@ namespace AdditionalTiers.Tasks {
         private static AssetBundle richard = AssetBundle.LoadFromMemory("AdditionalTiers.Resources.Ninja.richard.bundle".GetEmbeddedResource());
         private static AssetBundle by = AssetBundle.LoadFromMemory("AdditionalTiers.Resources.B_Y.by.bundle".GetEmbeddedResource());
 
+        public static AssetBundle Round8 = AssetBundle.LoadFromMemory("AdditionalTiers.Resources.round8".GetEmbeddedResource());
+
         [HarmonyPatch(typeof(Factory.__c__DisplayClass21_0), nameof(Factory.__c__DisplayClass21_0._CreateAsync_b__0))]
         public sealed class DisplayFactory {
             public static bool hasBeenBuilt;
@@ -511,6 +188,34 @@ namespace AdditionalTiers.Tasks {
                 Transform transform = Game.instance.prototypeObjects.transform;
 
                 var resourceManager = Addressables.Instance.ResourceManager;
+
+                if (guid.StartsWith("Round8_")) {
+                    var round8Asset = Round8.LoadAsset(guid.Replace("Round8_", "").Split('#')[0]).Cast<GameObject>();
+                    round8Asset.name = guid.Replace("Round8_", "").Split('#')[0];
+
+                    var round8AssetInstance = Object.Instantiate(round8Asset, factory.DisplayRoot).AddComponent<UnityDisplayNode>();
+                    round8AssetInstance.Active = false;
+                    round8AssetInstance.name = guid.Replace("Round8_", "").Split('#')[0] + " (Clone)";
+                    var scale = round8AssetInstance.gameObject.AddComponent<Round8Scale>();
+                    scale.Scale = float.Parse(guid.Replace("Round8_", "").Split('#')[1]);
+                    round8AssetInstance.RecalculateGenericRenderers();
+
+                    factory.prototypeHandles[prefabReference] = resourceManager.CreateCompletedOperation(round8AssetInstance.gameObject, $"COULDN'T COMPLETE OPERATION FOR ROUND 8 ASSET {guid.Normalize()}");
+
+                    Vector3 nvector = new(Factory.kOffscreenPosition.x, 0f, 0f);
+                    Quaternion nidentity = Quaternion.identity;
+                    GameObject ngameObject2 = Object.Instantiate(round8AssetInstance.gameObject, nvector, nidentity, factory.DisplayRoot);
+                    ngameObject2.SetActive(true);
+                    UnityDisplayNode ncomponent = ngameObject2.GetComponent<UnityDisplayNode>();
+                    var ncomponentscale = ngameObject2.GetComponent<Round8Scale>();
+                    ncomponentscale.Scale = float.Parse(guid.Replace("Round8_", "").Split('#')[1]);
+                    ncomponent.Create();
+                    ncomponent.cloneOf = prefabReference;
+                    factory.active.Add(ncomponent);
+                    onComplete.Invoke(ncomponent);
+
+                    return false;
+                }
 
                 if (guid.Contains(".Ninja.")) {
 
@@ -602,9 +307,8 @@ namespace AdditionalTiers.Tasks {
                         var udn = gameObject.GetComponent<UnityDisplayNode>();
 
                         udn.RecalculateGenericRenderers();
-                        var nktmp = udn.GetComponentInChildren<NK_TextMeshPro>();
+                        var nktmp = udn.GetComponentInChildren<TextMeshPro>();
                         nktmp.m_fontColorGradient = new(Color.red, Color.red, new(255, 255, 0), Color.white);
-                        nktmp.capitalize = false;
                         udn.RecalculateGenericRenderers();
 
                         Vector3 vector = new(Factory.kOffscreenPosition.x, 0f, 0f);
@@ -633,9 +337,8 @@ namespace AdditionalTiers.Tasks {
                         var udn = gameObject.GetComponent<UnityDisplayNode>();
 
                         udn.RecalculateGenericRenderers();
-                        var nktmp = udn.GetComponentInChildren<NK_TextMeshPro>();
+                        var nktmp = udn.GetComponentInChildren<TextMeshPro>();
                         nktmp.m_fontColorGradient = new(new(237, 171, 2), new(255, 200, 15), new(255, 255, 0), Color.white);
-                        nktmp.capitalize = false;
                         udn.RecalculateGenericRenderers();
 
                         Vector3 vector = new(Factory.kOffscreenPosition.x, 0f, 0f);
@@ -664,9 +367,8 @@ namespace AdditionalTiers.Tasks {
                         var udn = gameObject.GetComponent<UnityDisplayNode>();
 
                         udn.RecalculateGenericRenderers();
-                        var nktmp = udn.GetComponentInChildren<NK_TextMeshPro>();
+                        var nktmp = udn.GetComponentInChildren<TextMeshPro>();
                         nktmp.m_fontColorGradient = new(Color.green, Color.green, new(35, 255, 35), Color.white);
-                        nktmp.capitalize = false;
                         udn.RecalculateGenericRenderers();
 
                         Vector3 vector = new(Factory.kOffscreenPosition.x, 0f, 0f);
@@ -689,7 +391,15 @@ namespace AdditionalTiers.Tasks {
                 udn.RecalculateGenericRenderers();
 
                 for (var i = 0; i < udn.genericRenderers.Length; i++) {
-                    if (((curAsset.RendererType == RendererType.SKINNEDANDUNSKINNEDMESHRENDERER && udn.genericRenderers[i] is SkinnedMeshRenderer or MeshRenderer) ||
+                    if (curAsset.RendererType == RendererType.ANYRENDERER && udn.genericRenderers[i].GetIl2CppType() != Il2CppType.Of<ParticleSystemRenderer>()) {
+                        var renderer = udn.genericRenderers[i].Cast<Renderer>();
+                        renderer.material.shader = ShaderAssets.First(a => a.name.StartsWith("Unlit/CelShading")).Cast<Shader>();
+                        renderer.material.SetColor("_OutlineColor", Color.black);
+                        renderer.material.mainTexture = CacheBuilder.Get(objectId);
+                    } else if (curAsset.RendererType == RendererType.PARTICLESYSTEMRENDERER) {
+                        var renderer = udn.genericRenderers[i].Cast<Renderer>();
+                        renderer.material.mainTexture = CacheBuilder.Get(objectId);
+                    } else if (((curAsset.RendererType == RendererType.SKINNEDANDUNSKINNEDMESHRENDERER && udn.genericRenderers[i] is SkinnedMeshRenderer or MeshRenderer) ||
                         (curAsset.RendererType == RendererType.SKINNEDMESHRENDERER && udn.genericRenderers[i].Is<SkinnedMeshRenderer>()) ||
                         (curAsset.RendererType == RendererType.MESHRENDERER && udn.genericRenderers[i].Is<MeshRenderer>())) && !udn.genericRenderers[i].Is<SpriteRenderer>()) {
                         var renderer = udn.genericRenderers[i].Cast<Renderer>();
@@ -784,11 +494,19 @@ namespace AdditionalTiers.Tasks {
             [HarmonyPrefix]
             private static bool Prefix(SpriteAtlas __instance, string name, ref Sprite __result) {
                 if (__instance.name == "Ui") {
+                    if (name.StartsWith("Round8_")) {
+                        var assetName = name.Trim().Replace("Round8_", "");
+                        var r8T = Round8.LoadAsset(assetName).Cast<Texture2D>();
+                        __result = Sprite.Create(r8T, new(0, 0, r8T.width, r8T.height), new(), 10.2f);
+                        __result.texture.requestedMipmapLevel = -1;
+                        return false;
+                    }
+                    
                     var resource = name.Trim().GetEmbeddedResource();
                     if (resource?.Length > 0) {
                         var texture = resource.ToTexture();
                         __result = Sprite.Create(texture, new(0, 0, texture.width, texture.height), new(), 10.2f);
-                        __result.texture.mipMapBias = -1;
+                        __result.texture.requestedMipmapLevel = -1;
                         return false;
                     }
                 }

@@ -1,5 +1,5 @@
 ﻿namespace AdditionalTiers.Utils.Components;
-[RegisterTypeInIl2Cpp]
+[RegisterTypeInIl2Cpp(false)]
 public class SetScaleBY : MonoBehaviour {
     public SetScaleBY(IntPtr obj0) : base(obj0) { ClassInjector.DerivedConstructorBody(this); }
 

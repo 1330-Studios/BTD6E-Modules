@@ -52,7 +52,7 @@ internal static class Crayon {
 
         for (int i = 0; i < godzilla.behaviors.Length; i++) {
             if (godzilla.behaviors[i].Is<AirUnitModel>(out var aum)) {
-                aum.display = "BlueCrayon";
+                aum.display = new() { guidRef= "BlueCrayon" };
                 var hmm = aum.behaviors[0].Cast<HeliMovementModel>();
                 hmm.tiltAngle = 0;
                 hmm.brakeForce *= MathF.Pow(50, 3);
@@ -67,7 +67,7 @@ internal static class Crayon {
                 am.weapons[0].emission = new EmissionWithOffsetsModel("EWOM_", new[] {
                     new ThrowMarkerOffsetModel("Middle", 0, 4, 0, 0) }, 1, false, null, 0);
                 am.weapons[0].Rate = 0.025f;
-                am.weapons[0].projectile.display = "CrayonBlueTrail";
+                am.weapons[0].projectile.display = new() { guidRef = "CrayonBlueTrail" };
                 am.weapons[0].projectile.radius /= 2;
                 am.weapons[0].projectile.scale /= 3;
                 am.weapons[0].projectile.scale *= 2;
@@ -110,11 +110,11 @@ internal static class Crayon {
 
         for (int i = 0; i < godzilla.behaviors.Length; i++) {
             if (godzilla.behaviors[i].Is<AirUnitModel>(out var aum)) {
-                aum.display = "RedCrayon";
+                aum.display = new() { guidRef = "RedCrayon" };
             }
             if (godzilla.behaviors[i].Is<AttackModel>(out var am)) {
                 am.weapons[0].Rate = 0.02f;
-                am.weapons[0].projectile.display = "CrayonRedTrail";
+                am.weapons[0].projectile.display = new() { guidRef = "CrayonRedTrail" };
                 for (int j = 0; j < am.weapons[0].projectile.behaviors.Count; j++) {
                     if (am.weapons[0].projectile.behaviors[j].Is<TravelStraitModel>(out var tsm)) {
                         tsm.Lifespan *= 3;
@@ -145,11 +145,11 @@ internal static class Crayon {
 
         for (int i = 0; i < godzilla.behaviors.Length; i++) {
             if (godzilla.behaviors[i].Is<AirUnitModel>(out var aum)) {
-                aum.display = "YellowCrayon";
+                aum.display = new() { guidRef= "YellowCrayon" };
             }
             if (godzilla.behaviors[i].Is<AttackModel>(out var am)) {
                 am.weapons[0].Rate = 0.0175f;
-                am.weapons[0].projectile.display = "CrayonYellowTrail";
+                am.weapons[0].projectile.display = new() { guidRef= "CrayonYellowTrail" };
                 for (int j = 0; j < am.weapons[0].projectile.behaviors.Count; j++) {
                     if (am.weapons[0].projectile.behaviors[j].Is<TravelStraitModel>(out var tsm)) {
                         tsm.Lifespan *= 3;
@@ -177,7 +177,7 @@ internal static class Crayon {
 
         for (int i = 0; i < godzilla.behaviors.Length; i++) {
             if (godzilla.behaviors[i].Is<AirUnitModel>(out var aum)) {
-                aum.display = "GreenCrayon";
+                aum.display = new() { guidRef = "GreenCrayon" };
             }
             if (godzilla.behaviors[i].Is<AttackModel>(out var am)) {
                 am.weapons[0].emission = new EmissionWithOffsetsModel("EWOM_", new[] {
@@ -186,7 +186,7 @@ internal static class Crayon {
                     new ThrowMarkerOffsetModel("Right", -4.5f, 4, 0, 0)
                 }, 3, false, null, 0);
                 am.weapons[0].Rate = 0.0125f;
-                am.weapons[0].projectile.display = "CrayonGreenTrail";
+                am.weapons[0].projectile.display = new() { guidRef = "CrayonGreenTrail" };
                 for (int j = 0; j < am.weapons[0].projectile.behaviors.Count; j++) {
                     if (am.weapons[0].projectile.behaviors[j].Is<TravelStraitModel>(out var tsm)) {
                         tsm.Lifespan /= 3;
@@ -215,7 +215,7 @@ internal static class Crayon {
 
         for (int i = 0; i < godzilla.behaviors.Length; i++) {
             if (godzilla.behaviors[i].Is<AirUnitModel>(out var aum)) {
-                aum.display = "PurpleCrayon";
+                aum.display = new() { guidRef= "PurpleCrayon" };
             }
             if (godzilla.behaviors[i].Is<AttackModel>(out var am)) {
                 am.weapons[0].emission = new EmissionWithOffsetsModel("EWOM_", new[] {
@@ -226,7 +226,7 @@ internal static class Crayon {
                     new ThrowMarkerOffsetModel("Bottom", 0, 4, -4.5f, 0)
                 }, 5, false, null, 0);
                 am.weapons[0].Rate = 0.0075f;
-                am.weapons[0].projectile.display = "CrayonPurpleTrail";
+                am.weapons[0].projectile.display = new() { guidRef = "CrayonPurpleTrail" };
                 for (int j = 0; j < am.weapons[0].projectile.behaviors.Count; j++) {
                     if (am.weapons[0].projectile.behaviors[j].Is<TravelStraitModel>(out var tsm)) {
                         tsm.Lifespan /= 3;
@@ -236,7 +236,7 @@ internal static class Crayon {
                         dm.immuneBloonProperties = dm.immuneBloonPropertiesOriginal = BloonProperties.None;
                     }
                     if (am.weapons[0].projectile.behaviors[j].Is<CreateEffectOnContactModel>(out var effect)) {
-                        effect.effectModel.assetId = "6d84b13b7622d2744b8e8369565bc058";
+                        effect.effectModel.assetId = new() { guidRef= "6d84b13b7622d2744b8e8369565bc058" };
                     }
                 }
             }
@@ -256,7 +256,7 @@ internal static class Crayon {
 
         for (int i = 0; i < godzilla.behaviors.Length; i++) {
             if (godzilla.behaviors[i].Is<AirUnitModel>(out var aum)) {
-                aum.display = "RainbowCrayon";
+                aum.display = new() { guidRef= "RainbowCrayon" };
             }
             if (godzilla.behaviors[i].Is<AttackModel>(out var am)) {
                 am.weapons[0].emission = new EmissionWithOffsetsModel("EWOM_", new[] {
@@ -271,7 +271,7 @@ internal static class Crayon {
                     new ThrowMarkerOffsetModel("RBottom", -4.5f, 4, -4.5f, 0)
                 }, 9, false, null, 0);
                 am.weapons[0].Rate = 0.0001f;
-                am.weapons[0].projectile.display = "CrayonRainbowTrail";
+                am.weapons[0].projectile.display = new() { guidRef= "CrayonRainbowTrail" };
                 for (int j = 0; j < am.weapons[0].projectile.behaviors.Count; j++) {
                     if (am.weapons[0].projectile.behaviors[j].Is<TravelStraitModel>(out var tsm)) {
                         tsm.Lifespan /= 5f;
@@ -281,7 +281,7 @@ internal static class Crayon {
                         dm.immuneBloonProperties = dm.immuneBloonPropertiesOriginal = BloonProperties.None;
                     }
                     if (am.weapons[0].projectile.behaviors[j].Is<CreateEffectOnContactModel>(out var effect)) {
-                        effect.effectModel.assetId = "6d84b13b7622d2744b8e8369565bc058";
+                        effect.effectModel.assetId = new() { guidRef = "6d84b13b7622d2744b8e8369565bc058" };
                     }
                 }
             }

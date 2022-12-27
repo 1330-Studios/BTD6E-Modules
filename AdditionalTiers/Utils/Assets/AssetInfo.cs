@@ -1,17 +1,10 @@
-﻿
-using Newtonsoft.Json;
-
-namespace AdditionalTiers.Utils.Assets {
+﻿namespace AdditionalTiers.Utils.Assets {
     [Serializable]
-    [JsonObject(MemberSerialization.OptIn)]
     public record AssetInfo {
-        [JsonProperty]
         public string CustomAssetName { get => _customassetname; set => _customassetname = value; }
 
-        [JsonProperty]
         public string BTDAssetName { get => _btdassetname; set => _btdassetname = value; }
 
-        [JsonProperty]
         public RendererType RendererType { get => _renderertype; set => _renderertype = value; }
 
         private string _customassetname = String.Empty;
@@ -31,7 +24,7 @@ namespace AdditionalTiers.Utils.Assets {
         SKINNEDANDUNSKINNEDMESHRENDERER,
         SPRITERENDERER,
         PARTICLESYSTEMRENDERER,
-
+        ANYRENDERER,
         UNSET
     }
 }

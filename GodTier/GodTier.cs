@@ -175,32 +175,8 @@ namespace GodTier {
         public sealed class GameStart {
             [HarmonyPostfix]
             public static void Postfix(ref GameModel __result) {
-                bloonstubers.Add(Tewtiy.InitializeTowers(ref __result));
-
-                towers.Add(Godzilla.GetTower(__result));
-                towers.Add(Mechagodzilla.GetTower(__result));
-                towers.Add(Shrek.GetTower(__result));
-                towers.Add(LightningMcQueen.GetTower(__result));
-                towers.Add(Spider_Man.GetTower(__result));
-                towers.Add(Carnage.GetTower(__result));
-                towers.Add(Venom.GetTower(__result));
-                towers.Add(TobeyMaguireSM.GetTower(__result));
-                towers.Add(Thanos.GetTower(__result));
-                towers.Add(MiniPekka.GetTower(__result));
-                towers.Add(Grim_Reaper.GetTower(__result));
                 towers.Add(Steve.GetTower(__result));
                 towers.Add(Crayon.GetTower(__result));
-
-                paragons.Add(Paragons.GetDartMonkey(__result));
-                paragons.Add(Paragons.GetBoomerangMonkey(__result));
-                paragons.Add(Paragons.GetNinjaMonkey(__result));
-                paragons.Add(Paragons.GetMonkeyBuccaneer(__result));
-
-
-                foreach (var paragon in paragons) {
-                    __result.towers = __result.towers.Add(paragon.Item1);
-                    __result.towerSet = __result.towerSet.Add(paragon.Item2);
-                }
 
                 foreach (var tower in towers) {
                     foreach (var t in tower.Item3)
